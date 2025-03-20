@@ -4,5 +4,9 @@
     <!--
     <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />
     -->
+    <!--
+    기존 양식: Jetpack Compose (not layout directory)
+    Theme.UMC_8th를 import할 때, Theme.MaterialComponents을 상속하도록 바꿈
+    -->
     <style name="Theme.UMC_8th" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>
