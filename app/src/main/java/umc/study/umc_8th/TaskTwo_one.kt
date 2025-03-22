@@ -44,6 +44,7 @@ class TaskTwo_one : Fragment() {
         return inflater.inflate(R.layout.fragment_task_two_one, container, false)
     }
 
+    //생명주기 상 내용을 정의할 때는 onCreateView보다는 onViewCreated가 더 안정적이다.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btnVeryHappy = view.findViewById<ImageButton>(R.id.btn_veryhappy_frag)

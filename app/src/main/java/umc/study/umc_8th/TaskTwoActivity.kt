@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.NavOptions
 
 class TaskTwoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,21 +26,27 @@ class TaskTwoActivity : AppCompatActivity() {
         
 
         bottomNavigationView.setOnItemSelectedListener { item->
+
+            //백스택에 fragment들이 쌓이는 것을 막기
+            val navOptions = NavOptions.Builder().
+                setPopUpTo(R.id.nav_graph, true) //전체 그래프에 popup옵션
+                .build()
+
             when(item.itemId) {
                 R.id.navigation_home -> {
-                    navController.navigate(R.id.navigation_home)
+                    navController.navigate(R.id.navigation_home, null, navOptions)
                     true
                 }
                 R.id.navigation_favorite -> {
-                    navController.navigate(R.id.navigation_favorite)
+                    navController.navigate(R.id.navigation_favorite, null, navOptions)
                     true
                 }
                 R.id.navigation_setting -> {
-                    navController.navigate(R.id.navigation_setting)
+                    navController.navigate(R.id.navigation_setting, null, navOptions)
                     true
                 }
                 R.id.navigation_myapge -> {
-                    navController.navigate(R.id.navigation_myapge)
+                    navController.navigate(R.id.navigation_myapge, null, navOptions)
                     true
                 }
                 else -> false
