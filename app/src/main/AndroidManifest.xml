@@ -13,22 +13,30 @@
         android:theme="@style/Theme.UMC_8th"
         tools:targetApi="31">
         <activity
+            android:name=".SplashActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".TaskTwoActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name="com.example.umc_8th.TaskOneTempActivity"
             android:exported="false" />
         <activity
             android:name="com.example.umc_8th.TaskOneActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name="com.example.umc_8th.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.UMC_8th">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
