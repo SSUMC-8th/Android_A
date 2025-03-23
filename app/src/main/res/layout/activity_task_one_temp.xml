@@ -9,6 +9,10 @@
     android:gravity="center"
     tools:context="com.example.umc_8th.TaskOneTempActivity">
 
+    <!--
+        각 버튼에서 intent로 String 값을 받았을 때 이를 반영해 UI로 작성하는 화면
+    -->
+
     <TextView
         android:id="@+id/tv_tempMove"
         android:textColor="@color/black"
