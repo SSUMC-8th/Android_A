@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.UMC_8th" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+
 </resources>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<resources>-->
+
+<!--    <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />-->
+<!--</resources>-->

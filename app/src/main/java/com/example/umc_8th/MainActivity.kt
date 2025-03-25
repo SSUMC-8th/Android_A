@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,37 +12,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import com.example.umc_8th.databinding.ActivitiyMainBinding
 import com.example.umc_8th.ui.theme.UMC_8thTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() { //xml버전으로 하였으므로 Apcompactivitiy로 바꿔줌
+
+    private lateinit var mBinding : ActivitiyMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            UMC_8thTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+        mBinding = ActivitiyMainBinding.inflate(layoutInflater)
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    UMC_8thTheme {
-        Greeting("Android")
+        setContentView(mBinding.root)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
+
+        //네비게이션을 컨트롤러
+        val navController = navHostFragment.navController
+        //바텀네비게이션뷰와 묶어줌
+        NavigationUI.setupWithNavController(mBinding.myBtmNav, navController)
     }
+
 }

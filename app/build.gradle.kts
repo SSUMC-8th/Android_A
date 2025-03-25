@@ -129,6 +129,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
@@ -136,7 +137,7 @@ plugins {
 }
 
 android {
-    namespace = "umc.study.umc_8th"
+    namespace = "com.example.umc_8th"
     compileSdk = 34
 
     defaultConfig {
@@ -168,8 +169,14 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    viewBinding{
+        enable = true
+    }
+    
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -207,6 +214,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx) // 추가된 부분
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    val nav_version = "2.8.9"
+    // Views/Fragments integration
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
 
     // Paging 라이브러리 추가
     implementation("androidx.paging:paging-runtime:3.1.1")
