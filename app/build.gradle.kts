@@ -138,6 +138,9 @@ plugins {
 android {
     namespace = "umc.study.umc_8th"
     compileSdk = 34
+    viewBinding{
+        enable = true
+    }
 
     defaultConfig {
         applicationId = "umc.study.umc_8th"
@@ -207,6 +210,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx) // 추가된 부분
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Paging 라이브러리 추가
     implementation("androidx.paging:paging-runtime:3.1.1")
