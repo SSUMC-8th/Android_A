@@ -3,8 +3,6 @@ package com.example.umc_8th
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityToYouMainBinding
@@ -21,13 +19,13 @@ class ToYouMain : AppCompatActivity() {
         setContentView(binding.root)
 
         if(savedInstanceState==null){
-            replaceFragment(HomeFragment())
+            replaceFragment(ToYouHomeFragment())
         }
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.bottom_home ->{
-                    replaceFragmentWithAnimation(HomeFragment(), R.id.bottom_home)
+                    replaceFragmentWithAnimation(ToYouHomeFragment(), R.id.bottom_home)
                 }
                 R.id.bottom_write ->{
                     replaceFragmentWithAnimation(WriteFragment(), R.id.bottom_write)

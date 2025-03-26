@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentHomeBinding
+import umc.study.umc_8th.databinding.FragmentToYouHomeBinding
 
-class HomeFragment:Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+class ToYouHomeFragment:Fragment() {
+    private lateinit var binding: FragmentToYouHomeBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentHomeBinding.inflate(layoutInflater)
+        binding= FragmentToYouHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 }
