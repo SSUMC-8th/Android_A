@@ -32,12 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.umc_8th.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.UMC_8th">
-        </activity>
+<!--        <activity-->
+<!--            android:name="com.example.umc_8th.MainActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/Theme.UMC_8th">-->
+<!--        </activity>-->
     </application>
 
 </manifest>
