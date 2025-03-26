@@ -76,27 +76,32 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageButton
+                android:id="@+id/btn_homeplayer_previous"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/skipprevious"/>
             <ImageButton
+                android:id="@+id/btn_homeplayer_play"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/play"/>
             <ImageButton
+                android:id="@+id/btn_homeplayer_pause"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/pause"
                 android:visibility="gone"/>
             <ImageButton
+                android:id="@+id/btn_homeplayer_next"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/skipnext"/>
             <ImageButton
+                android:id="@+id/btn_homeplayer_queuemusic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"

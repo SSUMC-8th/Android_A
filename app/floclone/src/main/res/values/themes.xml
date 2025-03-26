@@ -10,5 +10,11 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <!--이미지 커버를 둥근 직사각형으로 만든다.-->
+    <style name="ImageRoundCorner" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item> <!-- 여기서 둥글기 조절 -->
+    </style>
+
     <style name="Theme.UMC_8th" parent="Base.Theme.UMC_8th" />
 </resources>
