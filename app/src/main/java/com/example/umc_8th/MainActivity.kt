@@ -1,47 +1,37 @@
 package com.example.umc_8th
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.umc_8th.ui.theme.UMC_8thTheme
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import android.widget.ImageButton
+import android.content.Intent
 
-class MainActivity : ComponentActivity() {
+
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            UMC_8thTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+        setContentView(R.layout.activity_main)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        val buttonIds = listOf(
+        R.id.happy_button to HappyActivity::class.java,
+        R.id.excited_button to ExcitedActivity::class.java,
+        R.id.anxious_button to AnxiousActivity::class.java,
+        R.id.normal_button to NormalActivity::class.java,
+        R.id.angry_button to AngryActivity::class.java,
+        R.id.vector_button to MainActivity::class.java
+        )
+        for ((id, activity) in buttonIds) {
+            findViewById<ImageButton>(id).setOnClickListener {
+                startActivity(Intent(this, activity))
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    UMC_8thTheme {
-        Greeting("Android")
     }
 }

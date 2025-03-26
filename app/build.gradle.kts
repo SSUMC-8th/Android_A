@@ -136,7 +136,7 @@ plugins {
 }
 
 android {
-    namespace = "umc.study.umc_8th"
+    namespace = "com.example.umc_8th"//"umc.study.umc_8th"
     compileSdk = 34
 
     defaultConfig {
