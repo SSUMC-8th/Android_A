@@ -2,6 +2,12 @@
 <resources>
 
     <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.MyApp.Splash" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/carrotback</item>
+    </style>
+    <style name="Theme.MyApp.AppCompat" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here -->
+    </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
 </resources>
