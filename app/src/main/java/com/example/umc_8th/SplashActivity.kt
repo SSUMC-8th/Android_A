@@ -32,7 +32,7 @@ class SplashActivity:AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
 
             // 일정 시간이 지나면 MainActivity로 이동
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity_2nd::class.java)
             startActivity(intent)
 
             finish()
