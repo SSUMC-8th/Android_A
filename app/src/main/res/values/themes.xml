@@ -2,4 +2,6 @@
 <resources>
 
     <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
 </resources>
