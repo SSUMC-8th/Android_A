@@ -8,5 +8,5 @@
     <style name="Theme.MyApp.AppCompat" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here -->
     </style>
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>

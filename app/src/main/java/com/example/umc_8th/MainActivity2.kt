@@ -1,18 +1,18 @@
-package com.example.umc_8th
-
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.umc_8th.CalendarFragment
+import com.example.umc_8th.HomeFragment
+import com.example.umc_8th.ProfileFragment
+import com.example.umc_8th.WriteFragment
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityMain2Binding
-import umc.study.umc_8th.databinding.ActivityMainBinding
 
 class MainActivity2 : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private var currentFragmentId = R.id.bottom_home
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +42,7 @@ class MainActivity2 : AppCompatActivity() {
             true
         }
     }
+
     private fun replaceFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
