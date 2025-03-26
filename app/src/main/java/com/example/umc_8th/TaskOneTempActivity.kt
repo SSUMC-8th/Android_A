@@ -14,6 +14,7 @@ class TaskOneTempActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_task_one_temp)
 
+        //기본 텍스트는 A로 설정 -> intent를 받은 경우 이에 맞춰 변경
         val getText = intent.getStringExtra("sendTemp") ?: "A"
         val textView = findViewById<TextView>(R.id.tv_tempMove)
         textView.text = getText

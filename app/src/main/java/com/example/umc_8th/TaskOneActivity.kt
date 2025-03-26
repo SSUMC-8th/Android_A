@@ -16,6 +16,7 @@ class TaskOneActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_task_one)
 
+        //각 UI 정의 및 clickListenr 정의
         val btnBack = findViewById<ImageButton>(R.id.btn_back)
         val btnVeryHappy = findViewById<ImageButton>(R.id.btn_veryhappy)
         val btnHappy = findViewById<ImageButton>(R.id.btn_happy)

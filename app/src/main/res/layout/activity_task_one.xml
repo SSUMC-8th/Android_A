@@ -10,6 +10,10 @@
     android:background="@color/white"
     tools:context="com.example.umc_8th.TaskOneActivity">
 
+    <!--
+    LinearLayout과 margin을 이용한 layout 작성
+    -->
+
     <ImageButton
         android:id="@+id/btn_back"
         android:layout_margin="5dp"
