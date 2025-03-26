@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_home"
+    >
+
+    <!--
+    id: bottomNavigationView에서 정의한 것
+    name: fragment 클래스가 있는 곳의 위치
+    label: 목적지 이름
+    layout: 미리보기 연결
+    -->
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="umc.study.umc_8th.TaskTwo_one"
+        android:label="Home"
+        tools:layout="@layout/fragment_task_two_one"
+        />
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="umc.study.umc_8th.TaskTwo_one"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_task_two_one"
+        />
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="umc.study.umc_8th.TaskTwo_two"
+        android:label="Setting"
+        tools:layout="@layout/fragment_task_two_two"
+        />
+
+    <fragment
+        android:id="@+id/navigation_myapge"
+        android:name="umc.study.umc_8th.TaskTwo_two"
+        android:label="Mypage"
+        tools:layout="@layout/fragment_task_two_two"
+        />
+
+</navigation>
