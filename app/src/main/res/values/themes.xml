@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--
-    <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />
-    -->
     <style name="Theme.UMC_8th" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="AppTheme.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/purple_200</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_cat</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.UMC_8th</item>
 </resources>
