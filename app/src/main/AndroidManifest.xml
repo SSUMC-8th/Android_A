@@ -12,8 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <activity android:name=".MainActivity_2nd"
+            android:exported="false"/>
         <activity
-            android:name="com.example.umc_8th.MainActivity"
+            android:name="com.example.umc_8th.SplashActivity"
 
             android:exported="true">
             <intent-filter>
