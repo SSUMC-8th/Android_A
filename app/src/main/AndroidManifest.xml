@@ -17,7 +17,8 @@
             android:exported="false" />
         <activity
             android:name="com.example.umc_8th.flo_project.FloMainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

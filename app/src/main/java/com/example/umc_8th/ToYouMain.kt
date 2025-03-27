@@ -9,7 +9,7 @@ import umc.study.umc_8th.databinding.ActivityToYouMainBinding
 
 class ToYouMain : AppCompatActivity() {
     private lateinit var binding: ActivityToYouMainBinding
-    private var currentFragmentId = R.id.bottom_home
+    private var currentFragmentId = R.id.homeFragmnet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,17 +24,17 @@ class ToYouMain : AppCompatActivity() {
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId){
-                R.id.bottom_home ->{
-                    replaceFragmentWithAnimation(ToYouHomeFragment(), R.id.bottom_home)
+                R.id.homeFragmnet ->{
+                    replaceFragmentWithAnimation(ToYouHomeFragment(), R.id.homeFragmnet)
                 }
-                R.id.bottom_write ->{
-                    replaceFragmentWithAnimation(WriteFragment(), R.id.bottom_write)
+                R.id.lookFragment ->{
+                    replaceFragmentWithAnimation(WriteFragment(), R.id.lookFragment)
                 }
-                R.id.bottom_calendar ->{
-                    replaceFragmentWithAnimation(CalendarFragment(), R.id.bottom_calendar)
+                R.id.searchFragmnet ->{
+                    replaceFragmentWithAnimation(CalendarFragment(), R.id.searchFragmnet)
                 }
-                R.id.bottom_profile ->{
-                    replaceFragmentWithAnimation(ProfileFragment(), R.id.bottom_profile)
+                R.id.lockerFragment ->{
+                    replaceFragmentWithAnimation(ProfileFragment(), R.id.lockerFragment)
                 }
             }
             true
