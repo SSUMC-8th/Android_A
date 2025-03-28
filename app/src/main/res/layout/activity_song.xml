@@ -5,6 +5,142 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.example.umc_8th.flo_project.SongActivity">
+
+    <ImageButton
+        android:id="@+id/player_setting_ibtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/btn_player_setting"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageButton
+        android:id="@+id/player_eq_ibtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/btn_player_eq_off"
+        android:scaleType="fitXY"
+        android:background="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/player_setting_ibtn"
+        app:layout_constraintTop_toTopOf="@+id/player_setting_ibtn"/>
+    <ImageButton
+        android:id="@+id/song_down_ibtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/nugu_btn_down"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/player_eq_ibtn"/>
+    <ImageButton
+        android:id="@+id/song_more_ibtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/btn_player_more"
+        android:scaleType="fitXY"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/song_down_ibtn"
+        app:layout_constraintTop_toBottomOf="@+id/song_down_ibtn"
+        app:layout_constraintStart_toStartOf="@+id/song_down_ibtn"/>
+
+    <TextView
+        android:id="@+id/song_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Song Title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/song_more_ibtn"/>
+    <TextView
+        android:id="@+id/song_singer_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="song singer"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/song_title_tv"
+        app:layout_constraintEnd_toEndOf="@+id/song_title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/song_title_tv"/>
+    <ImageButton
+        android:id="@+id/song_singer_more_ibtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/btn_main_arrow_more"
+        android:scaleType="fitXY"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/song_singer_tv"
+        app:layout_constraintStart_toEndOf="@+id/song_singer_tv"
+        app:layout_constraintTop_toTopOf="@+id/song_singer_tv"/>
+    <ImageView
+        android:id="@+id/song_album_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/img_album_exp2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/song_singer_tv"/>
+    <TextView
+        android:id="@+id/song_lyrics_first_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="너라는 꽃가루에"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/song_album_iv"
+        app:layout_constraintEnd_toEndOf="@+id/song_album_iv"
+        app:layout_constraintTop_toBottomOf="@+id/song_album_iv"/>
+    <TextView
+        android:id="@+id/song_lyrics_second_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="눈이 따끔해 아야"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/song_lyrics_first_tv"
+        app:layout_constraintEnd_toEndOf="@+id/song_lyrics_first_tv"
+        app:layout_constraintTop_toBottomOf="@+id/song_lyrics_first_tv"/>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/song_album_iv"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/song_album_iv"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/song_lyrics_second_tv">-->
+
+        <ImageButton
+            android:id="@+id/song_like_ibtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="fitXY"
+            android:background="@color/white"
+            android:src="@drawable/ic_my_like_off"
+            app:layout_constraintStart_toStartOf="@+id/song_lyrics_second_tv"
+            app:layout_constraintTop_toBottomOf="@+id/song_lyrics_second_tv"/>
+        <ImageButton
+            android:id="@+id/song_unlike_ibtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="50dp"
+            android:scaleType="fitXY"
+            android:background="@color/white"
+            android:src="@drawable/btn_player_unlike_off"
+            app:layout_constraintEnd_toEndOf="@+id/song_lyrics_second_tv"
+            app:layout_constraintTop_toTopOf="@+id/song_like_ibtn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
