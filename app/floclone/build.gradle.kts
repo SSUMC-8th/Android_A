@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-parcelize") // ← 이거 필요!
+    id("androidx.navigation.safeargs.kotlin") // ← SafeArgs도 필요
 }
 
 android {
@@ -62,6 +64,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx) // 추가된 부분
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    //circle Indicator
+    implementation("me.relex:circleindicator:2.1.6")
 
     // Paging 라이브러리 추가
     implementation("androidx.paging:paging-runtime:3.1.1")

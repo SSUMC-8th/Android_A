@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home_bottom_graph"
+    app:startDestination="@id/navigation_homeFragment">
+
+
+    <!--
+   id: bottomNavigationView에서 정의한 것
+   name: fragment 클래스가 있는 곳의 위치
+   label: 목적지 이름
+   layout: 미리보기 연결
+   -->
+
+    <!--이동을 정의하자-->
+    <fragment
+        android:id="@+id/navigation_homeFragment"
+        android:name="com.example.floclone.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_navigation_homeFragment_to_albumFragment"
+            app:destination="@id/albumFragment"
+            />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lookaroundFragment"
+        android:name="com.example.floclone.HomeFragment"
+        android:label="Lookaround"
+        tools:layout="@layout/fragment_home"
+        />
+
+    <fragment
+        android:id="@+id/navigation_searchFragment"
+        android:name="com.example.floclone.HomeFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_home"
+        />
+
+    <fragment
+        android:id="@+id/navigation_storeFragment"
+        android:name="com.example.floclone.HomeFragment"
+        android:label="Store"
+        tools:layout="@layout/fragment_home"
+        />
+
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.example.floclone.AlbumFragment"
+        android:label="albumFragment"
+        tools:layout="@layout/fragment_album">
+
+    <argument
+        android:name="song"
+        app:argType="com.example.floclone.Song"
+        app:nullable="false" />
+
+    </fragment>
+
+</navigation>

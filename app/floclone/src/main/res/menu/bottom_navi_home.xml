@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/navigation_homeFragment"
         android:icon="@drawable/home"
         app:showAsAction="always"
         android:title="홈"/>
 
     <item
-        android:id="@+id/lookaroundFragment"
+        android:id="@+id/navigation_lookaroundFragment"
         android:icon="@drawable/lookaround"
         app:showAsAction="always"
         android:title="둘러보기"/>
 
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/navigation_searchFragment"
         android:icon="@drawable/search"
         app:showAsAction="always"
         android:title="검색"/>
 
     <item
-        android:id="@+id/storeFragment"
+        android:id="@+id/navigation_storeFragment"
         android:icon="@drawable/account"
         app:showAsAction="always"
         android:title="보관함"/>

@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <!--fragmentContainerView에서도 NavHost + graph 가능-->
+    <!--꼭! navGraph를 연결하자-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/ct_home"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -18,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:defaultNavHost="true"
-
+        app:navGraph="@navigation/nav_home_bottom_graph"
         />
 
 
@@ -49,7 +50,7 @@
                 android:id="@+id/tv_homeplayer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="제목"
+                android:text="Lady"
                 android:textColor="@color/black"
                 android:textSize="12sp"/>
 
@@ -58,7 +59,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가수"
+                android:text="Kenshi Yonezu"
                 android:textColor="@color/black"
                 android:textSize="12sp"/>
         </LinearLayout>

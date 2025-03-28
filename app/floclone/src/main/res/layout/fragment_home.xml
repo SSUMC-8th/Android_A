@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--처음에 나오는 viewPager-->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_Home"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/cindicator_home"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@id/vp_Home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <!--밴 처음 배너 부분과 viewPager 부분은 일단 상충-->
+
+            <!-- -->
+
+            <!--오늘 발매 음악 부분-->
+            <TextView
+                android:id="@+id/tv_todaymusic_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오늘 발매 음악"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@id/vp_Home"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/btn_moretodaymusic"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/arrowforward"
+                android:layout_marginStart="5dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toEndOf="@id/tv_todaymusic_home"
+                app:layout_constraintTop_toTopOf="@id/tv_todaymusic_home"
+                app:layout_constraintBottom_toBottomOf="@id/tv_todaymusic_home"
+                />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tbl_categorySong_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="20dp"
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="#2F41E0"
+                app:layout_constraintTop_toTopOf="@id/tv_todaymusic_home"
+                app:layout_constraintBottom_toBottomOf="@id/tv_todaymusic_home"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="종합"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="국내"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="해외"/>
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <!--tabLayout에 따른 recyclerView-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_categorySong_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_todaymusic_home"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>
