@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="보관함"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="55dp"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="로그인"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textColor="@color/darkergray"
         android:layout_marginEnd="20dp"
         app:layout_constraintTop_toTopOf="@id/locker_title_tv"
@@ -38,7 +38,7 @@
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorColor="#3f3fff"
             app:tabRippleColor="#00ff0000"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="8dp"
             app:layout_constraintTop_toBottomOf="@id/locker_title_tv"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -47,19 +47,19 @@
         android:id="@+id/locker_saved_song_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="저장한 곡"
+        android:text=""
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/locker_content_tb"
         app:layout_constraintStart_toStartOf="@+id/locker_title_tv"/>
-    <TextView
-        android:id="@+id/locker_music_file_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="음악파일"
-        android:textStyle="bold"
-        android:layout_marginStart="40dp"
-        app:layout_constraintStart_toEndOf="@+id/locker_saved_song_tv"
-        app:layout_constraintTop_toTopOf="@+id/locker_saved_song_tv"/>
+<!--    <TextView-->
+<!--        android:id="@+id/locker_music_file_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="음악파일"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="40dp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/locker_saved_song_tv"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/locker_saved_song_tv"/>-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/locker_content_vp"
