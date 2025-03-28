@@ -118,7 +118,7 @@
             android:id="@+id/song_like_ibtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:scaleType="fitXY"
             android:background="@color/white"
             android:src="@drawable/ic_my_like_off"
@@ -139,7 +139,7 @@
         android:id="@+id/song_progress_v"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="@color/gray"
@@ -226,7 +226,20 @@
             android:layout_height="60dp"
             android:src="@drawable/btn_miniplayer_play"
             android:scaleType="fitXY"
-            android:background="@color/white"/>
+            android:background="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"/>
+        <ImageButton
+            android:id="@+id/song_player_pause_ibtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:background="@color/white"
+            android:src="@drawable/btn_miniplay_mvpause"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"/>
         <ImageButton
             android:id="@+id/song_player_next_ibtn"
             android:layout_width="60dp"

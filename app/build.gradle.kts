@@ -217,6 +217,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    //viewpager2
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+
     // Paging 라이브러리 추가
     implementation("androidx.paging:paging-runtime:3.1.1")
 
