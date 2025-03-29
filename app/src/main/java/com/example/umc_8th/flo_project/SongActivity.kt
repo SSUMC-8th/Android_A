@@ -1,5 +1,6 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,14 +18,25 @@ class SongActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding=ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        var title : String?=null
+        var singer : String?=null
         if(intent.hasExtra("title")&&intent.hasExtra("singer")){
+            title = intent.getStringExtra("title")
+            singer =intent.getStringExtra("singer")
             binding.songTitleTv.text=intent.getStringExtra("title")
             binding.songSingerTv.text=intent.getStringExtra("singer")
         }
         binding.songDownIbtn.setOnClickListener{
+//            val intent = Intent(this, FloMainActivity::class.java).apply {
+//                putExtra("message", title + " " + singer)
+//            }
+            val resultIntent = Intent().apply {
+                putExtra("message", "$title $singer")
+            }
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
+
         binding.songPlayerPlayIbtn.setOnClickListener{
             Log.d("SongActivity", "Play button clicked")
             PlayerStatus(true)

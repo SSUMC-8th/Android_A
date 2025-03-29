@@ -27,6 +27,15 @@ class AlbumFragment : Fragment() {
                 .replace(R.id.main_frame, HomeFragment())
                 .commitAllowingStateLoss()
         }
+        binding.songMixoffTg.setOnClickListener{
+            binding.songMixoffTg.visibility=View.GONE
+            binding.songMixonTg.visibility=View.VISIBLE
+        }
+        binding.songMixonTg.setOnClickListener{
+            binding.songMixoffTg.visibility=View.VISIBLE
+            binding.songMixonTg.visibility=View.GONE
+        }
+
         binding.songLalacLayout.setOnClickListener{
             Toast.makeText(activity, "Lilac", Toast.LENGTH_LONG).show()
         }
