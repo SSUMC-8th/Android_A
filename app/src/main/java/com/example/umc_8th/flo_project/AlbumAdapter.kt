@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import umc.study.umc_8th.databinding.ItemAlbumBinding
 
-class AlbumAdapter(private val albumList:List<Album>) :
+class AlbumAdapter(private val albumList:List<Album>, private val itemClick: (Album) -> Unit) :
     RecyclerView.Adapter<AlbumAdapter.ViewHolder>(){
         inner class ViewHolder(private val binding: ItemAlbumBinding):
                 RecyclerView.ViewHolder(binding.root){
@@ -13,6 +13,10 @@ class AlbumAdapter(private val albumList:List<Album>) :
                         binding.itemAlbumTitleTv.text = album.title
                         binding.itemAlbumSingerTv.text = album.singer
                         binding.itemAlbumCoverImgIv.setImageResource(album.imageRes)
+
+                        binding.root.setOnClickListener{
+                            itemClick(album)
+                        }
                     }
                 }
 

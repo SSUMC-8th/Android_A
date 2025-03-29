@@ -11,6 +11,9 @@ import umc.study.umc_8th.databinding.FragmentAlbumBinding
 
 class AlbumFragment : Fragment() {
     lateinit var binding: FragmentAlbumBinding
+    private var isMixed=false
+    private val originalOrder = mutableListOf<View>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -27,15 +30,43 @@ class AlbumFragment : Fragment() {
                 .replace(R.id.main_frame, HomeFragment())
                 .commitAllowingStateLoss()
         }
+
+//        HomeFragment에서 넘겨받은 데이터 꺼내기
+        val album = arguments?.getSerializable("album")as?Album
+        album?.let{
+            binding.albumTitleTv.text=it.title
+            binding.albumSingerNameTv.text=it.singer
+        }
+
+//        취향 mix버튼
+        val musicListLayout = binding.songMusicListLayout
+        if (originalOrder.isEmpty()) {
+            for (i in 0 until musicListLayout.childCount) {
+                originalOrder.add(musicListLayout.getChildAt(i))
+            }
+        }
+
         binding.songMixoffTg.setOnClickListener{
             binding.songMixoffTg.visibility=View.GONE
             binding.songMixonTg.visibility=View.VISIBLE
+
+            val shuffledList = originalOrder.shuffled()
+
+            musicListLayout.removeAllViews()
+            for (view in shuffledList) {
+                musicListLayout.addView(view)
+            }
         }
         binding.songMixonTg.setOnClickListener{
             binding.songMixoffTg.visibility=View.VISIBLE
             binding.songMixonTg.visibility=View.GONE
+            musicListLayout.removeAllViews()
+            for (view in originalOrder) {
+                musicListLayout.addView(view)
+            }
         }
 
+//      각 노래에 클릭 리스너
         binding.songLalacLayout.setOnClickListener{
             Toast.makeText(activity, "Lilac", Toast.LENGTH_LONG).show()
         }

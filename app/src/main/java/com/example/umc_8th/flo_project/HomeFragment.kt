@@ -31,7 +31,17 @@ class HomeFragment:Fragment() {
             Album("Baam", "모모랜드", R.drawable.img_album_exp5),
             Album("Drama", "에스타", R.drawable.img_album_drama)
         )
-        val adapter = AlbumAdapter(albumList)
+        val adapter = AlbumAdapter(albumList){album->
+            val fragment =AlbumFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("album", album)
+            fragment.arguments=bundle
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
         binding.homeTodayMusicAlbumRv.adapter = adapter
 
         binding.homeTodayMusicAlbumRv.layoutManager=
