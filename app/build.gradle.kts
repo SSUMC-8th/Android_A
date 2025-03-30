@@ -217,6 +217,10 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    implementation ("com.google.android.material:material:1.10.0")
+    //splash
+    implementation ("androidx.core:core-splashscreen:1.0.0-alpha01")
+
     //viewpager2
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
 

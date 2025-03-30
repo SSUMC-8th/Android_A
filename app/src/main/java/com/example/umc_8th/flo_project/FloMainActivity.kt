@@ -3,10 +3,13 @@ package com.example.umc_8th.flo_project
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityFloMainBinding
 
@@ -15,10 +18,10 @@ class FloMainActivity : AppCompatActivity() {
     companion object {const val STRING_INTENT_KEY ="message"}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         enableEdgeToEdge()
         binding=ActivityFloMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         BottomNav()
 
         val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString())
