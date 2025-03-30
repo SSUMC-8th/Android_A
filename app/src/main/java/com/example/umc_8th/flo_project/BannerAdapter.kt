@@ -6,12 +6,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class BannerAdapter(fragment: Fragment) :FragmentStateAdapter(fragment) {
     private val fragmentList:ArrayList<Fragment> = ArrayList()
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
         return fragmentList.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        TODO("Not yet implemented")
         return fragmentList[position]
     }
     fun addFragment(fragment: Fragment){

@@ -24,6 +24,7 @@ class FloMainActivity : AppCompatActivity() {
         setContentView(binding.root)
         BottomNav()
 
+//        하단 미니 플레이어에서 SongAcitivitiy로 데이터 전달하고 띄우기
         val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString())
         binding.mainPlayerCl.setOnClickListener{
             val intent=Intent(this, SongActivity::class.java)

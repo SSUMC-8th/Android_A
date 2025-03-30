@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.FragmentAlbumBinding
 
 class AlbumFragment : Fragment() {
     lateinit var binding: FragmentAlbumBinding
-    private var isMixed=false
-    private val originalOrder = mutableListOf<View>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,60 +30,28 @@ class AlbumFragment : Fragment() {
                 .commitAllowingStateLoss()
         }
 
-//        HomeFragment에서 넘겨받은 데이터 꺼내기
+//        HomeFragment에서 넘겨받은 데이터(곡이름, 가수, 앨범 이미지 꺼내기)
         val album = arguments?.getSerializable("album")as?Album
         album?.let{
             binding.albumTitleTv.text=it.title
             binding.albumSingerNameTv.text=it.singer
+            binding.albumAlbumimgIv.setImageResource(it.imageRes)
         }
 
-//        취향 mix버튼
-        val musicListLayout = binding.songMusicListLayout
-        if (originalOrder.isEmpty()) {
-            for (i in 0 until musicListLayout.childCount) {
-                originalOrder.add(musicListLayout.getChildAt(i))
+//        앨범에서 탭뷰 구현
+        val albumVPAdapter = AlbumVPAdapter(this)
+        binding.albumContentVp.adapter = albumVPAdapter
+
+        val tabLayout = binding.albumContentTb
+        TabLayoutMediator(tabLayout, binding.albumContentVp) { tab, position ->
+            tab.text = when(position) {
+                0 -> "수록곡"
+                1 -> "상세정보"
+                2 -> "영상"
+                else -> ""
             }
-        }
+        }.attach()
 
-        binding.songMixoffTg.setOnClickListener{
-            binding.songMixoffTg.visibility=View.GONE
-            binding.songMixonTg.visibility=View.VISIBLE
-
-            val shuffledList = originalOrder.shuffled()
-
-            musicListLayout.removeAllViews()
-            for (view in shuffledList) {
-                musicListLayout.addView(view)
-            }
-        }
-        binding.songMixonTg.setOnClickListener{
-            binding.songMixoffTg.visibility=View.VISIBLE
-            binding.songMixonTg.visibility=View.GONE
-            musicListLayout.removeAllViews()
-            for (view in originalOrder) {
-                musicListLayout.addView(view)
-            }
-        }
-
-//      각 노래에 클릭 리스너
-        binding.songLalacLayout.setOnClickListener{
-            Toast.makeText(activity, "Lilac", Toast.LENGTH_LONG).show()
-        }
-        binding.songFluLayout.setOnClickListener{
-            Toast.makeText(activity, "Flu", Toast.LENGTH_LONG).show()
-        }
-        binding.songCoinLayout.setOnClickListener {
-            Toast.makeText(activity, "Coin", Toast.LENGTH_LONG).show()
-        }
-        binding.songSpringLayout.setOnClickListener {
-            Toast.makeText(activity, "봄 안녕", Toast.LENGTH_LONG).show()
-        }
-        binding.songCelebrityLayout.setOnClickListener {
-            Toast.makeText(activity, "Celebrity", Toast.LENGTH_LONG).show()
-        }
-        binding.songSingLayout.setOnClickListener {
-            Toast.makeText(activity, "돌림노래", Toast.LENGTH_LONG).show()
-        }
         return binding.root
     }
 }
