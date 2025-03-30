@@ -20,23 +20,23 @@ layout: 미리보기 연결
 
     <fragment
         android:id="@+id/menu_profile"
-        android:name="umc.study.umc_8th.BlankFragment"
+        android:name="umc.study.umc_8th.fragment_profile"
         android:label="Profile"
-        tools:layout="@layout/fragment_blank"
+        tools:layout="@layout/profile"
         />
 
     <fragment
         android:id="@+id/menu_settings"
-        android:name="umc.study.umc_8th.BlankFragment"
+        android:name="umc.study.umc_8th.settings_fragment"
         android:label="Settings"
         tools:layout="@layout/settings"
         />
 
     <fragment
         android:id="@+id/menu_search"
-        android:name="umc.study.umc_8th.BlankFragment"
+        android:name="umc.study.umc_8th.fragment_search"
         android:label="Search"
-        tools:layout="@layout/fragment_blank"
+        tools:layout="@layout/search"
         />
 
 </navigation>
