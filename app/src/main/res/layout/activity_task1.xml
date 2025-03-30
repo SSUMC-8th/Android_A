@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Task1Activity">
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="10sp"
+        android:src="@drawable/angry"
+        android:background="@color/white"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘 하루는 어땠나요?"
+            android:textColor="@color/black"
+            android:layout_marginTop="30dp"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="감정 우표를 선택해주세요"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택한 감정우표를 기반으로 맞춤형 질문이 배달됩니다."
+            android:layout_marginTop="30dp"
+            android:textColor="@color/black"/>
+
+        <ImageButton
+            android:id = "@+id/btn_smile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/smile"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="더없이 행복한 하루였어요"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            />
+
+        <ImageButton
+            android:id = "@+id/btn_bigsmile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/big_smile"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="들뜨고 흥분돼요"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            />
+
+        <ImageButton
+            android:id = "@+id/btn_nonsmile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/non_smile"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="평범한 하루였어요"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp" />
+
+        <ImageButton
+            android:id = "@+id/btn_sad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/sad"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="생각이 많아지고 불안해요"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp" />
+
+        <ImageButton
+            android:id = "@+id/btn_angry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src = "@drawable/angry"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="부글부글 화가 나요"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+  </LinearLayout>
