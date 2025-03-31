@@ -217,6 +217,10 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    
+    //indicator
+    implementation ("me.relex:circleindicator:2.1.6")
+
     implementation ("com.google.android.material:material:1.10.0")
     //splash
     implementation ("androidx.core:core-splashscreen:1.0.0-alpha01")

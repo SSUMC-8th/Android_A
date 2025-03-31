@@ -1,6 +1,8 @@
 package com.example.umc_8th.flo_project
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +13,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.umc_8th.MainActivity
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.FragmentHomeBinding
+import java.util.TimerTask
+import kotlin.concurrent.timer
 
 class HomeFragment:Fragment() {
     lateinit var binding: FragmentHomeBinding
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var slideRunnable: Runnable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -33,12 +39,28 @@ class HomeFragment:Fragment() {
             Album("Drama", "에스타", R.drawable.img_album_drama)
         )
 
+        //ViewPager, VPAdapter연결
+        val pannelAdapter = PannelVPAdapter(this)
+        pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
+        pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
+        pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
+        pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
+        binding.homeFragTop.adapter=pannelAdapter
+        binding.homeFragTop.orientation=ViewPager2.ORIENTATION_HORIZONTAL
+
+        //viewpager랑 indicator 연결
+        binding.homePannelIndicator.setViewPager(binding.homeFragTop)
+        binding.homePannelIndicator.setViewPager(binding.homeBannerVp)
+
+
 //        HomeFragment에서 배너 연결
         val bannerAdapter = BannerAdapter(this)
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp))
         bannerAdapter.addFragment(BannerFragment(R.drawable.img_home_viewpager_exp2))
         binding.homeBannerVp.adapter =bannerAdapter
         binding.homeBannerVp.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        autoSlide(bannerAdapter)
 
 //        앨범 목록 RecyclerView설정
         val adapter = AlbumAdapter(albumList){album->
@@ -57,6 +79,28 @@ class HomeFragment:Fragment() {
         binding.homeTodayMusicAlbumRv.layoutManager=
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+
         return binding.root
+    }
+
+//    private fun autoSlide(adapter: PannelVPAdapter){
+//        slideRunnable=object:Runnable{
+//            override fun run(){
+//                val nextItem= binding.homeFragTop.currentItem+1
+//                binding.homeFragTop.currentItem=if(nextItem<adapter.itemCount) nextItem else 0
+//                handler.postDelayed(this, 4000)
+//            }
+//        }
+//        handler.postDelayed(slideRunnable, 4000)
+//    }
+    private fun autoSlide(adapter: BannerAdapter) {
+        slideRunnable = object : Runnable {
+            override fun run() {
+                val nextItem = binding.homeBannerVp.currentItem + 1
+                binding.homeBannerVp.currentItem = if (nextItem < adapter.itemCount) nextItem else 0
+                handler.postDelayed(this, 4000)
+            }
+        }
+        handler.postDelayed(slideRunnable, 4000)
     }
 }

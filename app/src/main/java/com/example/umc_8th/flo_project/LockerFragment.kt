@@ -41,6 +41,8 @@ class LockerFragment : Fragment(){
                 else -> ""
             }
         }.attach()
+
+        //커스텀 슬라이드
 //        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
 ////            tab.text = info[position]
 //            val tabText = TextView(requireContext()).apply {
