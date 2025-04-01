@@ -26,15 +26,6 @@
                 app:layout_constraintTop_toBottomOf="@id/home_frag_top"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-<!--            <ImageView-->
-<!--                android:id="@+id/home_frag_top"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="450dp"-->
-<!--                android:src="@drawable/img_first_album_default"-->
-<!--                android:scaleType="fitXY"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"/>-->
             <ImageButton
                 android:id="@+id/home_frag_setting_ibtn"
                 android:layout_width="35dp"
