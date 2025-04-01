@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <!-- 곡 번호 -->
+    <TextView
+        android:id="@+id/track_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="10dp"/>
+
+    <!-- 곡 정보 (제목 + 아티스트) -->
+
+    <LinearLayout
+        android:layout_width="259dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/track_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Track Title"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/track_artist_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Artist Name"
+            android:textColor="#888888"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/track_play_iv"
+        android:layout_width="41dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/btn_miniplay_mvplay" />
+
+    <ImageView
+        android:id="@+id/track_more_iv"
+        android:layout_width="44dp"
+        android:layout_height="39dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/btn_player_more" />
+
+    <!-- 재생 버튼 -->
+</LinearLayout>

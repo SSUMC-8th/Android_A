@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import umc.study.umc_8th.R
 
 class AlbumAdapter(
-    private val albumList: List<Album>,
     private val onAlbumClick: (Album) -> Unit // 클릭 이벤트 처리
 ) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 

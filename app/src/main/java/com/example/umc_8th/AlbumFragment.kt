@@ -1,15 +1,19 @@
 package com.example.umc_8th
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
 import umc.study.umc_8th.R
+import umc.study.umc_8th.databinding.FragmentAlbumBinding
 
 class AlbumFragment : Fragment() {
+    lateinit var binding: FragmentAlbumBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +28,8 @@ class AlbumFragment : Fragment() {
         val albumTitle = arguments?.getString("albumTitle")
         val albumArtist = arguments?.getString("albumArtist")
         val albumCover = arguments?.getInt("albumCover")
+        val albumIndex = arguments?.getInt("albumListIndex")
+        Log.d("AlbumFragment", "$albumIndex")
 
         val titleTextView: TextView = view.findViewById(R.id.album_detail_title)
         val artistTextView: TextView = view.findViewById(R.id.album_detail_artist)
@@ -32,6 +38,19 @@ class AlbumFragment : Fragment() {
         titleTextView.text = albumTitle
         artistTextView.text = albumArtist
         coverImageView.setImageResource(albumCover ?: R.drawable.img_album_exp2)
+
+        val adapter = AlbumPagerAdapter(this, albumIndex)
+        binding = FragmentAlbumBinding.bind(view)
+        binding.viewPager.adapter = adapter
+
+        // TabLayout과 ViewPager2 연결
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "수록곡"
+                1 -> tab.text = "상세정보"
+                2 -> tab.text = "영상"
+            }
+        }.attach()
 
         // 뒤로 가기 버튼 설정
         val backButton: ImageView = view.findViewById(R.id.back_button)

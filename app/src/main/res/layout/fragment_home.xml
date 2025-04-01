@@ -206,7 +206,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_today_music_album_rv"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -216,9 +216,9 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/ad_banner_vp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/home_frag_setting_ibtn"
+                app:layout_constraintEnd_toEndOf="@+id/home_today_music_album_rv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_today_music_album_rv" />
 
@@ -229,7 +229,13 @@
 <!--                        android:layout_height="32dp"-->
 <!--                        app:layout_constraintStart_toStartOf="parent"-->
 <!--                        app:layout_constraintEnd_toEndOf="parent"/>-->
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:text="오디오로 에너지 충전"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/ad_banner_vp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
