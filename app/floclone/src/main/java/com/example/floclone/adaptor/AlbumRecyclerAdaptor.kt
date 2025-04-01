@@ -1,4 +1,4 @@
-package com.example.floclone
+package com.example.floclone.adaptor
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.floclone.R
+import com.example.floclone.Song
 
 
 //데이터-뷰 연결 + View 생성(각 요소들), View 재사용, 클릭 처리 등
@@ -35,7 +37,7 @@ class AlbumRecyclerAdaptor(private val songList:List<Song>, private val onImageC
         holder.titleView.text = song.title
         holder.artistView.text = song.artist
 
-        //onclicklistener
+        //onclicklistener 설정
         holder.imageView.setOnClickListener{
             onImageClick(song)
         }

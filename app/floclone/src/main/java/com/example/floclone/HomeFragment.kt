@@ -1,13 +1,22 @@
 package com.example.floclone
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.postDelayed
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.example.floclone.adaptor.AlbumRecyclerAdaptor
+import com.example.floclone.adaptor.BannerAdaptor
+import me.relex.circleindicator.CircleIndicator3
+import java.util.Timer
+import java.util.TimerTask
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +32,15 @@ class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    //ViewPager를 위한 어댑터 + Looper
+    private lateinit var vpHome: ViewPager2
+    private lateinit var cIndicatorHome: CircleIndicator3
+    private lateinit var bannerAdapter: BannerAdaptor
+
+    // Handler와 timer를 이용해서 시간 delay
+    private val timer = Timer()
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +64,21 @@ class HomeFragment : Fragment() {
         //오늘 발매 음악 정리
         setAblumRecyclerView()
 
+        //viewpager 설정
+        //viewpager로 보여주기
+        vpHome = view.findViewById(R.id.vp_Home)
+        cIndicatorHome = view.findViewById(R.id.cindicator_home)
+        val bannerList = listOf(
+            Banner("달밤의 감성 산책", "#7DC1F6", "총 10곡 2025.03.30", Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),  Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner")),
+            Banner("요네즈 켄시 최신 특집", "#A67CF6", "총 23곡 2025.04.01", Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "digital single"), Song("Plazma", "Kenshi Yonezu", R.drawable.plazma, "digital single")),
+            Banner("오늘의 추천 노래", "#009688", "총 17곡 2025.03.31", Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"), Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"))
+
+        )
+        bannerAdapter = BannerAdaptor(bannerList)
+        vpHome.adapter = bannerAdapter
+        cIndicatorHome.setViewPager(vpHome)
+        startAutoBanner(bannerAdapter)
+
     }
     companion object {
         /**
@@ -67,15 +100,35 @@ class HomeFragment : Fragment() {
             }
     }
 
+    //일정 시간마다 run()을 수행
+    private fun startAutoBanner(adaptor: BannerAdaptor) {
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                handler.post {
+                    val nextItem = vpHome.currentItem + 1
+                    if (nextItem < adaptor.itemCount) {
+                        vpHome.currentItem = nextItem
+                    } else {
+                        vpHome.currentItem = 0 // 마지막 페이지에서 첫 페이지로 순환
+                    }
+                }
+            }
+        }, 7000, 7000) //맨 처음 지연시간, 그 후 지연시간
+    }
+
+    //recyclerview 설정
     //:: 는 함수를 참조해서 넘긴다
-    fun setAblumRecyclerView(){
+    private fun setAblumRecyclerView(){
         //recylcerView를 통해 연결해보자
         val rcv_categorySong = view?.findViewById<RecyclerView>(R.id.rcv_categorySong_home)
         //사용할 Item들을 정의
         val songList = listOf(
             Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
-            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner")
+            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner"),
+            Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
+            Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
+            Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
+            Song("Plazma", "Kenshi Yonezu", R.drawable.plazma, "Digital single")
         )
         val adaptor_categorySong = AlbumRecyclerAdaptor(songList, ::moveAlbumFragment)
         rcv_categorySong?.adapter = adaptor_categorySong
@@ -84,8 +137,21 @@ class HomeFragment : Fragment() {
     }
 
     fun moveAlbumFragment(song: Song){
-        val action = HomeFragmentDirections.actionNavigationHomeFragmentToAlbumFragment(song)
-        findNavController().navigate(action)
+        //val action = HomeFragmentDirections.actionNavigationHomeFragmentToAlbumFragment(song)
+        //findNavController().navigate(action)
+
+        // AlbumFragment의 인스턴스를 생성하고 Bundle로 인자 전달
+        val albumFragment = AlbumFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("song", song)
+            }
+        }
+        // fragment container (예: activity_main.xml에 있는 FrameLayout의 id를 fragment_container라 가정)
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.ct_home, albumFragment)
+            .addToBackStack(null)
+            .commit()
+
     }
 
 }

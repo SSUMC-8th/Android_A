@@ -39,6 +39,35 @@ class MainActivity : AppCompatActivity() {
         var title = findViewById<TextView>(R.id.tv_homeplayer_title).text.toString()
         var artist = findViewById<TextView>(R.id.tv_homeplayer_artist).text.toString()
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.ct_home, HomeFragment())
+                .commit()
+        }
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bnv_home)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                //홈 화면
+                R.id.navigation_homeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.ct_home, HomeFragment())
+                        .commit()
+                    true
+                }
+                //보관함
+                R.id.navigation_storeFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.ct_home, LockerFragment())
+                        .commit()
+                    true
+                }
+                // 다른 메뉴 항목에 대해서도 필요하면 추가
+                else -> false
+            }
+        }
+
+        /*
         //fragmentManager랑 navController 사용  fragment 이동 관리 + 백스택
         //FragmentContainer를 HavHostFragment처럼 사용하자
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.ct_home) as NavHostFragment
@@ -62,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        */
 
 
         //플레이 바랑 연결해서 노래 액티비티로 이동

@@ -54,10 +54,10 @@
         android:label="albumFragment"
         tools:layout="@layout/fragment_album">
 
-    <argument
-        android:name="song"
-        app:argType="com.example.floclone.Song"
-        app:nullable="false" />
+        <argument
+            android:name="song"
+            app:argType="com.example.floclone.Song"
+            app:nullable="false" />
 
     </fragment>
 
