@@ -1,5 +1,6 @@
 package com.example.umc_8th
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,12 +13,16 @@ import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityMainBinding
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var songActivityLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,32 @@ class MainActivity : AppCompatActivity() {
         )
         binding.bottomNavi.itemIconTintList = colorStateList
         binding.bottomNavi.itemIconTintList = colorStateList
+
+        // 최신 방식으로 ActivityResultLauncher 등록
+        songActivityLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data
+                val newTitle = data?.getStringExtra("title") ?: "Unknown"
+                val newArtist = data?.getStringExtra("artist") ?: "Unknown"
+                val message = newTitle+"-"+newArtist
+
+                // 뷰 바인딩을 통해 UI 업데이트
+                binding.mainplayerTitle.text = newTitle
+                binding.mainplayerArtist.text = newArtist
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // 미니 플레이어 클릭 시 SongActivity로 이동
+        binding.mainplayerLayout.setOnClickListener {
+            val intent = Intent(this, SongActivity::class.java).apply {
+                putExtra("title", binding.mainplayerTitle.text.toString())
+                putExtra("artist", binding.mainplayerArtist.text.toString())
+            }
+            songActivityLauncher.launch(intent)
+        }
 
         // BottomNavigationView 아이템 선택 리스너 설정
         binding.bottomNavi.setOnItemSelectedListener { item ->
