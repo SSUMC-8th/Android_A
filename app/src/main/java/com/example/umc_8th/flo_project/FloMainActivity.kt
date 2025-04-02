@@ -18,6 +18,7 @@ class FloMainActivity : AppCompatActivity() {
     companion object {const val STRING_INTENT_KEY ="message"}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_MyApp_Splash2)
         installSplashScreen()
         enableEdgeToEdge()
         binding=ActivityFloMainBinding.inflate(layoutInflater)
@@ -25,7 +26,7 @@ class FloMainActivity : AppCompatActivity() {
         BottomNav()
 
 //        하단 미니 플레이어에서 SongAcitivitiy로 데이터 전달하고 띄우기
-        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString())
+        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 0,60,false)
         binding.mainPlayerCl.setOnClickListener{
             val intent=Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
