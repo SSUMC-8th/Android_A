@@ -3,11 +3,23 @@
 
     <style name="Theme.UMC_8th" parent="android:Theme.Material.Light.NoActionBar" />
     <style name="Theme.MyApp.Splash" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/carrotback</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
     <style name="Theme.MyApp.AppCompat" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here -->
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
+    <style name="Theme.MyApp.Splash2" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="postSplashScreenTheme">@style/Theme.UMC_8th</item>
+    </style>
+<!--    보관함 탭뷰 텍스트 커스텀-->
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#A0A0A0</item>
+    </style>
 </resources>

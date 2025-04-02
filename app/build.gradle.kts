@@ -174,6 +174,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+//    kotlinOptions {
+//        jvmTarget = JavaVersion.VERSION_17.toString()
+//    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -181,6 +184,9 @@ android {
     }
     buildFeatures{
         viewBinding=true
+    }
+    buildFeatures{
+        dataBinding=true
     }
 }
 
@@ -210,6 +216,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx) // 추가된 부분
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    
+    //indicator
+    implementation ("me.relex:circleindicator:2.1.6")
+
+    implementation ("com.google.android.material:material:1.10.0")
+    //splash
+    implementation ("androidx.core:core-splashscreen:1.0.0-alpha01")
+
+    //viewpager2
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
     // Paging 라이브러리 추가
     implementation("androidx.paging:paging-runtime:3.1.1")

@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.umc_8th.flo_project.FloMainActivity
 import umc.study.umc_8th.R
 
 class SplashActivity : AppCompatActivity() {
@@ -15,9 +16,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash)
-
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, ToYouMain::class.java))
+            startActivity(Intent(this, FloMainActivity::class.java))
             finish()
         }, 2000)
     }

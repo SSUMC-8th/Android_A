@@ -3,15 +3,13 @@ package com.example.umc_8th
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityToYouMainBinding
 
 class ToYouMain : AppCompatActivity() {
     private lateinit var binding: ActivityToYouMainBinding
-    private var currentFragmentId = R.id.bottom_home
+    private var currentFragmentId = R.id.homeFragmnet
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,22 +19,22 @@ class ToYouMain : AppCompatActivity() {
         setContentView(binding.root)
 
         if(savedInstanceState==null){
-            replaceFragment(HomeFragment())
+            replaceFragment(ToYouHomeFragment())
         }
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when(item.itemId){
-                R.id.bottom_home ->{
-                    replaceFragmentWithAnimation(HomeFragment(), R.id.bottom_home)
+                R.id.homeFragmnet ->{
+                    replaceFragmentWithAnimation(ToYouHomeFragment(), R.id.homeFragmnet)
                 }
-                R.id.bottom_write ->{
-                    replaceFragmentWithAnimation(WriteFragment(), R.id.bottom_write)
+                R.id.lookFragment ->{
+                    replaceFragmentWithAnimation(WriteFragment(), R.id.lookFragment)
                 }
-                R.id.bottom_calendar ->{
-                    replaceFragmentWithAnimation(CalendarFragment(), R.id.bottom_calendar)
+                R.id.searchFragmnet ->{
+                    replaceFragmentWithAnimation(CalendarFragment(), R.id.searchFragmnet)
                 }
-                R.id.bottom_profile ->{
-                    replaceFragmentWithAnimation(ProfileFragment(), R.id.bottom_profile)
+                R.id.lockerFragment ->{
+                    replaceFragmentWithAnimation(ProfileFragment(), R.id.lockerFragment)
                 }
             }
             true
