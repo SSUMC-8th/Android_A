@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--selector color 만들기-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#3D35D7" android:state_checked="true" />
+    <item android:color="#A6A4A4" android:state_checked="false" />
+</selector>

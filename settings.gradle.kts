@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "UMC_8th"
 include(":app")
- 
+include(":app:floclone")
