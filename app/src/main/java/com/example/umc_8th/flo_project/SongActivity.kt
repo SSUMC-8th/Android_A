@@ -13,6 +13,7 @@ import umc.study.umc_8th.databinding.ActivitySongBinding
 
 class SongActivity : AppCompatActivity() {
     lateinit var binding: ActivitySongBinding
+    lateinit var song :Song
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,6 +48,20 @@ class SongActivity : AppCompatActivity() {
         }
 
     }
+
+    //프로그래스 바 관련 추가한 부분
+    private fun initSong(){
+        if(intent.hasExtra("title")&&intent.hasExtra("singer")){
+            song = Song(
+                intent.getStringExtra("title")!!,
+                intent.getStringExtra("singer")!!,
+                intent.getIntExtra("second", 0),
+                intent.getIntExtra("playTime", 0),
+                intent.getBooleanExtra("isPlaying", false)
+            )
+        }
+    }
+
     fun PlayerStatus(isPlaying:Boolean){
         if(isPlaying){
             binding.songPlayerPauseIbtn.visibility= View.VISIBLE
