@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.umc_8th.databinding.FragmentSavedBinding
+import com.example.umc_8th.databinding.FragmentFileBinding
 
-class SavedFragment:Fragment(){
-    private var mBinding: FragmentSavedBinding? = null
+class FileFragment:Fragment(){
+    private var mBinding: FragmentFileBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentSavedBinding.inflate(inflater,container,false)
+        val binding = FragmentFileBinding.inflate(inflater,container,false)
         mBinding = binding
         return mBinding?.root
     }
