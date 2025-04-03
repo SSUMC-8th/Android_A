@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.umc_8th.StorageAdapter
 import com.example.umc_8th.databinding.FragmentProfileBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

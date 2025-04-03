@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="로그인"
             android:textSize="15dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>

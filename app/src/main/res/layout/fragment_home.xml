@@ -9,11 +9,19 @@
     tools:context="com.example.umc_8th.fragment.HomeFragment"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:fillViewport="true">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/banner_pager"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            tools:layout_editor_absoluteX="-54dp"
+            tools:layout_editor_absoluteY="-194dp"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/album_recyclerView"
@@ -22,12 +30,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="300dp"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 

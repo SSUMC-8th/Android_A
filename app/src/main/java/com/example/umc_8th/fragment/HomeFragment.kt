@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_8th.AlbumAdapter
-import com.example.umc_8th.AlbumModel
+import com.example.umc_8th.AlbumItem
 import com.example.umc_8th.R
 import androidx.navigation.fragment.findNavController
+import com.example.umc_8th.BannerAdapter
+import com.example.umc_8th.BannerItem
 import com.example.umc_8th.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -35,11 +37,11 @@ class HomeFragment : Fragment() {
 
         // 더미 데이터 추가
         val albumList = listOf(
-            AlbumModel(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
-            AlbumModel(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
-            AlbumModel(R.drawable.img_album_exp3, "Album Three", "Artist C"),
-            AlbumModel(R.drawable.img_album_exp4, "Album Four", "Artist D"),
-            AlbumModel(R.drawable.img_album_exp5, "Album Five", "Artist E")
+            AlbumItem(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
+            AlbumItem(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
+            AlbumItem(R.drawable.img_album_exp3, "Album Three", "Artist C"),
+            AlbumItem(R.drawable.img_album_exp4, "Album Four", "Artist D"),
+            AlbumItem(R.drawable.img_album_exp5, "Album Five", "Artist E")
         )
 
         // 어댑터 설정
@@ -54,8 +56,14 @@ class HomeFragment : Fragment() {
         }
         binding.albumRecyclerView.adapter = albumAdapter
 
-        //albumAdapter = AlbumAdapter(albumList)
-        //binding.albumRecyclerView.adapter = albumAdapter
+        val bannerList = listOf(
+            BannerItem(R.drawable.img_first_album_default, "추천 플레이리스트", "노래1", "가수1", "노래2", "가수2"),
+            BannerItem(R.drawable.img_first_album_default, "인기 앨범", "노래3", "가수3", "노래4", "가수4"),
+            BannerItem(R.drawable.img_first_album_default, "새로운 음악", "노래5", "가수5", "노래6", "가수6")
+        )
+
+        val banneradapter = BannerAdapter(this, bannerList)
+        binding.bannerPager.adapter = banneradapter
 
 
     }

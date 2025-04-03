@@ -1,7 +1,9 @@
-package com.example.umc_8th.fragment
+package com.example.umc_8th
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.umc_8th.fragment.FileFragment
+import com.example.umc_8th.fragment.SavedFragment
 
 class StorageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2  // 탭 개수 (저장한 곡, 음악 파일)

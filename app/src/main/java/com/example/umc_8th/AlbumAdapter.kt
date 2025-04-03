@@ -1,19 +1,16 @@
 package com.example.umc_8th
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_8th.databinding.AlbumRecyclerviewBinding
 
-class AlbumAdapter(private val albumList: List<AlbumModel>,
-                   private val onItemClick: (AlbumModel) -> Unit ) :
+class AlbumAdapter(private val albumList: List<AlbumItem>,
+                   private val onItemClick: (AlbumItem) -> Unit ) :
     RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 
     inner class AlbumViewHolder(private val binding: AlbumRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: AlbumModel) {
+        fun bind(album: AlbumItem) {
             binding.albumImg.setImageResource(album.albumImage)
             binding.albumName.text = album.albumName
             binding.artistName.text = album.artistName
