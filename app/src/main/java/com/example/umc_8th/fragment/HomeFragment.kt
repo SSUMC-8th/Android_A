@@ -4,24 +4,124 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_8th.AlbumAdapter
+import com.example.umc_8th.AlbumModel
+import com.example.umc_8th.R
+import androidx.navigation.fragment.findNavController
 import com.example.umc_8th.databinding.FragmentHomeBinding
 
-class HomeFragment:Fragment() {
+class HomeFragment : Fragment() {
 
-    private var mBinding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentHomeBinding.inflate(inflater,container,false)
-        mBinding = binding
-        return mBinding?.root
+    private lateinit var albumAdapter: AlbumAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // RecyclerView 설정
+        //binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        // 더미 데이터 추가
+        val albumList = listOf(
+            AlbumModel(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
+            AlbumModel(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
+            AlbumModel(R.drawable.img_album_exp3, "Album Three", "Artist C"),
+            AlbumModel(R.drawable.img_album_exp4, "Album Four", "Artist D"),
+            AlbumModel(R.drawable.img_album_exp5, "Album Five", "Artist E")
+        )
+
+        // 어댑터 설정
+        albumAdapter = AlbumAdapter(albumList) { album ->
+            val bundle = Bundle().apply {
+                putString("title", album.albumName)
+                putString("artist", album.artistName)
+                putInt("imageRes", album.albumImage)
+            }
+
+            findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle) // 🔥 navigate 사용
+        }
+        binding.albumRecyclerView.adapter = albumAdapter
+
+        //albumAdapter = AlbumAdapter(albumList)
+        //binding.albumRecyclerView.adapter = albumAdapter
+
+
     }
 
     override fun onDestroyView() {
-        mBinding = null
         super.onDestroyView()
+        _binding = null // 메모리 누수 방지
     }
-
-
 }
+
+//package com.example.umc_8th.fragment
+//
+//import android.os.Bundle
+//import android.view.LayoutInflater
+//import android.view.View
+//import android.view.ViewGroup
+//import androidx.appcompat.app.AppCompatActivity
+//import androidx.fragment.app.Fragment
+//import androidx.recyclerview.widget.LinearLayoutManager
+//import com.example.umc_8th.AlbumAdapter
+//import com.example.umc_8th.AlbumModel
+//import com.example.umc_8th.R
+//import com.example.umc_8th.databinding.FragmentHomeBinding
+//
+//class HomeFragment:Fragment() {
+//
+//    private var mBinding: FragmentHomeBinding? = null
+//
+//    private var _binding: FragmentHomeBinding? = null
+//    private val binding get() = _binding!!
+//
+//    private lateinit var albumAdapter: AlbumAdapter
+//
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        val binding = FragmentHomeBinding.inflate(inflater,container,false)
+//
+//        mBinding = binding
+//        return mBinding?.root
+//
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        // RecyclerView 설정
+//        binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+//
+//        // 더미 데이터 추가
+//        val albumList = listOf(
+//            AlbumModel(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
+//            AlbumModel(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
+//            AlbumModel(R.drawable.img_album_exp3, "Album Three", "Artist C"),
+//            AlbumModel(R.drawable.img_album_exp4, "Album Four", "Artist D"),
+//            AlbumModel(R.drawable.img_album_exp5, "Album Five", "Artist E")
+//        )
+//
+//        // 어댑터 설정
+//        albumAdapter = AlbumAdapter(albumList)
+//        binding.albumRecyclerView.adapter = albumAdapter
+//    }
+//
+//
+//    override fun onDestroyView() {
+//        mBinding = null
+//        super.onDestroyView()
+//    }
+//
+//
+//}
