@@ -12,7 +12,9 @@ import com.example.umc_8th.R
 import androidx.navigation.fragment.findNavController
 import com.example.umc_8th.BannerAdapter
 import com.example.umc_8th.BannerItem
+import com.example.umc_8th.StateAdapter
 import com.example.umc_8th.databinding.FragmentHomeBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {
 
@@ -33,7 +35,7 @@ class HomeFragment : Fragment() {
 
         // RecyclerView 설정
         //binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        //binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         // 더미 데이터 추가
         val albumList = listOf(
@@ -54,7 +56,7 @@ class HomeFragment : Fragment() {
 
             findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle) // 🔥 navigate 사용
         }
-        binding.albumRecyclerView.adapter = albumAdapter
+        //binding.albumRecyclerView.adapter = albumAdapter
 
         val bannerList = listOf(
             BannerItem(R.drawable.img_first_album_default, "추천 플레이리스트", "노래1", "가수1", "노래2", "가수2"),
@@ -65,6 +67,20 @@ class HomeFragment : Fragment() {
         val banneradapter = BannerAdapter(this, bannerList)
         binding.bannerPager.adapter = banneradapter
         binding.dotsIndicator.attachTo(binding.bannerPager)
+
+        val stateAdapter = StateAdapter(this)
+        binding.viewPager.adapter = stateAdapter
+        binding.viewPager.isUserInputEnabled = false //스와이프 금지
+
+        // TabLayout과 ViewPager 연결
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "종합"
+                1 -> "국내"
+                else -> "해외"
+            }
+        }.attach()
+        binding.tabLayout.setSelectedTabIndicator(null)
 
 
     }
