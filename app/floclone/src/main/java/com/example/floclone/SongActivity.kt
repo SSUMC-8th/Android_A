@@ -31,9 +31,7 @@ class SongActivity : AppCompatActivity() {
     private lateinit var endString : TextView
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var seekBar: SeekBar
-
-    //핸들러와 lopper 정의
-    private val handler = Handler(Looper.getMainLooper()) //메인 쓰레드 핸들러
+    private var updateThread: Thread? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,20 +131,35 @@ class SongActivity : AppCompatActivity() {
             if(mediaPlayer.isPlaying) {
                 mediaPlayer.pause() //멈춤
             }
-            handler.removeCallbacksAndMessages(null)
         }
     }
 
     //1초마다 seekbar update
     private fun updateSeekbar(){
-        if(mediaPlayer.isPlaying){
-            //설정
-            val currentPosition = mediaPlayer.currentPosition
-            seekBar.progress = currentPosition
-            startString.text=milliTotime(currentPosition)
-            //Handler로 1초마다
-            handler.postDelayed({updateSeekbar()}, 1000) //1초마다 재귀로 해당 함수 실행
+        // 이미 스레드가 실행 중이면 새로 시작하지 않음
+        if (updateThread != null && updateThread!!.isAlive) return
+
+        updateThread = Thread{
+            while(mediaPlayer.isPlaying) {
+                try {
+                    Thread.sleep(1000)
+                } catch (e: InterruptedException) {
+                    // 스레드가 인터럽트되면 종료
+                    break
+                }
+                if(!mediaPlayer.isPlaying){break}
+                else if (mediaPlayer.isPlaying) {
+                    //설정
+                    runOnUiThread {
+                        val currentPosition = mediaPlayer.currentPosition
+                        seekBar.progress = currentPosition
+                        startString.text = milliTotime(currentPosition)
+                    }
+                }
+            }
         }
+
+        updateThread?.start()
     }
 
     //일단 누르면 정지
@@ -180,7 +193,7 @@ class SongActivity : AppCompatActivity() {
     //노래 멈추기
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacksAndMessages(null)
+        updateThread?.interrupt()
         if(mediaPlayer.isPlaying){
             mediaPlayer.stop()
         }
