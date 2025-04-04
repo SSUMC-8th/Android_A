@@ -1,11 +1,18 @@
 package com.example.floclone
 
+import android.media.MediaPlayer
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.provider.MediaStore
+import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.SeekBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -13,6 +20,20 @@ class SongActivity : AppCompatActivity() {
 
     private lateinit var arrowDownButton : ImageButton
     private var returnString: String = "제목"
+    var playCheck = true;
+
+    //노래 재생을 위한 정의
+    private lateinit var btnPlay : ImageButton
+    private lateinit var btnPause : ImageButton
+    private lateinit var btnPrevious: ImageButton
+    private lateinit var btnNext: ImageButton
+    private lateinit var startString : TextView
+    private lateinit var endString : TextView
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var seekBar: SeekBar
+
+    //핸들러와 lopper 정의
+    private val handler = Handler(Looper.getMainLooper()) //메인 쓰레드 핸들러
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,17 +45,58 @@ class SongActivity : AppCompatActivity() {
         val artist = intent.getStringExtra("artist") ?: "가수"
         val lyric1 = intent.getStringExtra("lyric1") ?: "가사1"
         val lyric2 = intent.getStringExtra("lyric2") ?: "가사2"
+        playCheck = intent.getBooleanExtra("playCheck", true)
 
         findViewById<TextView>(R.id.tv_songName_songActivity).text = title
         findViewById<TextView>(R.id.tv_artistName_songActivity).text = artist
         findViewById<TextView>(R.id.tv_lyric1_songActivity).text = lyric1
         findViewById<TextView>(R.id.tv_lyric2_songActivity).text = lyric2
-
         returnString = title
 
-        arrowDownButton = findViewById(R.id.btn_arrowDown_songActivity)
+        //UI 연결 작업
+        initUI()
+
+        //MediaPlayer에 노래를 연결하고 seekbar에도 적용
+        mediaPlayer = MediaPlayer.create(this, R.raw.lady_kenshi_yonezu)
+        seekBar.max = mediaPlayer.duration
+        endString.text = milliTotime(mediaPlayer.duration)
+
+        //처음 재생버튼 초기화
+        checkPlay()
+
+        /** 버튼 listenr 정의 시작 **/
+        //돌아가기버튼
         arrowDownButton.setOnClickListener({
             returnHome()
+        })
+        //재생/멈춤
+        btnPlay.setOnClickListener {
+            playCheck = true;
+            checkPlay()
+
+        }
+        btnPause.setOnClickListener {
+            playCheck = false;
+            checkPlay()
+        }
+        btnPrevious.setOnClickListener {resetSong()}
+        btnNext.setOnClickListener {resetSong()}
+        /** 버튼 listener 정의 끝 **/
+
+        //Seekbar를 눌러서 변화할 때 Listener
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            //드래그 중
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    //변경
+                    mediaPlayer.seekTo(progress)
+                    startString.text = milliTotime(progress)
+                }
+            }
+            //최초 탭 드래그 시 발생
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            //드래그 멈추면 발생
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
 
@@ -44,11 +106,84 @@ class SongActivity : AppCompatActivity() {
             insets
         }
     }
+    private fun initUI(){
+        btnPlay = findViewById<ImageButton>(R.id.btn_play_songActivity)
+        btnPause = findViewById<ImageButton>(R.id.btn_pause_songActivity)
+        btnNext = findViewById<ImageButton>(R.id.btn_next_songActivity)
+        btnPrevious = findViewById<ImageButton>(R.id.btn_previous_songActivity)
+        arrowDownButton = findViewById(R.id.btn_arrowDown_songActivity)
+        startString = findViewById<TextView>(R.id.tv_startmusic_songActivity)
+        endString = findViewById<TextView>(R.id.tv_endmusic_songActivity)
+        seekBar = findViewById<SeekBar>(R.id.sbar_songActivity)
+
+    }
+
+    //재생 상태에 따라 UI 변경
+    private fun checkPlay(){
+        if(playCheck){
+            btnPlay.visibility = View.GONE
+            btnPause.visibility = View.VISIBLE
+            if(!mediaPlayer.isPlaying) {
+                mediaPlayer.start() //재생
+            }
+            updateSeekbar() //seekbar 업데이트
+        } else{
+            btnPlay.visibility = View.VISIBLE
+            btnPause.visibility = View.GONE
+            if(mediaPlayer.isPlaying) {
+                mediaPlayer.pause() //멈춤
+            }
+            handler.removeCallbacksAndMessages(null)
+        }
+    }
+
+    //1초마다 seekbar update
+    private fun updateSeekbar(){
+        if(mediaPlayer.isPlaying){
+            //설정
+            val currentPosition = mediaPlayer.currentPosition
+            seekBar.progress = currentPosition
+            startString.text=milliTotime(currentPosition)
+            //Handler로 1초마다
+            handler.postDelayed({updateSeekbar()}, 1000) //1초마다 재귀로 해당 함수 실행
+        }
+    }
+
+    //일단 누르면 정지
+    private fun resetSong(){
+        mediaPlayer.seekTo(0) //0이동
+        seekBar.progress = 0 //seekbar도 0
+        startString.text = milliTotime(0) //text도 0
+
+        if(mediaPlayer.isPlaying){
+            mediaPlayer.pause()
+            playCheck = false
+            checkPlay()
+        }
+
+    }
+
+    // 밀리초를 "분:초" 형식으로 변환하는 함수
+    private fun milliTotime(milliseconds: Int): String {
+        val seconds = (milliseconds / 1000) % 60 //밀리세컨트*1000 = 초(총 몇 초)
+        val minutes = (milliseconds / (1000 * 60)) % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
 
     private fun returnHome(){
         val resultIntent = Intent()
         resultIntent.putExtra("title", returnString)
         setResult(RESULT_OK, resultIntent)
         finish()
+    }
+
+    //노래 멈추기
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+        if(mediaPlayer.isPlaying){
+            mediaPlayer.stop()
+        }
+        mediaPlayer.release()
     }
 }
