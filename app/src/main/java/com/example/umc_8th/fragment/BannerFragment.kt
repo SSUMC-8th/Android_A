@@ -52,16 +52,3 @@ class BannerFragment:Fragment() {
         }
     }
 }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        // arguments로 전달된 데이터를 가져옴
-//        val imageResId = arguments?.getInt("imageResId") ?: R.drawable.img_first_album_default
-//        val title = arguments?.getString("title") ?: "제목 없음"
-//
-//        binding.bannerImg.setImageResource(imageResId)
-//        binding.bannerKeyword.text = title
-//        //binding.textViewDescription.text = description
-//    }
-//}

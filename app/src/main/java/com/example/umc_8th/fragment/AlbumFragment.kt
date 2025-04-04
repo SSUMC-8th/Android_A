@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.umc_8th.NewSongAdapter
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentAlbumBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class AlbumFragment : Fragment() {
 
@@ -34,6 +36,17 @@ class AlbumFragment : Fragment() {
         binding.albumTitle.text = albumTitle
         binding.albumArtist.text = artist
         binding.albumImg.setImageResource(imageRes)
+
+        val newsongAdapter = NewSongAdapter(this)  // 어댑터 이름 변경
+        binding.newSongPager.adapter = newsongAdapter
+
+        TabLayoutMediator(binding.newSongTab, binding.newSongPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "수록곡"
+                1 -> "상세정보"
+                else -> ""
+            }
+        }.attach()
 
 
     }
