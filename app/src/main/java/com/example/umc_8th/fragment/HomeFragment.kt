@@ -64,6 +64,7 @@ class HomeFragment : Fragment() {
 
         val banneradapter = BannerAdapter(this, bannerList)
         binding.bannerPager.adapter = banneradapter
+        binding.dotsIndicator.attachTo(binding.bannerPager)
 
 
     }
