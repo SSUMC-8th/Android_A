@@ -14,31 +14,34 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/transparent"
         android:src="@drawable/tunesetting"
+        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
     
     <ImageButton
         android:id="@+id/btn_arrowDown_songActivity"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/arrowdown"
+        android:src="@drawable/nugu_btn_down"
+        android:scaleType="centerInside"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/btn_more_songActivity"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/more"
+        android:src="@drawable/btn_player_more"
+        android:scaleType="centerInside"
         android:background="@android:color/transparent"
         app:layout_constraintTop_toBottomOf="@id/btn_arrowDown_songActivity"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -52,7 +55,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_more_songActivity"
@@ -78,6 +81,7 @@
         android:src="@drawable/arrowforward"
         android:background="@android:color/transparent"
         android:layout_marginStart="5dp"
+        android:scaleType="centerInside"
         app:layout_constraintTop_toTopOf="@id/tv_artistName_songActivity"
         app:layout_constraintBottom_toBottomOf="@id/tv_artistName_songActivity"
         app:layout_constraintStart_toEndOf="@id/tv_artistName_songActivity"
@@ -136,17 +140,19 @@
 
         <ImageButton
             android:id="@+id/btn_favorite_songActivity"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_marginRight="20dp"
+            android:scaleType="centerInside"
             android:background="@android:color/transparent"
             android:src="@drawable/favorite"/>
 
         <ImageButton
             android:id="@+id/btn_ban_songActivity"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_marginLeft="20dp"
+            android:scaleType="centerInside"
             android:background="@android:color/transparent"
             android:src="@drawable/ban"/>
     </LinearLayout>
@@ -198,44 +204,49 @@
 
         <ImageButton
             android:id="@+id/btn_previous_songActivity"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
             android:background="@android:color/transparent"
-            android:src="@drawable/skipprevious_big"/>
+            android:src="@drawable/nugu_btn_skip_previous_32"/>
 
         <ImageButton
             android:id="@+id/btn_play_songActivity"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:scaleType="centerInside"
             android:background="@android:color/transparent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/play_big"/>
+            android:src="@drawable/nugu_btn_play_32"/>
 
         <ImageButton
             android:id="@+id/btn_pause_songActivity"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:scaleType="centerInside"
             android:background="@android:color/transparent"
-            android:src="@drawable/pause_big"
+            android:src="@drawable/nugu_btn_pause_32"
             android:visibility="gone"/>
 
         <ImageButton
             android:id="@+id/btn_next_songActivity"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
             android:background="@android:color/transparent"
-            android:src="@drawable/skipnext_big"/>
+            android:src="@drawable/nugu_btn_skip_next_32"/>
 
 
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/btn_repeat_songActivity"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/repeat"
+        android:src="@drawable/nugu_btn_repeat_inactive"
+        android:scaleType="centerInside"
         app:layout_constraintTop_toTopOf="@id/ll_playConatainer_songActivty"
         app:layout_constraintBottom_toBottomOf="@id/ll_playConatainer_songActivty"
         app:layout_constraintEnd_toStartOf="@id/ll_playConatainer_songActivty"
@@ -245,10 +256,11 @@
 
     <ImageButton
         android:id="@+id/btn_shuffle_songActivity"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/shuffle"
+        android:src="@drawable/nugu_btn_random_inactive"
+        android:scaleType="centerInside"
         app:layout_constraintTop_toTopOf="@id/ll_playConatainer_songActivty"
         app:layout_constraintBottom_toBottomOf="@id/ll_playConatainer_songActivty"
         app:layout_constraintStart_toEndOf="@id/ll_playConatainer_songActivty"
@@ -262,6 +274,7 @@
         android:layout_height="30dp"
         android:background="@android:color/transparent"
         android:src="@drawable/instagram"
+        android:scaleType="centerInside"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -273,7 +286,8 @@
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/btn_similiar"
+        android:src="@drawable/btn_player_related"
+        android:scaleType="centerInside"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -285,7 +299,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/queuemusic"
+        android:src="@drawable/btn_player_more"
+        android:scaleType="centerInside"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

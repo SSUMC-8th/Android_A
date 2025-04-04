@@ -80,33 +80,38 @@
                 android:id="@+id/btn_homeplayer_previous"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/skipprevious"/>
+                android:src="@drawable/btn_miniplayer_previous"/>
             <ImageButton
                 android:id="@+id/btn_homeplayer_play"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/play"/>
+                android:src="@drawable/btn_miniplayer_play"/>
             <ImageButton
                 android:id="@+id/btn_homeplayer_pause"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/pause"
+                android:src="@drawable/btn_miniplay_pause"
                 android:visibility="gone"/>
             <ImageButton
                 android:id="@+id/btn_homeplayer_next"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/skipnext"/>
+                android:src="@drawable/btn_miniplayer_next"/>
             <ImageButton
                 android:id="@+id/btn_homeplayer_queuemusic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/queuemusic"/>
+                android:src="@drawable/btn_miniplayer_go_list"/>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

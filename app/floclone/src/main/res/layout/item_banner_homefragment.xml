@@ -3,24 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#7DC1F6">
-    
+    android:background="#7DC1F6"
+    >
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_first_album_default"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ImageButton
         android:id="@+id/btn_setting_banner"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/setting"
+        android:src="@drawable/btn_main_setting"
+        android:scaleType="centerInside"
         android:layout_margin="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageButton
         android:id="@+id/btn_ticket_banner"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ticket"
+        android:src="@drawable/btn_main_ticket"
+        android:scaleType="centerInside"
         android:layout_marginEnd="15dp"
         app:layout_constraintTop_toTopOf="@id/btn_setting_banner"
         app:layout_constraintBottom_toBottomOf="@id/btn_setting_banner"
@@ -28,10 +43,11 @@
 
     <ImageButton
         android:id="@+id/btn_mic_banner"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/mic"
+        android:src="@drawable/btn_main_mike"
+        android:scaleType="centerInside"
         android:layout_marginEnd="15dp"
         app:layout_constraintTop_toTopOf="@id/btn_setting_banner"
         app:layout_constraintBottom_toBottomOf="@id/btn_setting_banner"
@@ -52,11 +68,13 @@
 
     <ImageButton
         android:id="@+id/btn_play_banner"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/play_circle"
+        android:src="@drawable/btn_panel_play_large"
+        android:scaleType="centerInside"
         android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/tv_jaemok_banner"
         app:layout_constraintEnd_toEndOf="parent"/>
 
