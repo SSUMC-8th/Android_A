@@ -19,7 +19,7 @@
         />
 
     <LinearLayout
-        android:id="@+id/touchBar"
+        android:id="@+id/miniPlayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/light_gray"
@@ -30,6 +30,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/miniSongTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="곡제목"
@@ -40,6 +41,7 @@
                 />
 
             <TextView
+                android:id="@+id/miniSongArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가수"

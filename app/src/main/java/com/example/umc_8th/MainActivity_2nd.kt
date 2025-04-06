@@ -1,6 +1,7 @@
 package com.example.umc_8th
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,16 +15,9 @@ import com.example.umc_8th.databinding.ActivityMain2ndBinding
 
 class MainActivity_2nd : AppCompatActivity(){
 
+
     private lateinit var mBinding : ActivityMain2ndBinding
     val TAG: String = "로그"
-
-//    val albumList = listOf(
-//        AlbumModel(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
-//        AlbumModel(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
-//        AlbumModel(R.drawable.img_album_exp3, "Album Three", "Artist C"),
-//        AlbumModel(R.drawable.img_album_exp4, "Album Four", "Artist D"),
-//        AlbumModel(R.drawable.img_album_exp5, "Album Five", "Artist E")
-//    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +26,54 @@ class MainActivity_2nd : AppCompatActivity(){
 
         setContentView(mBinding.root)
 
-//        //리사이클러뷰부분
-//        val recyclerView = findViewById<RecyclerView>(R.id.album_recyclerView)
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-//        recyclerView.adapter = AlbumAdapter(albumList)
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
 
         //네비게이션을 컨트롤러
         val navController = navHostFragment.navController
         //바텀네비게이션뷰와 묶어줌
         NavigationUI.setupWithNavController(mBinding.myBtmNav, navController)
+
+       // miniPlayer 버튼 클릭 시 토글
+        mBinding.miniPlayBtn.setOnClickListener {
+            val isPlaying = it.tag == "playing"
+            setMiniPlayerButtonState(!isPlaying)
+//            if (isPlaying) {
+//                mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
+//                mBinding.miniPlayBtn.tag = "paused"
+//            } else {
+//                mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
+//                mBinding.miniPlayBtn.tag = "playing"
+//            }
+        }
+
+
+
     }
+
+    private fun setMiniPlayerButtonState(isPlaying: Boolean) {
+        if (isPlaying) {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
+            mBinding.miniPlayBtn.tag = "playing"
+        } else {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
+            mBinding.miniPlayBtn.tag = "paused"
+        }
+    }
+
+    fun updateMiniPlayer(title: String, artist: String, isPlaying: Boolean) {
+        mBinding.miniSongTitle.text = title
+        mBinding.miniSongArtist.text = artist
+
+        if (isPlaying) {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
+            mBinding.miniPlayBtn.tag = "playing"
+        } else {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
+            mBinding.miniPlayBtn.tag = "paused"
+        }
+
+        mBinding.miniPlayer.visibility = View.VISIBLE
+    }
+
 
 }

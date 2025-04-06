@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_8th.MainActivity_2nd
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentBannerBinding
 
@@ -32,6 +33,15 @@ class BannerFragment:Fragment() {
         binding.song1Artist.text = song1Artist
         binding.song2Title.text = song2Title
         binding.song2Artist.text = song2Artist
+
+        //미니플레이어로 데이터 전달
+        binding.bannerPlayBtn.setOnClickListener {
+            val title = binding.song1Title.text.toString()
+            val artist = binding.song1Artist.text.toString()
+
+            val mainActivity = activity as? MainActivity_2nd
+            mainActivity?.updateMiniPlayer(title, artist, true)
+        }
 
 
         return binding.root
