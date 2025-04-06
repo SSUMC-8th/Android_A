@@ -136,11 +136,11 @@ plugins {
 }
 
 android {
-    namespace = "umc.study.umc_8th"
+    namespace = "com.example.flo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "umc.study.umc_8th"
+        applicationId = "com.example.flo"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -170,6 +170,8 @@ android {
     }
     buildFeatures {
         compose = true
+        dataBinding = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -213,7 +215,7 @@ dependencies {
 
     // Hilt Dependency Injection
     implementation("com.google.dagger:hilt-android:2.49")
-    ksp("com.google.dagger:hilt-compiler:2.49")
+    kapt("com.google.dagger:hilt-compiler:2.49")
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
@@ -235,8 +237,8 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     // Glide Image Loading Library
-    implementation("com.github.bumptech.glide:glide:4.14.2")
-    ksp("com.github.bumptech.glide:ksp:4.14.2")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
 
     // CardView
     implementation("androidx.cardview:cardview:1.0.0")
@@ -251,6 +253,6 @@ dependencies {
 
     // ROOM Database
     implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 }
