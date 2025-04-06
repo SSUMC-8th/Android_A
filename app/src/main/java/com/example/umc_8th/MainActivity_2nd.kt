@@ -1,5 +1,6 @@
 package com.example.umc_8th
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
@@ -33,17 +34,19 @@ class MainActivity_2nd : AppCompatActivity(){
         //바텀네비게이션뷰와 묶어줌
         NavigationUI.setupWithNavController(mBinding.myBtmNav, navController)
 
-       // miniPlayer 버튼 클릭 시 토글
+       // miniPlayer 버튼 클릭 시 토글, +곡 세팅 안되면 버튼 비활성
         mBinding.miniPlayBtn.setOnClickListener {
             val isPlaying = it.tag == "playing"
             setMiniPlayerButtonState(!isPlaying)
-//            if (isPlaying) {
-//                mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
-//                mBinding.miniPlayBtn.tag = "paused"
-//            } else {
-//                mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
-//                mBinding.miniPlayBtn.tag = "playing"
-//            }
+        }
+
+        mBinding.miniPlayer.setOnClickListener {
+            val intent = Intent(this, SongActivity::class.java).apply {
+                putExtra("songTitle", mBinding.miniSongTitle.text.toString())
+                putExtra("songArtist", mBinding.miniSongArtist.text.toString())
+                //이미지 추가로 넣기(추후)
+            }
+            startActivity(intent)
         }
 
 

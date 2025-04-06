@@ -8,6 +8,11 @@
     android:orientation="vertical"
     tools:context="com.example.umc_8th.MainActivity">
 
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/my_nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -105,4 +110,5 @@
         android:layout_height="wrap_content"
         app:menu="@menu/btn_menu"
         />
+
 </LinearLayout>

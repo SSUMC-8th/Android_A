@@ -33,10 +33,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // RecyclerView 설정
-        //binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        //binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
         // 더미 데이터 추가
         val albumList = listOf(
             AlbumItem(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),

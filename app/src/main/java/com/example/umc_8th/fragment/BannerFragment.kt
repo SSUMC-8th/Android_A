@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.umc_8th.MainActivity_2nd
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentBannerBinding
 
-class BannerFragment:Fragment() {
+class BannerFragment: Fragment() {
 
     private lateinit var binding: FragmentBannerBinding
 
@@ -17,6 +18,15 @@ class BannerFragment:Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
+//        binding.root.setOnClickListener {
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.fragment_container, BannerAlbumFragment())
+//                .addToBackStack(null)
+//                .commit()
+//        }
+
         binding = FragmentBannerBinding.inflate(inflater, container, false)
 
         val imageRes = arguments?.getInt("imageRes") ?: R.drawable.img_first_album_default
@@ -42,6 +52,13 @@ class BannerFragment:Fragment() {
             val mainActivity = activity as? MainActivity_2nd
             mainActivity?.updateMiniPlayer(title, artist, true)
         }
+
+        binding.root.setOnClickListener {
+            binding.root.setOnClickListener {
+                findNavController().navigate(R.id.bannerAlbumFragment)
+            }
+        }
+
 
 
         return binding.root

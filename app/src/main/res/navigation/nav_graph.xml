@@ -5,6 +5,12 @@
     android:id="@+id/btm_nav_menu"
     app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/bannerAlbumFragment"
+        android:name="com.example.umc_8th.fragment.BannerAlbumFragment"
+        android:label="Banner Album"
+        tools:layout="@layout/fragment_banner_album" />
+
 <!--    <fragment-->
 <!--        android:id="@+id/homeFragment"-->
 <!--        android:name="com.example.umc_8th.fragment.HomeFragment"-->
