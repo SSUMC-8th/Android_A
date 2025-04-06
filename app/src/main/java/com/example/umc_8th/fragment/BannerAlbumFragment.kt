@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,9 +37,19 @@ class BannerAlbumFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toggleOff.setOnClickListener {
+            // 현재 이미지가 toggle_off이면 toggle_on으로 변경
+            val currentDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.btn_toggle_off)
+            if (binding.toggleOff.drawable.constantState == currentDrawable?.constantState) {
+                binding.toggleOff.setImageResource(R.drawable.btn_toggle_on)  // 토글 온 이미지로 변경
+            } else {
+                binding.toggleOff.setImageResource(R.drawable.btn_toggle_off)  // 토글 오프 이미지로 변경
+            }
+        }
+
 
         val bannerAlbumItems = listOf(
             BannerAlbumItem(R.drawable.img_album_drama, "Drama", "aespa", "겨울 감성 앨범"),
