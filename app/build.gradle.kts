@@ -134,6 +134,9 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.kapt")
 }
+kotlin {
+    jvmToolchain(17)
+}
 
 android {
     namespace = "com.example.flo"
@@ -174,7 +177,7 @@ android {
         viewBinding = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     packaging {
         resources {
