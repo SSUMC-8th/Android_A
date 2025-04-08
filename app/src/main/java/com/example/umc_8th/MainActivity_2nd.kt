@@ -1,18 +1,25 @@
 package com.example.umc_8th
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.umc_8th.databinding.ActivityMain2ndBinding
 
 
 class MainActivity_2nd : AppCompatActivity(){
 
+
     private lateinit var mBinding : ActivityMain2ndBinding
+    val TAG: String = "로그"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,6 +33,50 @@ class MainActivity_2nd : AppCompatActivity(){
         val navController = navHostFragment.navController
         //바텀네비게이션뷰와 묶어줌
         NavigationUI.setupWithNavController(mBinding.myBtmNav, navController)
+
+       // miniPlayer 버튼 클릭 시 토글, +곡 세팅 안되면 버튼 비활성
+        mBinding.miniPlayBtn.setOnClickListener {
+            val isPlaying = it.tag == "playing"
+            setMiniPlayerButtonState(!isPlaying)
+        }
+
+        mBinding.miniPlayer.setOnClickListener {
+            val intent = Intent(this, SongActivity::class.java).apply {
+                putExtra("songTitle", mBinding.miniSongTitle.text.toString())
+                putExtra("songArtist", mBinding.miniSongArtist.text.toString())
+                //이미지 추가로 넣기(추후)
+            }
+            startActivity(intent)
+        }
+
+
+
     }
+
+    private fun setMiniPlayerButtonState(isPlaying: Boolean) {
+        if (isPlaying) {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
+            mBinding.miniPlayBtn.tag = "playing"
+        } else {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
+            mBinding.miniPlayBtn.tag = "paused"
+        }
+    }
+
+    fun updateMiniPlayer(title: String, artist: String, isPlaying: Boolean) {
+        mBinding.miniSongTitle.text = title
+        mBinding.miniSongArtist.text = artist
+
+        if (isPlaying) {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
+            mBinding.miniPlayBtn.tag = "playing"
+        } else {
+            mBinding.miniPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
+            mBinding.miniPlayBtn.tag = "paused"
+        }
+
+        mBinding.miniPlayer.visibility = View.VISIBLE
+    }
+
 
 }

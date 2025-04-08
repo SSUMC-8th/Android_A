@@ -137,7 +137,7 @@ plugins {
 
 android {
     namespace = "com.example.umc_8th"//"umc.study.umc_8th"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "umc.study.umc_8th"
@@ -183,6 +183,15 @@ android {
 }
 
 dependencies {
+    //도트인디케이터
+    implementation ("com.tbuonomo:dotsindicator:4.3")
+    //리사이클러뷰 및 카드뷰
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    // For control over item selection of both touch and mouse driven selection
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    //뷰페이져2
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

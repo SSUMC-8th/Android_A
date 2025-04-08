@@ -6,10 +6,28 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
+        android:id="@+id/bannerAlbumFragment"
+        android:name="com.example.umc_8th.fragment.BannerAlbumFragment"
+        android:label="Banner Album"
+        tools:layout="@layout/fragment_banner_album" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/homeFragment"-->
+<!--        android:name="com.example.umc_8th.fragment.HomeFragment"-->
+<!--        android:label="fragment_home"-->
+<!--        tools:layout="@layout/fragment_home" />-->
+
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.umc_8th.fragment.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="fragment_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_albumFragment"
+            app:destination="@id/albumFragment" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/writeFragment"
         android:name="com.example.umc_8th.fragment.WriteFragment"
@@ -25,4 +43,12 @@
         android:name="com.example.umc_8th.fragment.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+
+
+
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.example.umc_8th.fragment.AlbumFragment"
+        android:label="AlbumFragment" />
+
 </navigation>
