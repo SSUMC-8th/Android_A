@@ -22,16 +22,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
-            <!--        <me.relex.circleindicator.CircleIndicator3-->
-            <!--            android:id="@+id/home_pannel_indicator"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="32dp"-->
-            <!--            app:ci_drawable_unselected="@drawable/gray_radius"-->
-            <!--            app:ci_drawable="@drawable/blue_radius"-->
-            <!--            app:ci_animator="@animator/scale_with_alpha"-->
-            <!--            app:layout_constraintTop_toBottomOf="@id/home_frag_top"-->
-            <!--            app:layout_constraintStart_toStartOf="parent"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"/>-->
             <ImageButton
                 android:id="@+id/home_frag_setting_ibtn"
                 android:layout_width="35dp"
