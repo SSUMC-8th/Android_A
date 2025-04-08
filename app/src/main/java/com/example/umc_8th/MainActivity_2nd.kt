@@ -48,7 +48,7 @@ class MainActivity_2nd : AppCompatActivity(){
 //            setMiniPlayerButtonState(!isPlaying)
 //        }
 
-        MusicPlayerState.addListener(playStateListener)
+        MusicPlayerState.addPlayListener(playStateListener)
 
         mBinding.miniPlayBtn.setOnClickListener {
             MusicPlayerState.togglePlay()
@@ -75,7 +75,7 @@ class MainActivity_2nd : AppCompatActivity(){
 
     override fun onDestroy() {
         super.onDestroy()
-        MusicPlayerState.removeListener(playStateListener)
+        MusicPlayerState.removePlayListener(playStateListener)
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.umc_8th
 
 import android.os.Bundle
+import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.umc_8th.databinding.ActivitySongBinding
@@ -16,6 +17,10 @@ class SongActivity :AppCompatActivity(){
             if (isPlaying) R.drawable.btn_miniplay_pause
             else R.drawable.btn_miniplayer_play
         )
+    }
+
+    private val progressListener: (Int) -> Unit = { progress ->
+        binding.timeSeekBar.progress = progress
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,25 +39,43 @@ class SongActivity :AppCompatActivity(){
         binding.songArtist.text = artist ?: "아티스트 없음"
 
 
-
-        MusicPlayerState.addListener(playStateListener)
-
+        //재생 상태 리스너(play/pause)
+        MusicPlayerState.addPlayListener(playStateListener)
         binding.songPlayBtn.setOnClickListener {
             MusicPlayerState.togglePlay()
         }
 
-//        binding.songPlayBtn.setOnClickListener {
-//            // 현재 버튼 이미지가 play일 경우 pause로 변경
-//            if (binding.songPlayBtn.drawable.constantState == ContextCompat.getDrawable(this, R.drawable.btn_miniplayer_play)?.constantState) {
-//                binding.songPlayBtn.setImageResource(R.drawable.btn_miniplay_pause)
-//            } else {
-//                binding.songPlayBtn.setImageResource(R.drawable.btn_miniplayer_play)
-//            }
-//        }
+        //진행도 리스너
+        MusicPlayerState.addProgressListener(progressListener)
+
+        MusicPlayerState.addProgressListener { progress ->
+            binding.timeSeekBar.progress = progress
+        }
+
+
+        //사용자 클릭에 반응
+        binding.timeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    MusicPlayerState.setProgress(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // 필요하다면 일시정지 시킬 수도 있음
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // 드래그가 끝났을 때, 자동 진행은 그대로 유지됨
+            }
+        })
+
+
 
     }
     override fun onDestroy() {
         super.onDestroy()
-        MusicPlayerState.removeListener(playStateListener)
+        MusicPlayerState.removePlayListener(playStateListener)
+        MusicPlayerState.removeProgressListener(progressListener)
     }
 }
