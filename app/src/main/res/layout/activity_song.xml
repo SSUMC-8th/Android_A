@@ -185,6 +185,7 @@
         app:layout_constraintTop_toTopOf="@+id/song_player_ll" />
 
     <LinearLayout
+        android:id="@+id/song_time_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -198,14 +199,12 @@
             android:id="@+id/song_play_sb"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@color/black"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:progressDrawable="@drawable/seekbar_style"
             android:thumb="@null" />
 
         <LinearLayout
-            android:id="@+id/song_time_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -236,12 +235,11 @@
         android:id="@+id/song_player_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toTopOf="@+id/song_related_iv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="song_time_ll">
+        app:layout_constraintTop_toBottomOf="@+id/song_time_ll">
 
         <ImageButton
             android:id="@+id/song_player_prev_ibtn"

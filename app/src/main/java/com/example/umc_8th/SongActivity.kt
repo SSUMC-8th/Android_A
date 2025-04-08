@@ -87,5 +87,7 @@ class SongActivity : AppCompatActivity() {
     override fun onDestroy() {
         mediaPlayer.release()
         super.onDestroy()
+
+        handler.removeCallbacksAndMessages(null)
     }
 }
