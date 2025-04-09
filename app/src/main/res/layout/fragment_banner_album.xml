@@ -46,14 +46,13 @@
             android:scaleType="centerCrop"
             />
 
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/albumTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="앨범 제목"
+        android:text="배너 키워드"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,10 +63,9 @@
         app:layout_constraintVertical_bias="0.07" />
 
     <TextView
-        android:id="@+id/albumArtist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아티스트 이름"
+        android:text="FlO"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

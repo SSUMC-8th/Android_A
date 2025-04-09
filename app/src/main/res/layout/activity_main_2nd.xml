@@ -23,6 +23,7 @@
         app:navGraph = "@navigation/nav_graph"
         />
 
+
     <LinearLayout
         android:id="@+id/miniPlayer"
         android:layout_width="match_parent"
