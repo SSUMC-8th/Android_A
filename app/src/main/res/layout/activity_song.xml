@@ -135,16 +135,34 @@
             app:layout_constraintEnd_toEndOf="@+id/song_lyrics_second_tv"
             app:layout_constraintTop_toTopOf="@+id/song_like_ibtn"/>
 
-    <View
+<!--    <View-->
+<!--        android:id="@+id/song_progress_v"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:background="@color/gray"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/song_like_ibtn"/>-->
+    <SeekBar
         android:id="@+id/song_progress_v"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="10dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/gray"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@null"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:progress="0"
+        android:progressBackgroundTint="@color/song_player_bg"
+        android:progressTint="@color/tab_selected"
+        android:thumb="@color/transparent"
+        android:max="100000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/song_like_ibtn"/>
     <TextView
         android:id="@+id/song_time_start_tv"
