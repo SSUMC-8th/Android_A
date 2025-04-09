@@ -4,25 +4,25 @@
 
     <item
         android:id="@+id/navigation_homeFragment"
-        android:icon="@drawable/home"
+        android:icon="@drawable/ic_bottom_home_select_resized"
         app:showAsAction="always"
         android:title="홈"/>
 
     <item
         android:id="@+id/navigation_lookaroundFragment"
-        android:icon="@drawable/lookaround"
+        android:icon="@drawable/ic_bottom_look_select_resized"
         app:showAsAction="always"
         android:title="둘러보기"/>
 
     <item
         android:id="@+id/navigation_searchFragment"
-        android:icon="@drawable/search"
+        android:icon="@drawable/ic_bottom_search_select_resized"
         app:showAsAction="always"
         android:title="검색"/>
 
     <item
         android:id="@+id/navigation_storeFragment"
-        android:icon="@drawable/account"
+        android:icon="@drawable/ic_bottom_locker_select_resized"
         app:showAsAction="always"
         android:title="보관함"/>
 

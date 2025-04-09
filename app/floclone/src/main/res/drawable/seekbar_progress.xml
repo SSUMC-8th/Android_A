@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Background -->
+
+    <!-- 비재생된 구간(회색) -->
     <item android:id="@android:id/background">
-        <shape>
+        <shape android:shape="rectangle">
             <corners android:radius="2dp"/>
-            <solid android:color="#8C8C8C"/> <!-- 비재생된 구간 -->
+            <solid android:color="#8C8C8C"/>
         </shape>
     </item>
 
-    <!-- Secondary Progress (버퍼) -->
+    <!-- 버퍼 구간(원한다면 다른 색상) -->
     <item android:id="@android:id/secondaryProgress">
-        <shape>
+        <shape android:shape="rectangle">
             <corners android:radius="2dp"/>
-            <solid android:color="#8C8C8C"/> <!-- 버퍼링된 구간 -->
+            <solid android:color="#8C8C8C"/>
         </shape>
     </item>
 
-    <!-- Progress -->
+    <!-- 재생된 구간(파란색) -->
     <item android:id="@android:id/progress">
-        <shape>
+        <shape android:shape="rectangle">
             <corners android:radius="2dp"/>
-            <solid android:color="#FF0000"/> <!-- 재생된 구간 -->
+            <solid android:color="#2196F3"/>
         </shape>
     </item>
+
 </layer-list>
