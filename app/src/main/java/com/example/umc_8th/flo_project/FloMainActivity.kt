@@ -10,11 +10,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.gson.Gson
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityFloMainBinding
 
 class FloMainActivity : AppCompatActivity() {
     lateinit var binding: ActivityFloMainBinding
+    private var song:Song = Song()
+    private var gson:Gson = Gson()
     companion object {const val STRING_INTENT_KEY ="message"}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,7 @@ class FloMainActivity : AppCompatActivity() {
         BottomNav()
 
 //        하단 미니 플레이어에서 SongAcitivitiy로 데이터 전달하고 띄우기
-        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 0,60,false)
+//        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 0,60,false, "sample")
         binding.mainPlayerCl.setOnClickListener{
             val intent=Intent(this, SongActivity::class.java)
             intent.putExtra("title", song.title)
@@ -34,6 +37,7 @@ class FloMainActivity : AppCompatActivity() {
             intent.putExtra("second", song.second)
             intent.putExtra("playTime", song.playTime)
             intent.putExtra("isPlaying", song.isPlaying)
+            intent.putExtra("music", song.music)
 //            startActivity(intent)  <- 문제가 됐던 코드
             getResultText.launch(intent)
         }
@@ -82,6 +86,25 @@ class FloMainActivity : AppCompatActivity() {
             }
             false
         }
+    }
+
+    private fun setMiniPlayer(song:Song){
+        binding.mainMiniplayerTitleTv.text=song.title
+        binding.mainMiniplayerSingerTv.text=song.singer
+        binding.mainMiniplayerProgress.progress=(song.second*100000)/song.playTime
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val sharedPreferences=getSharedPreferences("song", MODE_PRIVATE)
+        val songJson = sharedPreferences.getString("songData", null)
+
+        song=if(songJson==null){
+            Song("라일락", "아이유(IU)", 0, 60, false, "sample")
+        }else{
+            gson.fromJson(songJson, song::class.java)
+        }
+        setMiniPlayer(song)
     }
 
 }

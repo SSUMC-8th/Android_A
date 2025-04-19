@@ -1,6 +1,7 @@
 package com.example.umc_8th.flo_project
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivitySongBinding
 
@@ -15,6 +17,9 @@ class SongActivity : AppCompatActivity() {
     lateinit var binding: ActivitySongBinding
     lateinit var song :Song
     lateinit var timer : Timer
+    private var mediaPlayer: MediaPlayer? = null
+    private var gson: Gson = Gson()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -54,9 +59,21 @@ class SongActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        PlayerStatus(false)
+        song.second = ((binding.songProgressV.progress * song.playTime)/100000)
+        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val songJson=gson.toJson(song)
+        editor.putString("songData", songJson)
+        editor.apply()
+    }
     override fun onDestroy() {
         super.onDestroy()
         timer.interrupt()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 
     //프로그래스 바 관련 추가한 부분
@@ -67,7 +84,8 @@ class SongActivity : AppCompatActivity() {
                 intent.getStringExtra("singer")!!,
                 intent.getIntExtra("second", 0),
                 intent.getIntExtra("playTime", 0),
-                intent.getBooleanExtra("isPlaying", false)
+                intent.getBooleanExtra("isPlaying", false),
+                intent.getStringExtra("music")!!
             )
         }
         startTimer()
@@ -79,6 +97,9 @@ class SongActivity : AppCompatActivity() {
         binding.songTimeStartTv.text=String.format("%02d: %02d", song.second / 60, song.second % 60)
         binding.songTimeEndTv.text=String.format("%02d: %02d", song.playTime / 60, song.playTime % 60)
         binding.songProgressV.progress = (song.second * 1000 / song.playTime)
+
+        val music = resources.getIdentifier(song.music, "raw", this.packageName)
+        mediaPlayer=MediaPlayer.create(this, music)
 
         PlayerStatus(song.isPlaying)
     }
@@ -93,10 +114,12 @@ class SongActivity : AppCompatActivity() {
         if(isPlaying){
             binding.songPlayerPauseIbtn.visibility= View.VISIBLE
             binding.songPlayerPlayIbtn.visibility=View.GONE
+            mediaPlayer?.start()
         }
         else{
             binding.songPlayerPlayIbtn.visibility=View.VISIBLE
             binding.songPlayerPauseIbtn.visibility=View.GONE
+            if(mediaPlayer?.isPlaying==true) mediaPlayer?.pause()
         }
     }
 

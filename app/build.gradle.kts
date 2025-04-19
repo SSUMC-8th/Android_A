@@ -217,7 +217,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    
+    implementation ("com.google.code.gson:gson:2.8.7")
+
     //indicator
     implementation ("me.relex:circleindicator:2.1.6")
 
