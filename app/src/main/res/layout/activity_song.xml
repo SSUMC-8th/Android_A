@@ -50,11 +50,11 @@
         android:id="@+id/timeSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:max="100"
         android:progress="0"
         app:layout_constraintBottom_toTopOf="@id/songPlayBar"
-        tools:layout_editor_absoluteX="16dp"/>
+        android:progressDrawable="@drawable/seekbar_progress"/>
+
 
     <LinearLayout
         android:id="@+id/songPlayBar"
@@ -176,20 +176,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="-34dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="-17dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="-8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

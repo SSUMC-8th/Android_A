@@ -52,6 +52,9 @@ class SongActivity :AppCompatActivity(){
             binding.timeSeekBar.progress = progress
         }
 
+        binding.timeSeekBar.thumb = null
+
+
 
         //사용자 클릭에 반응
         binding.timeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
