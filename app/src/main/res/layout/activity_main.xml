@@ -14,8 +14,21 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph"
         android:name="androidx.navigation.fragment.NavHostFragment"/>
+
+    <SeekBar
+        android:id="@+id/mainplayer_sb"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:thumb="@null"
+        app:layout_constraintBottom_toTopOf="@+id/mainplayer_cl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainplayer_layout"
+        android:id="@+id/mainplayer_cl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavi"
@@ -24,14 +37,17 @@
         android:background="#F9F9F9"
         android:paddingVertical="6dp">
 
+
+
+        <!-- 🎶 2. 노래 정보 텍스트 -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical"
-            android:layout_marginStart="15dp">
+            android:layout_marginStart="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
             <TextView
                 android:id="@+id/mainplayer_title"
                 android:layout_width="wrap_content"
