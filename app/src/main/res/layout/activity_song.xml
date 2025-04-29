@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SongActivity">
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_arrowDown_songActivity"
+        android:src="@drawable/nugu_btn_down"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="좋은 밤 좋은 꿈"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_arrowDown_songActivity"
+        android:layout_margin="20dp"
+        android:id="@+id/tv_songName_songActivity"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="너드커넥션"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_songName_songActivity"
+        android:layout_margin="20dp"
+        android:id="@+id/tv_artistName_songActivity"/>
+
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:src="@drawable/goodnight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_artistName_songActivity"
+        android:layout_marginTop="20dp"
+        android:id="@+id/imv_albumCover_songActivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="저 많은 별을 다 세어 보아도"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imv_albumCover_songActivity"
+        android:layout_margin="20dp"
+        android:id="@+id/subone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:text="그대 마음은 헤아릴 수 없어요"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subone"
+        android:layout_margin="10dp"
+        android:id="@+id/subtwo"/>
+
+    <ImageButton
+        android:id="@+id/like"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_my_like_off"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/subtwo"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toStartOf="@id/unlike"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <ImageButton
+        android:id="@+id/unlike"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_player_unlike_off"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/subtwo"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toEndOf="@id/like"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/unlike"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:max="100"
+        android:progress="0"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="570dp" />
+
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/endTime"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/endTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="04:26"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_start"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_miniplay_mvplay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        tools:layout_editor_absoluteX="185dp" />
+
+    <ImageButton
+        android:id="@+id/btn_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_miniplayer_next"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        app:layout_constraintStart_toEndOf="@id/btn_start" />
+
+    <ImageButton
+        android:id="@+id/btn_jeon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_miniplayer_previous"
+        app:layout_constraintEnd_toStartOf="@id/btn_start"
+        app:layout_constraintTop_toBottomOf="@id/seekBar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TaskThree">
+
+    <FrameLayout
+        android:id="@+id/main_fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/miniPlayer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_three"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_three"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/miniPlayer"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="#EEEEEE"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_three"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/goodnight_album"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="앨범 아트"
+            android:scaleType="centerCrop"
+            android:src="@drawable/goodnight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/goodnight_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="좋은 밤 좋은 꿈"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/goodnight_album"
+            app:layout_constraintStart_toEndOf="@id/goodnight_album"
+            app:layout_constraintTop_toTopOf="@id/goodnight_album" />
+
+        <ImageButton
+            android:id="@+id/btn_prev"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_miniplayer_previous"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toStartOf="@id/btn_play"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_play"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_miniplayer_play"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toStartOf="@id/btn_next"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/btn_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_miniplayer_next"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/miniPlayer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 시간 표시 TextView 추가 -->
+    <TextView
+        android:id="@+id/startTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/endTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="04:26"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
