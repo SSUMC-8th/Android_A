@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--fragmentContainerView에서도 NavHost + graph 가능-->
-    <!--꼭! navGraph를 연결하자-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/ct_home"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -24,14 +22,16 @@
 
 
     <!--노래 플레이어가 담길 뷰-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_homeplayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F9F9F9"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bnv_home"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bnv_home">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <!--제목/가수-->
@@ -42,9 +42,8 @@
             android:orientation="vertical"
             android:paddingVertical="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_homeplayer_title"
@@ -52,66 +51,84 @@
                 android:layout_height="wrap_content"
                 android:text="Lady"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_homeplayer_artist"
-                android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="Kenshi Yonezu"
                 android:textColor="@color/black"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
         </LinearLayout>
 
 
+        <SeekBar
+            android:id="@+id/sbar_HomeActivity"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="10dp"
+            android:max="100"
+            android:progress="0"
+            android:progressBackgroundTint="#8C8C8C"
+            android:progressTint="#0E91FF"
+            app:layout_constraintBottom_toTopOf="@id/ll_playlayout_homeActivity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <!--재생목록버튼-->
         <LinearLayout
+            android:id="@+id/ll_playlayout_homeActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
             android:layout_marginEnd="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/btn_homeplayer_previous"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/btn_miniplayer_previous"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_miniplayer_previous" />
+
             <ImageButton
                 android:id="@+id/btn_homeplayer_play"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/btn_miniplayer_play"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_miniplayer_play" />
+
             <ImageButton
                 android:id="@+id/btn_homeplayer_pause"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
+                android:scaleType="centerInside"
                 android:src="@drawable/btn_miniplay_pause"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <ImageButton
                 android:id="@+id/btn_homeplayer_next"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/btn_miniplayer_next"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_miniplayer_next" />
+
             <ImageButton
                 android:id="@+id/btn_homeplayer_queuemusic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/btn_miniplayer_go_list"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_miniplayer_go_list" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

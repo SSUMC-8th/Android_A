@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.SeekBar
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +22,8 @@ class SongActivity : AppCompatActivity() {
     private lateinit var arrowDownButton : ImageButton
     private var returnString: String = "제목"
     var playCheck = true;
+    private var currentPosition: Int = 0
+    private var durationSong: Int = 0
 
     //노래 재생을 위한 정의
     private lateinit var btnPlay : ImageButton
@@ -39,11 +42,14 @@ class SongActivity : AppCompatActivity() {
         setContentView(R.layout.activity_song)
 
         //전달 데이터
-        val title = intent.getStringExtra("title") ?: "제목"
-        val artist = intent.getStringExtra("artist") ?: "가수"
-        val lyric1 = intent.getStringExtra("lyric1") ?: "가사1"
-        val lyric2 = intent.getStringExtra("lyric2") ?: "가사2"
-        playCheck = intent.getBooleanExtra("playCheck", true)
+        val songPlay = intent.getParcelableExtra<SongPlay>("songPlay")
+        val title = songPlay!!.title
+        val artist = songPlay.artist
+        val lyric1 = songPlay.lyric1
+        val lyric2 = songPlay.lyric2
+        playCheck = songPlay.playCheck
+        currentPosition = songPlay.currentPosition
+        durationSong = songPlay.durationSong
 
         findViewById<TextView>(R.id.tv_songName_songActivity).text = title
         findViewById<TextView>(R.id.tv_artistName_songActivity).text = artist
@@ -58,6 +64,13 @@ class SongActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayer.create(this, R.raw.lady_kenshi_yonezu)
         seekBar.max = mediaPlayer.duration
         endString.text = milliTotime(mediaPlayer.duration)
+
+        //받아온 걸로 다시
+        seekBar.max = durationSong
+        endString.text = milliTotime(durationSong)
+        mediaPlayer.seekTo(currentPosition)
+        startString.text = milliTotime(currentPosition)
+        
 
         //처음 재생버튼 초기화
         checkPlay()
@@ -98,6 +111,14 @@ class SongActivity : AppCompatActivity() {
         })
 
 
+        //뒤로가기 눌렀을 때 처리
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                returnHome()
+            }
+        })
+        
+        
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -151,7 +172,7 @@ class SongActivity : AppCompatActivity() {
                 else if (mediaPlayer.isPlaying) {
                     //설정
                     runOnUiThread {
-                        val currentPosition = mediaPlayer.currentPosition
+                        currentPosition = mediaPlayer.currentPosition
                         seekBar.progress = currentPosition
                         startString.text = milliTotime(currentPosition)
                     }
@@ -186,9 +207,13 @@ class SongActivity : AppCompatActivity() {
     private fun returnHome(){
         val resultIntent = Intent()
         resultIntent.putExtra("title", returnString)
+        //추가로 재생 정보
+        resultIntent.putExtra("currentPosition", currentPosition)
+        resultIntent.putExtra("playCheck", playCheck)
         setResult(RESULT_OK, resultIntent)
         finish()
     }
+    
 
     //노래 멈추기
     override fun onDestroy() {
