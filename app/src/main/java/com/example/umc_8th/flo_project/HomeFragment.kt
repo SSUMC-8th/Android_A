@@ -1,12 +1,15 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -83,7 +86,7 @@ class HomeFragment:Fragment() {
         return binding.root
     }
 
-//    private fun autoSlide(adapter: PannelVPAdapter){
+    //    private fun autoSlide(adapter: PannelVPAdapter){
 //        slideRunnable=object:Runnable{
 //            override fun run(){
 //                val nextItem= binding.homeFragTop.currentItem+1

@@ -9,7 +9,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UMC_8th">
         <activity
-            android:name=".SmallMainActivity"
+            android:name=".SubMemoJangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SubMemoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity
+            android:name=".SmallMainActivity"
+            android:exported="false">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+    </application>
 </manifest>
