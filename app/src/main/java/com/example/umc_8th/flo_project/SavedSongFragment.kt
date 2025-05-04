@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.umc_8th.MainActivity
 import com.google.gson.Gson
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.FragmentSavedSongBinding
@@ -27,13 +26,20 @@ class SavedSongFragment:Fragment() {
         binding=FragmentSavedSongBinding.inflate(inflater, container, false)
 
         albumDatas.apply {
-            add(Album("Butter", "방탄소년단 (BTS)", R.drawable.img_album_exp))
-            add(Album("Lilac", "아이유 (IU)", R.drawable.img_album_exp2))
-            add(Album("Next Level", "에스파 (AESPA)", R.drawable.img_album_exp3))
-            add(Album("Boy with Luv", "방탄소년단 (BTS)", R.drawable.img_album_exp4))
-            add(Album("BBoom BBoom", "모모랜드 (MOMOLAND)", R.drawable.img_album_exp5))
-            add(Album("Weekend", "태연 (Tae Yeon)", R.drawable.img_album_exp6))
+            add(Album(id = 1, title = "LILAC", singer = "아이유 (IU)", coverImage = R.drawable.img_album_exp2))
+            add(Album(id = 2, title = "Butter", singer = "BTS", coverImage = R.drawable.img_album_exp))
+            add(Album(id = 3, title = "NextLevel", singer = "에스파", coverImage = R.drawable.img_album_exp3))
+            add(Album(id = 4, title = "Weekend", singer = "태연", coverImage = R.drawable.img_album_exp4))
+            add(Album(id = 5, title = "BBoom BBoom", singer = "모모랜드", coverImage = R.drawable.img_album_exp5))
+            add(Album(id = 6, title = "Drama", singer = "에스타", coverImage = R.drawable.img_album_drama))
+            add(Album(id = 1, title = "LILAC", singer = "아이유 (IU)", coverImage = R.drawable.img_album_exp2))
+            add(Album(id = 2, title = "Butter", singer = "BTS", coverImage = R.drawable.img_album_exp))
+            add(Album(id = 3, title = "NextLevel", singer = "에스파", coverImage = R.drawable.img_album_exp3))
+            add(Album(id = 4, title = "Weekend", singer = "태연", coverImage = R.drawable.img_album_exp4))
+            add(Album(id = 5, title = "BBoom BBoom", singer = "모모랜드", coverImage = R.drawable.img_album_exp5))
+            add(Album(id = 6, title = "Drama", singer = "에스타", coverImage = R.drawable.img_album_drama))
         }
+
 
         val lockerAlbumRVAdapter = LockerAlbumRVAdapter(albumDatas)
         binding.lockerMusicAlbumRv.adapter = lockerAlbumRVAdapter

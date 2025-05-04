@@ -34,7 +34,7 @@ class LockerAlbumRVAdapter (private val albumList: ArrayList<Album>) : RecyclerV
         fun bind(album: Album){
             binding.itemLockerAlbumTitleTv.text = album.title
             binding.itemLockerAlbumSingerTv.text = album.singer
-            binding.itemLockerAlbumCoverImgIv.setImageResource(album.imageRes!!)
+            binding.itemLockerAlbumCoverImgIv.setImageResource(album.coverImage!!)
         }
     }
 
