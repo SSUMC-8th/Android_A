@@ -32,7 +32,7 @@ class AlbumRecyclerFragment : Fragment() {
 
         // 📌 더미 데이터 추가 (여기에 position 값에 따라 다르게 넣을 수도 있음)
         val albumList = listOf(
-            AlbumItem(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
+            AlbumItem(R.drawable.img_album_exp6, "Weekend", "태연"),
             AlbumItem(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
             AlbumItem(R.drawable.img_album_exp3, "Album Three", "Artist C"),
             AlbumItem(R.drawable.img_album_exp4, "Album Four", "Artist D"),

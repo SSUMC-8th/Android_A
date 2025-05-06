@@ -23,7 +23,7 @@ class SavedFragment:Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //음악 리스트
-        val savedList = listOf(
+        val savedList = mutableListOf(
             SavedData(
                 savedImg = R.drawable.img_album_lovewinsall,
                 savedName = "love wins all",
@@ -76,7 +76,14 @@ class SavedFragment:Fragment(){
             )
         )
 
-        val savedAdapter = SavedAdapter(savedList)
+        lateinit var savedAdapter: SavedAdapter //먼저 선언
+
+        savedAdapter = SavedAdapter(savedList, object : SavedAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int){
+                savedAdapter.removeItem(position)
+            }
+        })
+        
         binding.savedRecyclerView.layoutManager =LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, false)
         binding.savedRecyclerView.adapter = savedAdapter
     }
