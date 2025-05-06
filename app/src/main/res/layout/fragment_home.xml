@@ -16,13 +16,13 @@
         android:orientation="vertical"
         android:fillViewport="true">
 
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/banner_pager"
             android:layout_width="match_parent"
             android:layout_height="380dp"
             tools:layout_editor_absoluteX="-54dp"
-            tools:layout_editor_absoluteY="-194dp"/>
-
+            tools:layout_editor_absoluteY="-194dp" />
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/dotsIndicator"

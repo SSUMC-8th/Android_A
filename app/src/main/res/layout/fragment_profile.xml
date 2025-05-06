@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/profileFragment"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.example.umc_8th.fragment.ProfileFragment"
     >
 
@@ -41,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@id/storage"
         app:tabSelectedTextColor="@android:color/black"
         app:tabTextColor="@android:color/black">

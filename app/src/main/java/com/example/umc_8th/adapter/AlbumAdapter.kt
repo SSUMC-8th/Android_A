@@ -1,8 +1,9 @@
-package com.example.umc_8th
+package com.example.umc_8th.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_8th.AlbumItem
 import com.example.umc_8th.databinding.AlbumRecyclerviewBinding
 
 class AlbumAdapter(private val albumList: List<AlbumItem>,

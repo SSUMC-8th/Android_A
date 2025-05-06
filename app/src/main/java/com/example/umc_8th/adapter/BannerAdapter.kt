@@ -1,7 +1,8 @@
-package com.example.umc_8th
+package com.example.umc_8th.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.umc_8th.BannerItem
 import com.example.umc_8th.fragment.BannerFragment
 
 class BannerAdapter(fragment: Fragment, private val banners: List<BannerItem>) : FragmentStateAdapter(fragment) {

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.umc_8th.NewSongAdapter
+import com.example.umc_8th.adapter.NewSongAdapter
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator

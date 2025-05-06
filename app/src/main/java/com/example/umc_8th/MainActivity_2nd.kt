@@ -20,8 +20,6 @@ import com.example.umc_8th.databinding.ActivityMain2ndBinding
 class MainActivity_2nd : AppCompatActivity(){
 
 
-
-
     private lateinit var mBinding : ActivityMain2ndBinding
     val TAG: String = "로그"
 
@@ -32,6 +30,7 @@ class MainActivity_2nd : AppCompatActivity(){
         )
     }
 
+    //seekbar리스너 변수 설정
     private val progressListener: (Int) -> Unit = { progress ->
         mBinding.timeSeekBar.progress = progress
     }
