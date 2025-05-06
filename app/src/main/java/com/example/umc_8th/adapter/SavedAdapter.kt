@@ -43,8 +43,12 @@ class SavedAdapter(
 
     override fun getItemCount(): Int = savedList.size
 
-    fun removeItem(position: Int) {
-        savedList.removeAt(position)
-        notifyItemRemoved(position)
+
+    fun updateList(newList: List<SavedData>) {
+        savedList.clear()
+        savedList.addAll(newList)
+        notifyDataSetChanged()
+
     }
+
 }
