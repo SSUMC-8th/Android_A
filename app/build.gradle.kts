@@ -133,6 +133,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.kapt")
+    id("kotlin-kapt")
 }
 
 android {

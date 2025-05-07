@@ -64,8 +64,6 @@ class HomeFragment:Fragment(), CommunicationInterface {
         val pannelAdapter = PannelVPAdapter(this)
         pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
         pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
-        pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
-        pannelAdapter.addFragment(PannelFragment(R.drawable.img_first_album_default))
         binding.homeFragTop.adapter=pannelAdapter
         binding.homeFragTop.orientation=ViewPager2.ORIENTATION_HORIZONTAL
 
