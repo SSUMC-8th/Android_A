@@ -123,17 +123,25 @@ class HomeFragment : Fragment() {
         val rcv_categorySong = view?.findViewById<RecyclerView>(R.id.rcv_categorySong_home)
         //사용할 Item들을 정의
         val songList = listOf(
+            Song("アイドル", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
             Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
-            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner"),
-            Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
+            Song("愛を伝えたいだとか", "Aimyon", R.drawable.aiwotsutaetaidatoka, "愛を伝えたいだとか"),
+            Song("勇者", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
             Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
-            Song("Plazma", "Kenshi Yonezu", R.drawable.plazma, "Digital single")
+            Song("群青", "Yoasobi", R.drawable.thebook, "THE BOOK"),
         )
-        val adaptor_categorySong = AlbumRecyclerAdaptor(songList, ::moveAlbumFragment)
+        val adaptor_categorySong = AlbumRecyclerAdaptor(songList, ::moveAlbumFragment, ::setMiniPlayerView)
         rcv_categorySong?.adapter = adaptor_categorySong
         //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
         rcv_categorySong?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    fun setMiniPlayerView(song: Song){
+        val homehome = requireActivity() as? MainActivity
+        homehome?.updateMiniplayerString(song.title, song.artist)
+
+        //직접 할 수도 있다.
+        //homehome?.tvTitle.text = song.title
     }
 
     fun moveAlbumFragment(song: Song){

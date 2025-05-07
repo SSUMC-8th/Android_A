@@ -16,5 +16,11 @@
         <item name="cornerSize">12dp</item> <!-- 여기서 둥글기 조절 -->
     </style>
 
+    <style name="ImageRoundCorner_two" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item> <!-- 여기서 둥글기 조절 -->
+    </style>
+
+
     <style name="Theme.UMC_8th" parent="Base.Theme.UMC_8th" />
 </resources>
