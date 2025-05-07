@@ -3,9 +3,11 @@ package com.example.floclone.adaptor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.floclone.R
 import com.example.floclone.Song
 
@@ -13,7 +15,11 @@ import com.example.floclone.Song
 //데이터-뷰 연결 + View 생성(각 요소들), View 재사용, 클릭 처리 등
 //private val onImageClick: (Song) -> Unit) :
 // ㄴ onImageClick 변수를 생성 이 타입은 song 객체를 인자로 받아 return X
-class AlbumRecyclerAdaptor(private val songList:List<Song>, private val onImageClick: (Song) -> Unit):
+class AlbumRecyclerAdaptor(
+    private val songList:List<Song>,
+    private val onImageClick: (Song) -> Unit,
+    private val onPlayClick: (Song) -> Unit
+):
         RecyclerView.Adapter<AlbumRecyclerAdaptor.ViewHolder>() {
 
     // ViewHolder(하나의 아이템을 구성하는 뷰들의 모음)
@@ -21,6 +27,7 @@ class AlbumRecyclerAdaptor(private val songList:List<Song>, private val onImageC
         val imageView: ImageView = itemView.findViewById(R.id.imv_albumCover_home_recycler)
         val titleView: TextView = itemView.findViewById(R.id.tv_songName_home_recycler)
         val artistView: TextView = itemView.findViewById(R.id.tv_artistName_home_recycler)
+        val btnPlay: ImageButton = itemView.findViewById(R.id.btn_playbutton_home_recycler)
     }
 
     //아이템에 대한 View 생성
@@ -34,12 +41,21 @@ class AlbumRecyclerAdaptor(private val songList:List<Song>, private val onImageC
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val song = songList[position]
         holder.imageView.setImageResource(song.image)
+
+        //Glide.with(holder.itemView.context)
+        //    .load(song.image) // 여기 song.image는 R.drawable.xxx여도 되고, URI, URL도 가능
+        //    .into(holder.imageView)
+
+
         holder.titleView.text = song.title
         holder.artistView.text = song.artist
 
-        //onclicklistener 설정
+        //onclicklistener 설정 (콜백함수 설정)
         holder.imageView.setOnClickListener{
             onImageClick(song)
+        }
+        holder.btnPlay.setOnClickListener {
+            onPlayClick(song)
         }
     }
 

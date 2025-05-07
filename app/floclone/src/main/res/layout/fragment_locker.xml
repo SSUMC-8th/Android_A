@@ -68,6 +68,7 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_Locker_lockerFragment"
         android:layout_width="match_parent"

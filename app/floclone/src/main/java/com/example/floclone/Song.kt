@@ -13,4 +13,5 @@ data class Song(
     val artist: String,
     val image: Int,
     val albumName: String,
+    var isPlaying: Boolean = false
 ) : Parcelable

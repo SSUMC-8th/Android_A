@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.floclone.R
+import com.example.floclone.Song
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +39,39 @@ class Locker_SavesongFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_locker__savesong, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setSavesongRecyclerView()
+
+    }
+
+
+    private fun setSavesongRecyclerView(){
+
+        val rcv_savesong = view?.findViewById<RecyclerView>(R.id.rcv_savesongs_savesong)
+        val songList = arrayListOf(
+            Song("アイドル", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
+            Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
+            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner"),
+            Song("勇者", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
+            Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
+            Song("青春と青春と青春", "Aimyon", R.drawable.kimiwarockwokikanai, "君はロックを聴かない"),
+            Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
+            Song("マリーゴールド", "Aimyon", R.drawable.marigold, "マリーゴールド"),
+            Song("夜に駆ける", "Yoasobi", R.drawable.thebook, "THE BOOK"),
+            Song("群青", "Yoasobi", R.drawable.thebook, "THE BOOK"),
+        )
+
+
+        val adaptor_savesong = SavesongRecyclerAdaptor(songList)
+        rcv_savesong?.adapter = adaptor_savesong
+        //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
+        rcv_savesong?.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
     }
 
     companion object {

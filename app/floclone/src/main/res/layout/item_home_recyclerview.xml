@@ -39,4 +39,16 @@
         app:layout_constraintTop_toBottomOf="@id/tv_songName_home_recycler"
         app:layout_constraintStart_toStartOf="@id/imv_albumCover_home_recycler"/>
 
+
+    <ImageButton
+        android:id="@+id/btn_playbutton_home_recycler"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/btn_miniplayer_white"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/imv_albumCover_home_recycler"
+        app:layout_constraintEnd_toEndOf="@id/imv_albumCover_home_recycler"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

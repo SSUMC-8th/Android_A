@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPlay : ImageButton
     private lateinit var btnPause : ImageButton
 
+    lateinit var tvTitle : TextView
+    lateinit var tvArtist : TextView
 
     //registerForActivityResult
     private val songResultLauncher = registerForActivityResult(
@@ -79,8 +81,11 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        var title = findViewById<TextView>(R.id.tv_homeplayer_title).text.toString()
-        var artist = findViewById<TextView>(R.id.tv_homeplayer_artist).text.toString()
+        tvTitle = findViewById<TextView>(R.id.tv_homeplayer_title)
+        tvArtist = findViewById<TextView>(R.id.tv_homeplayer_artist)
+
+        var title = tvTitle.text.toString()
+        var artist = tvArtist.text.toString()
 
         btnPlay = findViewById<ImageButton>(R.id.btn_homeplayer_play);
         btnPause = findViewById<ImageButton>(R.id.btn_homeplayer_pause);
@@ -154,6 +159,12 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
+    }
+
+    //fragment에서 activity 내용을 바꿀 수 있도록 함수 정의
+    fun updateMiniplayerString(title: String, artist: String){
+        tvTitle.text = title
+        tvArtist.text = artist
     }
 
 
