@@ -1,25 +1,36 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.example.umc_8th.MainActivity
+import com.google.gson.Gson
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.FragmentHomeBinding
 import java.util.TimerTask
 import kotlin.concurrent.timer
 
-class HomeFragment:Fragment() {
+class HomeFragment:Fragment(), CommunicationInterface {
     lateinit var binding: FragmentHomeBinding
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var slideRunnable: Runnable
+    private var albumDatas = ArrayList<Album>()
+
+     override fun sendData(album: Album) { // MainActivity의 UI를 업데이트하기 위해 사용하는 메서드
+        if (activity is FloMainActivity) {
+            val activity = activity as FloMainActivity
+            activity.updateMainPlayerCl(album)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -30,14 +41,24 @@ class HomeFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentHomeBinding.inflate(inflater, container, false)
-        val albumList= listOf(
-            Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2),
-            Album("Butter", "BTS", R.drawable.img_album_exp),
-            Album("NextLevel", "에스파", R.drawable.img_album_exp3),
-            Album("Weekend", "태연", R.drawable.img_album_exp4),
-            Album("Baam", "모모랜드", R.drawable.img_album_exp5),
-            Album("Drama", "에스타", R.drawable.img_album_drama)
-        )
+//        val albumList= listOf(
+//            Album("LILAC", "아이유 (IU)", R.drawable.img_album_exp2),
+//            Album("Butter", "BTS", R.drawable.img_album_exp),
+//            Album("NextLevel", "에스파", R.drawable.img_album_exp3),
+//            Album("Weekend", "태연", R.drawable.img_album_exp4),
+//            Album("Baam", "모모랜드", R.drawable.img_album_exp5),
+//            Album("Drama", "에스타", R.drawable.img_album_drama)
+//        )
+
+        albumDatas.apply {
+            add(Album(id = 1, title = "LILAC", singer = "아이유 (IU)", coverImage = R.drawable.img_album_exp2))
+            add(Album(id = 2, title = "Butter", singer = "BTS", coverImage = R.drawable.img_album_exp))
+            add(Album(id = 3, title = "NextLevel", singer = "에스파", coverImage = R.drawable.img_album_exp3))
+            add(Album(id = 4, title = "Weekend", singer = "태연", coverImage = R.drawable.img_album_exp4))
+            add(Album(id = 5, title = "BBoom BBoom", singer = "모모랜드", coverImage = R.drawable.img_album_exp5))
+            add(Album(id = 6, title = "Drama", singer = "에스타", coverImage = R.drawable.img_album_drama))
+        }
+
 
         //ViewPager, VPAdapter연결
         val pannelAdapter = PannelVPAdapter(this)
@@ -63,27 +84,39 @@ class HomeFragment:Fragment() {
         autoSlide(bannerAdapter)
 
 //        앨범 목록 RecyclerView설정
-        val adapter = AlbumAdapter(albumList){album->
-            val fragment =AlbumFragment()
-            val bundle = Bundle()
-            bundle.putSerializable("album", album)
-            fragment.arguments=bundle
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
-        binding.homeTodayMusicAlbumRv.adapter = adapter
-
+//        val adapter = AlbumAdapter(albumList){album->
+//            val fragment =AlbumFragment()
+//            val bundle = Bundle()
+//            bundle.putSerializable("album", album)
+//            fragment.arguments=bundle
+//
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.main_frame, fragment)
+//                .addToBackStack(null)
+//                .commit()
+//        }
+        val albumRVAdapter = AlbumAdapter(albumDatas)
+        binding.homeTodayMusicAlbumRv.adapter = albumRVAdapter
         binding.homeTodayMusicAlbumRv.layoutManager=
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+
+        //      앨범 데이터 연결
+        albumRVAdapter.setItemClickListener(object : AlbumAdapter.OnItemClickListener {
+            override fun onItemClick(album: Album) {
+                changeToAlbumFragment(album)
+            }
+
+            override fun onPlayAlbum(album: Album) {
+                sendData(album)
+            }
+
+        })
 
 
         return binding.root
     }
 
-//    private fun autoSlide(adapter: PannelVPAdapter){
+    //    private fun autoSlide(adapter: PannelVPAdapter){
 //        slideRunnable=object:Runnable{
 //            override fun run(){
 //                val nextItem= binding.homeFragTop.currentItem+1
@@ -93,6 +126,18 @@ class HomeFragment:Fragment() {
 //        }
 //        handler.postDelayed(slideRunnable, 4000)
 //    }
+    private fun changeToAlbumFragment(album: Album) {
+        (context as FloMainActivity).supportFragmentManager.beginTransaction()
+            .replace(R.id.main_frame, AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    val gson = Gson()
+                    val albuToJson = gson.toJson(album)
+                    putString("album", albuToJson)
+                }
+            })
+            .commitAllowingStateLoss()
+    }
+
     private fun autoSlide(adapter: BannerAdapter) {
         slideRunnable = object : Runnable {
             override fun run() {

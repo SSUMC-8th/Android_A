@@ -17,7 +17,8 @@ import umc.study.umc_8th.databinding.FragmentLockerBinding
 class LockerFragment : Fragment(){
     private lateinit var binding: FragmentLockerBinding
     private lateinit var lockerAdapter: LockerPageAdapter
-    private val info = arrayListOf("저장한 곡", "음악파일")
+    private val information = arrayListOf("저장한 곡", "음악파일")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -32,15 +33,17 @@ class LockerFragment : Fragment(){
 
         val lockerPageAdapter = LockerPageAdapter(this)
         binding.lockerContentVp.adapter=lockerPageAdapter
-
-        val tabLayout = binding.lockerContentTb
-        TabLayoutMediator(tabLayout, binding.lockerContentVp){tab, position ->
-            tab.text = when(position){
-                0 -> "저장한 곡"
-                1 -> "음악파일"
-                else -> ""
-            }
+        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
+            tab.text = information[position]
         }.attach()
+//        val tabLayout = binding.lockerContentTb
+//        TabLayoutMediator(tabLayout, binding.lockerContentVp){tab, position ->
+//            tab.text = when(position){
+//                0 -> "저장한 곡"
+//                1 -> "음악파일"
+//                else -> ""
+//            }
+//        }.attach()
 
         //커스텀 슬라이드
 //        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
