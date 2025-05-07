@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.umc_8th.NewSongAdapter
+import com.example.umc_8th.adapter.NewSongAdapter
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -29,7 +29,6 @@ class AlbumFragment : Fragment() {
         // 🔹 HomeFragment에서 전달받은 데이터 가져오기
         val albumTitle = arguments?.getString("title") ?: "제목 없음"
         val artist = arguments?.getString("artist") ?: "아티스트 정보 없음"
-        //val imageRes = arguments?.getInt("imageRes", R.drawable.ic_launcher_foreground)
         val imageRes = arguments?.getInt("imageRes") ?: R.drawable.ic_launcher_foreground
 
         // 🔹 UI 업데이트 (binding 사용)

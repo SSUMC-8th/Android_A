@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.umc_8th.BannerAlbumAdapter
+import com.example.umc_8th.adapter.BannerAlbumAdapter
 import com.example.umc_8th.BannerAlbumItem
-import com.example.umc_8th.BannerItem
 import com.example.umc_8th.MainActivity_2nd
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentBannerAlbumBinding

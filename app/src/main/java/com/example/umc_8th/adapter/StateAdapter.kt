@@ -1,4 +1,4 @@
-package com.example.umc_8th
+package com.example.umc_8th.adapter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

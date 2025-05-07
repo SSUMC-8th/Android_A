@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.umc_8th.AlbumAdapter
+import com.example.umc_8th.adapter.AlbumAdapter
 import com.example.umc_8th.AlbumItem
 import com.example.umc_8th.R
 import androidx.navigation.fragment.findNavController
-import com.example.umc_8th.BannerAdapter
+import com.example.umc_8th.adapter.BannerAdapter
 import com.example.umc_8th.BannerItem
-import com.example.umc_8th.StateAdapter
+import com.example.umc_8th.MainActivity_2nd
+import com.example.umc_8th.adapter.StateAdapter
 import com.example.umc_8th.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -43,15 +43,18 @@ class HomeFragment : Fragment() {
         )
 
         // 어댑터 설정
-        albumAdapter = AlbumAdapter(albumList) { album ->
+        albumAdapter = AlbumAdapter(albumList, { title, artist ->
+            // 플레이 버튼 클릭 시 미니플레이어에 데이터 전달
+            (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
+        }, { album ->
+            // 앨범 클릭 시 상세 화면으로 이동
             val bundle = Bundle().apply {
                 putString("title", album.albumName)
                 putString("artist", album.artistName)
                 putInt("imageRes", album.albumImage)
             }
-
-            findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle) // 🔥 navigate 사용
-        }
+            findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
+        })
         //binding.albumRecyclerView.adapter = albumAdapter
 
         val bannerList = listOf(

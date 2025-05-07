@@ -1,4 +1,4 @@
-package com.example.umc_8th
+package com.example.umc_8th.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
