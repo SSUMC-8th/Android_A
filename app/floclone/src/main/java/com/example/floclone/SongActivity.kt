@@ -8,6 +8,7 @@ import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.SeekBar
 import androidx.activity.OnBackPressedCallback
@@ -16,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.example.floclone.database.Song as SongDB
 
 class SongActivity : AppCompatActivity() {
 
@@ -24,6 +28,11 @@ class SongActivity : AppCompatActivity() {
     var playCheck = true;
     private var currentPosition: Int = 0
     private var durationSong: Int = 0
+
+    //노래 추가
+    private var songId : Int = 0
+    private lateinit var songList : ArrayList<SongDB>
+    private var nowPos : Int = 0
 
     //노래 재생을 위한 정의
     private lateinit var btnPlay : ImageButton
@@ -41,21 +50,32 @@ class SongActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_song)
 
+        //sharedPreference로 전달 데이터
+        val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+        songId = sharedPref.getInt("songId", 1)
+        val Json = sharedPref.getString("songList", "")
+        val gson = Gson()
+        val type = object : TypeToken<ArrayList<SongDB>>() {}.type
+        songList = gson.fromJson(Json, type)
+
+        for(i in 0 until songList.size){
+            if(songList.get(i).id == songId){
+                nowPos = i
+            }
+        }
+
         //전달 데이터
         val songPlay = intent.getParcelableExtra<SongPlay>("songPlay")
-        val title = songPlay!!.title
-        val artist = songPlay.artist
-        val lyric1 = songPlay.lyric1
-        val lyric2 = songPlay.lyric2
-        playCheck = songPlay.playCheck
-        currentPosition = songPlay.currentPosition
+        playCheck = songList.get(nowPos).isPlaying
+        currentPosition = songPlay!!.currentPosition
         durationSong = songPlay.durationSong
 
-        findViewById<TextView>(R.id.tv_songName_songActivity).text = title
-        findViewById<TextView>(R.id.tv_artistName_songActivity).text = artist
-        findViewById<TextView>(R.id.tv_lyric1_songActivity).text = lyric1
-        findViewById<TextView>(R.id.tv_lyric2_songActivity).text = lyric2
-        returnString = title
+        findViewById<TextView>(R.id.tv_songName_songActivity).text = songList.get(nowPos).title
+        findViewById<TextView>(R.id.tv_artistName_songActivity).text = songList.get(nowPos).singer
+        findViewById<TextView>(R.id.tv_lyric1_songActivity).text = "가사 1"
+        findViewById<TextView>(R.id.tv_lyric2_songActivity).text = "가사 2"
+        findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg!!)
+        returnString = songList.get(nowPos).title
 
         //UI 연결 작업
         initUI()
@@ -90,8 +110,8 @@ class SongActivity : AppCompatActivity() {
             playCheck = false;
             checkPlay()
         }
-        btnPrevious.setOnClickListener {resetSong()}
-        btnNext.setOnClickListener {resetSong()}
+        btnPrevious.setOnClickListener {resetSong(1)}
+        btnNext.setOnClickListener {resetSong(2)}
         /** 버튼 listener 정의 끝 **/
 
         //Seekbar를 눌러서 변화할 때 Listener
@@ -183,8 +203,8 @@ class SongActivity : AppCompatActivity() {
         updateThread?.start()
     }
 
-    //일단 누르면 정지
-    private fun resetSong(){
+    //일단 누르면 정지(mode = 1 (이전) / mode = 2 (다음)
+    private fun resetSong(mode : Int){
         mediaPlayer.seekTo(0) //0이동
         seekBar.progress = 0 //seekbar도 0
         startString.text = milliTotime(0) //text도 0
@@ -194,6 +214,30 @@ class SongActivity : AppCompatActivity() {
             playCheck = false
             checkPlay()
         }
+
+        //UI 작업
+        if(mode == 1){
+            songId -= 1
+            if(songId < 1){ //최소 번호 1번으로 갈 경우 1로 고정
+                songId = 1
+            }
+        }
+        else{
+            songId += 1
+            if(songId > songList.size){
+                songId = songList.size
+            }
+        }
+
+        for(i in 0 until songList.size) {
+            if (songList.get(i).id == songId) {
+                nowPos = i
+            }
+        }
+
+        findViewById<TextView>(R.id.tv_songName_songActivity).text = songList.get(nowPos).title
+        findViewById<TextView>(R.id.tv_artistName_songActivity).text = songList.get(nowPos).singer
+        findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg!!)
 
     }
 
@@ -205,6 +249,9 @@ class SongActivity : AppCompatActivity() {
     }
 
     private fun returnHome(){
+        val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+        sharedPref.edit().putInt("songId", songId).apply()
+
         val resultIntent = Intent()
         resultIntent.putExtra("title", returnString)
         //추가로 재생 정보

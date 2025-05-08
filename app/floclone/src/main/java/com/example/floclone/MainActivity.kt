@@ -20,12 +20,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.floclone.database.Album
+import com.example.floclone.database.AlbumDatabase
+import com.example.floclone.database.SongDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Job
 
+import com.example.floclone.database.Song as SongDB
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,9 +47,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var btnPlay : ImageButton
     private lateinit var btnPause : ImageButton
+    private lateinit var btnPrevious : ImageButton
+    private lateinit var btnNext : ImageButton
 
     lateinit var tvTitle : TextView
     lateinit var tvArtist : TextView
+
+    private var songId: Int = 0
+    private var songList: ArrayList<SongDB> = arrayListOf()
+    private var nowPos: Int = 0
 
     //registerForActivityResult
     private val songResultLauncher = registerForActivityResult(
@@ -73,6 +85,17 @@ class MainActivity : AppCompatActivity() {
                 btnPlay.visibility = View.VISIBLE
                 btnPause.visibility = View.GONE
             }
+
+            //SongActivity UI 연동
+            val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+            songId = sharedPref.getInt("songId", 1)
+            for(i in 0 until songList.size){
+                if(songList.get(i).id == songId){nowPos = i}
+            }
+            tvTitle.text = songList.get(nowPos).title
+            tvArtist.text = songList.get(nowPos).singer
+
+
         }
     }
 
@@ -80,6 +103,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        //DB랑 sharedPreference에서 가져오기
+        initSong()
+        initPlayList()
 
         tvTitle = findViewById<TextView>(R.id.tv_homeplayer_title)
         tvArtist = findViewById<TextView>(R.id.tv_homeplayer_artist)
@@ -89,6 +116,8 @@ class MainActivity : AppCompatActivity() {
 
         btnPlay = findViewById<ImageButton>(R.id.btn_homeplayer_play);
         btnPause = findViewById<ImageButton>(R.id.btn_homeplayer_pause);
+        btnPrevious = findViewById<ImageButton>(R.id.btn_homeplayer_previous)
+        btnNext = findViewById<ImageButton>(R.id.btn_homeplayer_next)
 
         //홈 뮤직 정의
         handleMusic()
@@ -133,6 +162,36 @@ class MainActivity : AppCompatActivity() {
             playCheck = false
             stopMusic()
         }
+        btnPrevious.setOnClickListener {
+            songId -= 1
+            if(songId < 1){ //최소 번호 1번으로 갈 경우 1로 고정
+                songId = 1
+            }
+
+            for(i in 0 until songList.size) {
+                if (songList.get(i).id == songId) {
+                    nowPos = i
+                }
+            }
+
+            tvTitle.text = songList.get(nowPos).title
+            tvArtist.text = songList.get(nowPos).singer
+        }
+        btnNext.setOnClickListener {
+            songId += 1
+            if(songId > songList.size){
+                songId = songList.size
+            }
+
+            for(i in 0 until songList.size) {
+                if (songList.get(i).id == songId) {
+                    nowPos = i
+                }
+            }
+
+            tvTitle.text = songList.get(nowPos).title
+            tvArtist.text = songList.get(nowPos).singer
+        }
 
         //플레이 바랑 연결해서 노래 액티비티로 이동
         clHomeplayer = findViewById(R.id.cl_homeplayer)
@@ -142,6 +201,10 @@ class MainActivity : AppCompatActivity() {
                 stopMusic()
             }
             updateJob?.cancel()
+
+            //sharedPreference에 현재 songID 저장
+            val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+            sharedPref.edit().putInt("songId", songId).apply()
 
             //intent 처리
             val intent = Intent(this, SongActivity::class.java)
@@ -153,6 +216,9 @@ class MainActivity : AppCompatActivity() {
             //intent를 만들고 startActivity 대신 registerForActivityResult를 수행
             songResultLauncher.launch(intent)
         })
+
+        //DB에 넣을 때
+        inputSongs()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -219,6 +285,87 @@ class MainActivity : AppCompatActivity() {
                 seekBar.progress = currentPosition
             }
         }
+
+    }
+
+    //현재 노래의 ID를 가져오기(Sharedpreference)
+    private fun initSong(){
+        //sharedPreferences 적용 및 가져오기
+        val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+
+        //값 넣기
+        //sharedPref.edit().putInt("songId", 1).apply()
+        songId = sharedPref.getInt("songId", 1)
+    }
+    //현재 DB에서 노래들 가져오기(RoomDB)
+    private fun initPlayList(){
+        val dao = SongDatabase.getDatabase(this).songDao()
+
+        lifecycleScope.launch{
+            //DB에서 모든 노래들 가져오기
+            val songs = dao.getAllSongs()
+            val songsList = ArrayList(songs)
+
+            //이를 json 형태로 바꾸기
+            val gson = Gson()
+            val json = gson.toJson(songsList)
+
+            //sharedPreference에 저장
+            val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+            sharedPref.edit().putString("songList", json).apply()
+
+            
+            //sharedPreference에서 가져오기(json -> ArrayList)
+            val getJson = sharedPref.getString("songList", "")
+            val gson2 = Gson()
+            val type = object : TypeToken<ArrayList<SongDB>>() {}.type
+            songList = gson2.fromJson(getJson, type)
+
+            //UI 작업
+            for(i in 0 until songList.size){
+                if(songList.get(i).id == songId){
+                    nowPos = i
+                }
+        }
+
+
+            tvTitle.text = songList.get(nowPos).title
+            tvArtist.text = songList.get(nowPos).singer
+
+        }
+
+    }
+
+    //temp(DB에 노래 저장)
+    private fun inputSongs(){
+        val db = SongDatabase.getDatabase(this)
+        val dao = db.songDao()
+
+        val db2 = AlbumDatabase.getDatabase(this)
+        val dao2 = db2.albumDao()
+
+
+
+        val albumList = listOf<Album>(
+            Album(title = "Lost corner", singer = "Kenshi Yonezu", coverImg = R.drawable.yone_lostcorner),
+            Album(title = "The book 3", singer = "Yoasobi", coverImg = R.drawable.thebook3),
+            Album(title = "愛を伝えたいだとか", singer = "Aimyon", coverImg = R.drawable.aiwotsutaetaidatoka),
+            Album(title = "Digital single", singer = "Kenshi Yonezu", coverImg = R.drawable.yone_lostcorner)
+        )
+
+
+        val songlist = listOf<SongDB>(
+            SongDB(title = "Lady", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Lady.mp3", coverImg = R.drawable.album_lady, isLike = false, albumIdx = 1),
+            SongDB(title = "愛を伝えたいだとか", singer = "Aimyon", second = 240, playTime = 0, isPlaying = false, music = "愛を伝えたいだとか.mp3", coverImg = R.drawable.aiwotsutaetaidatoka, isLike = false, albumIdx = 3),
+            SongDB(title = "勇者", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "勇者.mp3", coverImg = R.drawable.thebook3, isLike = false, albumIdx = 2),
+            SongDB(title = "群青", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "群青.mp3", coverImg = R.drawable.thebook, isLike = false, albumIdx = 2),
+            SongDB(title = "Spinning Globe", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Spinning Globe.mp3", coverImg = R.drawable.yone_lostcorner, isLike = false, albumIdx = 1),
+            SongDB(title = "Pop Song", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Pop Song.mp3", coverImg = R.drawable.yone_lostcorner, isLike = false, albumIdx = 1),
+            SongDB(title = "毎日", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "毎日.mp3", coverImg = R.drawable.yone_lostcorner, isLike = false, albumIdx = 1),
+            SongDB(title = "BOW AND ARROW", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "BOW AND ARROW.mp3", coverImg = R.drawable.bowandarrow, isLike = false, albumIdx = 4),
+            SongDB(title = "Plazma", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Plazma.mp3", coverImg = R.drawable.plazma, isLike = false, albumIdx = 4),
+            SongDB(title = "アイドル", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "アイドル.mp3", coverImg = R.drawable.thebook3, isLike = false, albumIdx = 2)
+        )
 
     }
 
