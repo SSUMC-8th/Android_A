@@ -60,6 +60,9 @@ class SongActivity : AppCompatActivity() {
         binding.songPlayerPauseIbtn.setOnClickListener{
             PlayerStatus(false)
         }
+        binding.songLikeIbtn.setOnClickListener {
+            setLike(songs[nowPos].isLike)
+        }
 
     }
 
@@ -67,13 +70,17 @@ class SongActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         songs[nowPos].second = (songs[nowPos].playTime * binding.songProgressV.progress) / 100000
+        Log.d("second", songs[nowPos].second.toString())
         songs[nowPos].isPlaying = false
         PlayerStatus(false)
+
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putInt("songId", songs[nowPos].id)
+        editor.putInt("second", songs[nowPos].second)
         editor.apply()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         timer.interrupt()
