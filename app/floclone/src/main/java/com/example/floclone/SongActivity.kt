@@ -17,8 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.floclone.database.SongDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
 import com.example.floclone.database.Song as SongDB
 
 class SongActivity : AppCompatActivity() {
@@ -44,6 +47,7 @@ class SongActivity : AppCompatActivity() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var seekBar: SeekBar
     private var updateThread: Thread? = null
+    private lateinit var btnFavorite : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,10 @@ class SongActivity : AppCompatActivity() {
         playCheck = songList.get(nowPos).isPlaying
         currentPosition = songPlay!!.currentPosition
         durationSong = songPlay.durationSong
+        btnFavorite = findViewById<ImageButton>(R.id.btn_favorite_songActivity)
+
+        if(songList.get(nowPos).isLike){btnFavorite.setImageResource(R.drawable.ic_my_like_on)}
+        else{btnFavorite.setImageResource(R.drawable.ic_my_like_off)}
 
         findViewById<TextView>(R.id.tv_songName_songActivity).text = songList.get(nowPos).title
         findViewById<TextView>(R.id.tv_artistName_songActivity).text = songList.get(nowPos).singer
@@ -112,6 +120,7 @@ class SongActivity : AppCompatActivity() {
         }
         btnPrevious.setOnClickListener {resetSong(1)}
         btnNext.setOnClickListener {resetSong(2)}
+        btnFavorite.setOnClickListener { handleFavorite() }
         /** 버튼 listener 정의 끝 **/
 
         //Seekbar를 눌러서 변화할 때 Listener
@@ -239,6 +248,9 @@ class SongActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_artistName_songActivity).text = songList.get(nowPos).singer
         findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg!!)
 
+        if(songList.get(nowPos).isLike){btnFavorite.setImageResource(R.drawable.ic_my_like_on)}
+        else{btnFavorite.setImageResource(R.drawable.ic_my_like_off)}
+
     }
 
     // 밀리초를 "분:초" 형식으로 변환하는 함수
@@ -259,6 +271,36 @@ class SongActivity : AppCompatActivity() {
         resultIntent.putExtra("playCheck", playCheck)
         setResult(RESULT_OK, resultIntent)
         finish()
+    }
+    
+    //좋아요 싫어요 버튼 눌렀을 때, songList에 반영 + DB에 업데이트
+    private fun handleFavorite(){
+        //songList에 반영
+        if(songList.get(nowPos).isLike){
+            songList.get(nowPos).isLike = false
+        }
+        else{
+            songList.get(nowPos).isLike = true
+        }
+        //sharedPreference에도
+        val gson = Gson()
+        val json = gson.toJson(songList)
+        //sharedPreference에 저장
+        val sharedPref = getSharedPreferences("Song", MODE_PRIVATE)
+        sharedPref.edit().putString("songList", json).apply()
+
+        //UI 반영
+        if(songList.get(nowPos).isLike){btnFavorite.setImageResource(R.drawable.ic_my_like_on)}
+        else{btnFavorite.setImageResource(R.drawable.ic_my_like_off)}
+
+        //DB에 반영
+        val db = SongDatabase.getDatabase(this)
+        val dao = db.songDao()
+
+        lifecycleScope.launch {
+            dao.updateSong(songList.get(nowPos))
+        }
+
     }
     
 
