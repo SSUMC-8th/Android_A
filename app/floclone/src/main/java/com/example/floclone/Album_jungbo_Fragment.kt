@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.floclone.database.Album
+import com.example.floclone.database.Song as SongDB
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,8 +25,10 @@ class Album_jungbo_Fragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var song: Song? = null
     private lateinit var tvJungbo: TextView
+
+    private lateinit var album: Album
+    private lateinit var songList: List<SongDB>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +50,14 @@ class Album_jungbo_Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            song = it.getParcelable("song")
+            album = it.getParcelable("album")!!
+            songList = it.getParcelableArrayList("songs")!!
         }
 
         tvJungbo = view.findViewById<TextView>(R.id.tv_detail_album_jungbo_frgment)
         var mytext = ""
-        mytext = "이 노래의 이름은 ${song?.title} 입니다.\n" +
-                "이 노래의 작곡가는 ${song?.artist} 입니다.\n" +
-                "이 노래의 수록 앨범은 ${song?.albumName} 입니다.\n"
+        mytext = "이 앨범의 이름은 ${album.title} 입니다.\n" +
+                "이 앨범의 작곡가는 ${album.singer} 입니다.\n"
 
         tvJungbo.text = mytext
 

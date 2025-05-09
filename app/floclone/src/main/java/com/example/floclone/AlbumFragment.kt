@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.adaptor.AlbumViewAdaptor
 import com.example.floclone.adaptor.SongsRecyclerAdaptor
+import com.example.floclone.database.Album
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+
+import com.example.floclone.database.Song as SongDB
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +43,9 @@ class AlbumFragment : Fragment() {
     private lateinit var albumImage: ImageView;
 
 
+    private lateinit var album: Album
+    private lateinit var songList: List<SongDB>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -60,15 +66,17 @@ class AlbumFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val song: Song? = arguments?.getParcelable<Song>("song")
+        arguments?.let {
+            album = it.getParcelable("album")!!
+            songList = it.getParcelableArrayList("songs")!!
+        }
 
         //val nowSong = args.song
-        val nowSong = song
         albumImage = view.findViewById<ShapeableImageView>(R.id.imv_albumCover_albumFragment);
 
-        view.findViewById<TextView>(R.id.tv_albumName_albumFragment).text = nowSong!!.albumName
-        view.findViewById<TextView>(R.id.tv_artistName_albumFragment).text = nowSong.artist
-        albumImage.setImageResource(nowSong.image)
+        view.findViewById<TextView>(R.id.tv_albumName_albumFragment).text = album.title
+        view.findViewById<TextView>(R.id.tv_artistName_albumFragment).text = album.singer
+        albumImage.setImageResource(album.coverImg ?: R.drawable.gibonsong)
 
         view.findViewById<ImageButton>(R.id.btn_arrowBck_albumFragment).setOnClickListener {
             //findNavController().popBackStack()
@@ -78,7 +86,7 @@ class AlbumFragment : Fragment() {
         //viewpager랑 tablayout을 연결
         val tabLayout = view.findViewById<TabLayout>(R.id.tbl_ablumInformation_albumFragment);
         val viewPager = view.findViewById<ViewPager2>(R.id.vp_showthree_albumFragment);
-        viewPager.adapter = AlbumViewAdaptor(this, nowSong)
+        viewPager.adapter = AlbumViewAdaptor(this, album, songList)
 
         TabLayoutMediator(tabLayout, viewPager) {tab, position ->
             tab.text = when(position) {

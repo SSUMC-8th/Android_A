@@ -1,8 +1,10 @@
 package com.example.floclone.database
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 @Entity(tableName = "SongTable")
 data class Song (
     @PrimaryKey(autoGenerate = true)
@@ -16,4 +18,4 @@ data class Song (
     var coverImg: Int? = null,
     var isLike: Boolean = false,
     var albumIdx: Int = 0
-)
+) : Parcelable

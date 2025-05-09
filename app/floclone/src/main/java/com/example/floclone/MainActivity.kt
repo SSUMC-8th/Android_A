@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         //DB에 넣을 때
-        inputSongs()
+        //inputSongs()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

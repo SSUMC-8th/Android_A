@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.floclone.R
 import com.example.floclone.Song
+import com.example.floclone.database.Song as SongDB
 
-class SongsRecyclerAdaptor(private val songList:List<Song>):
+class SongsRecyclerAdaptor(private val songList:List<SongDB>):
     RecyclerView.Adapter<SongsRecyclerAdaptor.ViewHolder>()
 {
 
@@ -31,7 +32,7 @@ class SongsRecyclerAdaptor(private val songList:List<Song>):
         val song = songList[position]
         holder.sunseView.text = String.format("%02d", position+1)
         holder.titleView.text = song.title
-        holder.artistView.text = song.artist
+        holder.artistView.text = song.singer
 
     }
 

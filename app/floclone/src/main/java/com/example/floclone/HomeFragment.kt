@@ -8,12 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.postDelayed
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.adaptor.AlbumRecyclerAdaptor
 import com.example.floclone.adaptor.BannerAdaptor
+import com.example.floclone.database.Album
+import com.example.floclone.database.AlbumDatabase
+import com.example.floclone.database.SongDatabase
+import kotlinx.coroutines.launch
 import me.relex.circleindicator.CircleIndicator3
 import java.util.Timer
 import java.util.TimerTask
@@ -121,7 +126,20 @@ class HomeFragment : Fragment() {
     private fun setAblumRecyclerView(){
         //recylcerView를 통해 연결해보자
         val rcv_categorySong = view?.findViewById<RecyclerView>(R.id.rcv_categorySong_home)
-        //사용할 Item들을 정의
+        //사용할 Item들을 정의(AlbumList)
+        val albumDao = AlbumDatabase.getDatabase(requireContext()).albumDao()
+
+        lifecycleScope.launch{
+            val albumList = albumDao.getAllAlbums()
+
+            val adaptor_categorySong = AlbumRecyclerAdaptor(albumList, ::moveAlbumFragment, ::setMiniPlayerView)
+            rcv_categorySong?.adapter = adaptor_categorySong
+            //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
+            rcv_categorySong?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        }
+
+
         val songList = listOf(
             Song("アイドル", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
             Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
@@ -130,35 +148,45 @@ class HomeFragment : Fragment() {
             Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
             Song("群青", "Yoasobi", R.drawable.thebook, "THE BOOK"),
         )
-        val adaptor_categorySong = AlbumRecyclerAdaptor(songList, ::moveAlbumFragment, ::setMiniPlayerView)
-        rcv_categorySong?.adapter = adaptor_categorySong
-        //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
-        rcv_categorySong?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
     }
 
-    fun setMiniPlayerView(song: Song){
+    fun setMiniPlayerView(album: Album){
         val homehome = requireActivity() as? MainActivity
-        homehome?.updateMiniplayerString(song.title, song.artist)
+
+        val songDao = SongDatabase.getDatabase(requireContext()).songDao()
+        lifecycleScope.launch {
+            val albumSongs = songDao.getSongsByAlbumIdx(album.id)
+            homehome?.updateMiniplayerString(albumSongs.get(0).title, albumSongs.get(0).singer)
+        }
+
+
 
         //직접 할 수도 있다.
         //homehome?.tvTitle.text = song.title
     }
 
-    fun moveAlbumFragment(song: Song){
+    fun moveAlbumFragment(album: Album){
         //val action = HomeFragmentDirections.actionNavigationHomeFragmentToAlbumFragment(song)
         //findNavController().navigate(action)
+        val songDao = SongDatabase.getDatabase(requireContext()).songDao()
+        lifecycleScope.launch {
+            val albumSongs = songDao.getSongsByAlbumIdx(album.id)
 
-        // AlbumFragment의 인스턴스를 생성하고 Bundle로 인자 전달
-        val albumFragment = AlbumFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable("song", song)
+            // AlbumFragment의 인스턴스를 생성하고 Bundle로 인자 전달
+            val albumFragment = AlbumFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("album", album)
+                    putParcelableArrayList("songs", ArrayList(albumSongs))
+                }
             }
+            // fragment container (예: activity_main.xml에 있는 FrameLayout의 id를 fragment_container라 가정)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.ct_home, albumFragment)
+                .addToBackStack(null)
+                .commit()
+
         }
-        // fragment container (예: activity_main.xml에 있는 FrameLayout의 id를 fragment_container라 가정)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.ct_home, albumFragment)
-            .addToBackStack(null)
-            .commit()
 
     }
 

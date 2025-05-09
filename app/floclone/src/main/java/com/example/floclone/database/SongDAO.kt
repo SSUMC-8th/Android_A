@@ -25,4 +25,7 @@ interface SongDAO {
     @Query("UPDATE SongTable SET coverImg = :newRes WHERE coverImg = :oldRes")
     suspend fun updateCoverImg(oldRes: Int, newRes: Int)
 
+    @Query("SELECT * FROM SongTable WHERE albumIdx = :albumIdx")
+    suspend fun getSongsByAlbumIdx(albumIdx: Int): List<Song>
+
 }
