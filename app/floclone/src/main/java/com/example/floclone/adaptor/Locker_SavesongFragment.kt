@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,9 @@ class Locker_SavesongFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var btnChooseall : ConstraintLayout
+    private lateinit var btnChooseallDelete : ConstraintLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -48,6 +52,8 @@ class Locker_SavesongFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        btnChooseall = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_savesong)
+        btnChooseallDelete = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_delete_savesong)
 
         setSavesongRecyclerView()
 
@@ -69,21 +75,6 @@ class Locker_SavesongFragment : Fragment() {
             rcv_savesong?.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
-
-        val songList = arrayListOf(
-            Song("アイドル", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
-            Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
-            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner"),
-            Song("勇者", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
-            Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("青春と青春と青春", "Aimyon", R.drawable.kimiwarockwokikanai, "君はロックを聴かない"),
-            Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
-            Song("マリーゴールド", "Aimyon", R.drawable.marigold, "マリーゴールド"),
-            Song("夜に駆ける", "Yoasobi", R.drawable.thebook, "THE BOOK"),
-            Song("群青", "Yoasobi", R.drawable.thebook, "THE BOOK"),
-        )
-
-
 
 
     }

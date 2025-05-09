@@ -369,4 +369,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //바로 다시 실행
+    override fun onResume() {
+        super.onResume()
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bnv_home)
+
+        if(bottomNavigationView.selectedItemId == R.id.navigation_storeFragment){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.ct_home, LockerFragment())
+                .commit()
+        }
+
+
+    }
+
+
 }
