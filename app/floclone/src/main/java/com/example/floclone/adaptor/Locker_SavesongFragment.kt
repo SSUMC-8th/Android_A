@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.floclone.MainActivity
 import com.example.floclone.R
 import com.example.floclone.Song
 import com.example.floclone.database.SongDatabase
@@ -32,7 +35,11 @@ class Locker_SavesongFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var btnChooseall : ConstraintLayout
-    private lateinit var btnChooseallDelete : ConstraintLayout
+    private lateinit var btnChooseallno : ConstraintLayout
+    private lateinit var btnDeleteAll : ConstraintLayout
+    private lateinit var adaptor_savesong : SavesongRecyclerAdaptor
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +60,31 @@ class Locker_SavesongFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnChooseall = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_savesong)
-        btnChooseallDelete = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_delete_savesong)
-
+        btnChooseallno = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_delete_savesong)
+        
+        //얘는 MainActivity꺼다
+        btnDeleteAll = requireActivity().findViewById<ConstraintLayout>(R.id.btn_delete_edit_bottomsheet)
+        
         setSavesongRecyclerView()
+
+        btnChooseall.setOnClickListener {
+            btnChooseall.visibility = TextView.INVISIBLE
+            btnChooseallno.visibility = TextView.VISIBLE
+            (requireActivity() as? MainActivity)?.showBottomActionBar()
+            adaptor_savesong.doSelectMode()
+        }
+
+        btnChooseallno.setOnClickListener {
+            btnChooseall.visibility = TextView.VISIBLE
+            btnChooseallno.visibility = TextView.INVISIBLE
+            (requireActivity() as? MainActivity)?.hideBottomActionBar()
+            adaptor_savesong.disableSelectMode()
+        }
+
+        btnDeleteAll.setOnClickListener {
+            adaptor_savesong.deleteAllItems(requireContext())
+            btnChooseallno.performClick() //버튼 누르기 코드적 실행
+        }
 
     }
 
@@ -69,7 +98,7 @@ class Locker_SavesongFragment : Fragment() {
         lifecycleScope.launch {
             var tmpsongList = dao.getLikedSongs()
             var songList = ArrayList(tmpsongList)
-            val adaptor_savesong = SavesongRecyclerAdaptor(songList)
+            adaptor_savesong = SavesongRecyclerAdaptor(songList)
             rcv_savesong?.adapter = adaptor_savesong
             //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
             rcv_savesong?.layoutManager =

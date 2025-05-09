@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -368,6 +369,25 @@ class MainActivity : AppCompatActivity() {
         )
 
     }
+
+    //lockerFragment에서 bottomDialog 띄우기 위한 코드
+    fun showBottomActionBar() {
+        val bar = findViewById<LinearLayout>(R.id.ll_bottomsheetdialog)
+        val bottombar = findViewById<BottomNavigationView>(R.id.bnv_home)
+        bar.visibility = View.VISIBLE
+        bottombar.visibility = View.INVISIBLE
+        bar.animate().translationY(0f).setDuration(300).start()
+    }
+
+    fun hideBottomActionBar() {
+        val bar = findViewById<LinearLayout>(R.id.ll_bottomsheetdialog)
+        val bottombar = findViewById<BottomNavigationView>(R.id.bnv_home)
+        bar.animate().translationY(bar.height.toFloat()).setDuration(300)
+            .withEndAction { bar.visibility = View.GONE }
+            .start()
+        bottombar.visibility = View.VISIBLE
+    }
+
 
     //바로 다시 실행
     override fun onResume() {

@@ -67,6 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="선택 해제"
+            android:textColor="#3D5AFE"
             android:textSize="15sp"
             android:layout_marginStart="5dp"
             app:layout_constraintStart_toEndOf="@id/imv_chooseall_delete_savesong"
