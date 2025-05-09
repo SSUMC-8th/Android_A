@@ -48,6 +48,7 @@ class SongActivity : AppCompatActivity() {
     private lateinit var seekBar: SeekBar
     private var updateThread: Thread? = null
     private lateinit var btnFavorite : ImageButton
+    private lateinit var imvHeartbbyong : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,7 @@ class SongActivity : AppCompatActivity() {
         currentPosition = songPlay!!.currentPosition
         durationSong = songPlay.durationSong
         btnFavorite = findViewById<ImageButton>(R.id.btn_favorite_songActivity)
+        imvHeartbbyong = findViewById<ImageView>(R.id.imv_heartbbyong_songActivity)
 
         if(songList.get(nowPos).isLike){btnFavorite.setImageResource(R.drawable.ic_my_like_on)}
         else{btnFavorite.setImageResource(R.drawable.ic_my_like_off)}
@@ -281,6 +283,26 @@ class SongActivity : AppCompatActivity() {
         }
         else{
             songList.get(nowPos).isLike = true
+
+            //Heart View를 보여주기 (그냥 Pop Animation 만들어서 띄우기)
+            //총 1초 동안 실행
+            imvHeartbbyong.apply {
+                alpha = 0f //투명도 0
+                visibility = TextView.VISIBLE
+                animate()
+                    .alpha(1f) //투명도 0->1로 보이게
+                    .setDuration(300) //약 0.3초간 실행(0->1 시간)
+                    .withEndAction { //이거 끝나면
+                        animate()
+                            .alpha(0f) //다시 투명하게 하기
+                            .setDuration(300) //약 0.3초간 1->0 으로 바꾸기
+                            .setStartDelay(400) //약 0.4초간 기다렸다가 실행
+                            .withEndAction {
+                                visibility = TextView.GONE
+                            }
+                    }
+            }
+
         }
         //sharedPreference에도
         val gson = Gson()

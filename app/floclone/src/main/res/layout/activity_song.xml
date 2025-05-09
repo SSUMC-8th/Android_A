@@ -100,6 +100,17 @@
         app:shapeAppearanceOverlay="@style/ImageRoundCorner"
         />
 
+    <ImageView
+        android:id="@+id/imv_heartbbyong_songActivity"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:src="@drawable/ic_my_like_on"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/imv_albumCover_songActivity"
+        app:layout_constraintEnd_toEndOf="@id/imv_albumCover_songActivity"
+        app:layout_constraintTop_toTopOf="@id/imv_albumCover_songActivity"
+        app:layout_constraintBottom_toBottomOf="@id/imv_albumCover_songActivity"/>
+
     <TextView
         android:id="@+id/tv_lyric1_songActivity"
         android:layout_width="wrap_content"
