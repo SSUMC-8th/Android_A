@@ -82,7 +82,7 @@ class SongActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_artistName_songActivity).text = songList.get(nowPos).singer
         findViewById<TextView>(R.id.tv_lyric1_songActivity).text = "가사 1"
         findViewById<TextView>(R.id.tv_lyric2_songActivity).text = "가사 2"
-        findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg!!)
+        findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg ?: R.drawable.gibonsong)
         returnString = songList.get(nowPos).title
 
         //UI 연결 작업
@@ -246,7 +246,7 @@ class SongActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tv_songName_songActivity).text = songList.get(nowPos).title
         findViewById<TextView>(R.id.tv_artistName_songActivity).text = songList.get(nowPos).singer
-        findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg!!)
+        findViewById<ImageView>(R.id.imv_albumCover_songActivity).setImageResource(songList.get(nowPos).coverImg ?: R.drawable.gibonsong)
 
         if(songList.get(nowPos).isLike){btnFavorite.setImageResource(R.drawable.ic_my_like_on)}
         else{btnFavorite.setImageResource(R.drawable.ic_my_like_off)}

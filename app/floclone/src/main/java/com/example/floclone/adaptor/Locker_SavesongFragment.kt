@@ -5,10 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.floclone.R
 import com.example.floclone.Song
+import com.example.floclone.database.SongDatabase
+import kotlinx.coroutines.launch
+
+import com.example.floclone.database.Song as SongDB
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,6 +57,19 @@ class Locker_SavesongFragment : Fragment() {
     private fun setSavesongRecyclerView(){
 
         val rcv_savesong = view?.findViewById<RecyclerView>(R.id.rcv_savesongs_savesong)
+
+        val dao = SongDatabase.getDatabase(requireContext()).songDao()
+
+        lifecycleScope.launch {
+            var tmpsongList = dao.getLikedSongs()
+            var songList = ArrayList(tmpsongList)
+            val adaptor_savesong = SavesongRecyclerAdaptor(songList)
+            rcv_savesong?.adapter = adaptor_savesong
+            //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
+            rcv_savesong?.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
         val songList = arrayListOf(
             Song("アイドル", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
             Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
@@ -66,11 +84,7 @@ class Locker_SavesongFragment : Fragment() {
         )
 
 
-        val adaptor_savesong = SavesongRecyclerAdaptor(songList)
-        rcv_savesong?.adapter = adaptor_savesong
-        //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
-        rcv_savesong?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
 
     }
 

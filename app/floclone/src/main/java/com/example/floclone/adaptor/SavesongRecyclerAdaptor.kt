@@ -1,5 +1,8 @@
 package com.example.floclone.adaptor
 
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +14,16 @@ import com.bumptech.glide.Glide
 import com.example.floclone.R
 import com.example.floclone.Song
 import com.example.floclone.adaptor.AlbumRecyclerAdaptor.ViewHolder
+import com.example.floclone.database.SongDatabase
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+import com.example.floclone.database.Song as SongDB
 
 class SavesongRecyclerAdaptor(
-    private val songList:ArrayList<Song>
+    private val songList:ArrayList<SongDB>
     ): RecyclerView.Adapter<SavesongRecyclerAdaptor.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,14 +43,14 @@ class SavesongRecyclerAdaptor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val song = songList[position]
-        holder.imageView.setImageResource(song.image)
+        holder.imageView.setImageResource(song.coverImg ?: R.drawable.gibonsong)
 
         //Glide.with(holder.itemView.context)
         //    .load(song.image)
         //    .into(holder.imageView)
 
         holder.titleView.text = song.title
-        holder.artistView.text = song.artist
+        holder.artistView.text = song.singer
 
         //song 객체 boolean 상태에 따라 보여주기를 다르게 설정
         if (song.isPlaying) {
@@ -56,13 +66,44 @@ class SavesongRecyclerAdaptor(
             //songList.removeAt(position)
             //notifyItemRemoved(position)
 
+            //일단 값 변경 후, DB에 반영한다.
             val pos = holder.bindingAdapterPosition
             if (pos != RecyclerView.NO_POSITION && pos < songList.size) {
-                songList.removeAt(pos)
-                notifyItemRemoved(pos) //삭제 후 애니메이션 반영
-                notifyItemRangeChanged(pos, songList.size - pos)
+                songList.get(pos).isLike = false
             }
 
+            //sharedPreference에도 적용
+            val sharedPref = holder.itemView.context.getSharedPreferences("Song", Context.MODE_PRIVATE)
+            val gson = Gson()
+            val getJson = sharedPref.getString("songList", "")
+            val type = object : TypeToken<ArrayList<SongDB>>() {}.type
+            val tmpSongList: ArrayList<SongDB> = gson.fromJson(getJson, type)
+
+            for(i in 0 until tmpSongList.size){
+                if(tmpSongList.get(i).id == songList.get(pos).id){
+                    tmpSongList.get(i).isLike = false
+                }
+            }
+
+            val jsonSongList = gson.toJson(tmpSongList)
+            sharedPref.edit().putString("songList", jsonSongList).apply()
+
+
+            //일단 DB에는 비동기적으로 반영이 될 것이다.
+            kotlinx.coroutines.GlobalScope.launch {
+                SongDatabase.getDatabase(holder.itemView.context).songDao()
+                    .updateSong(songList.get(pos))
+
+                //UI 작업은 메인 쓰레드
+                withContext(kotlinx.coroutines.Dispatchers.Main){
+                    //그리고 recyclerview에서 UI에 반영하기
+                    if (pos != RecyclerView.NO_POSITION && pos < songList.size) {
+                        songList.removeAt(pos)
+                        notifyItemRemoved(pos) //삭제 후 애니메이션 반영
+                        notifyItemRangeChanged(pos, songList.size - pos)
+                    }
+                }
+            }
         }
 
         holder.btnPlay.setOnClickListener {
