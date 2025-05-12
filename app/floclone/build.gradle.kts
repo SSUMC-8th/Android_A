@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.material3) // 이미 추가됨
     implementation("androidx.compose.material3:material3:1.0.0")
     implementation(libs.firebase.database) // 추가된 부분
+    implementation(libs.firebase.auth) //얘도 추가
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -125,6 +126,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    //implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+
 
 }
