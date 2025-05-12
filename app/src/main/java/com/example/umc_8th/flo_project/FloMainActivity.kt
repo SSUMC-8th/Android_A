@@ -57,20 +57,20 @@ class FloMainActivity : AppCompatActivity() {
             activityResultLauncher.launch(intent)
         }
     }
-    override fun onStart() {
-        super.onStart()
-
-        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
-        val songId = sharedPreferences.getInt("songId", 0)
-        val songDB = SongDatabase.getInstance(this)!!
-
-        song = if (songId == 0){
-            songDB.songDao().getSong(1)
-        } else{
-            songDB.songDao().getSong(songId)
-        }
-        setMiniPlayer(song)
-    }
+//    override fun onStart() {
+//        super.onStart()
+//
+//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+//        val songId = sharedPreferences.getInt("songId", 0)
+//        val songDB = SongDatabase.getInstance(this)!!
+//
+//        song = if (songId == 0){
+//            songDB.songDao().getSong(1)
+//        } else{
+//            songDB.songDao().getSong(songId)
+//        }
+//        setMiniPlayer(song)
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -139,10 +139,8 @@ class FloMainActivity : AppCompatActivity() {
     private fun setMiniPlayer(song : Song) {
         binding.mainMiniplayerTitleTv.text = song.title
         binding.mainMiniplayerSingerTv.text = song.singer
-        Log.d("songInfo", song.toString())
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val second = sharedPreferences.getInt("second", 0)
-        Log.d("spfSecond", second.toString())
         binding.mainMiniplayerProgress.progress = (second * 100000 / song.playTime)
     }
 
@@ -202,7 +200,7 @@ class FloMainActivity : AppCompatActivity() {
 
         songDB.songDao().insert(
             Song(
-                "Next Level",
+                "Text",
                 "에스파 (AESPA)",
                 0,
                 210,
@@ -245,7 +243,6 @@ class FloMainActivity : AppCompatActivity() {
         )
         val songDBData = songDB.songDao().getSongs()
     }
-
 
 }
 

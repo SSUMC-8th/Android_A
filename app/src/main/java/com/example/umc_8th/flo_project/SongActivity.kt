@@ -1,5 +1,6 @@
 package com.example.umc_8th.flo_project
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
@@ -20,7 +21,6 @@ class SongActivity : AppCompatActivity() {
     lateinit var binding: ActivitySongBinding
     lateinit var timer : Timer
     private var mediaPlayer: MediaPlayer? = null
-    private var gson: Gson = Gson()
     val songs = arrayListOf<Song>()
     lateinit var songDB: SongDatabase
     var nowPos = 0
@@ -70,7 +70,6 @@ class SongActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         songs[nowPos].second = (songs[nowPos].playTime * binding.songProgressV.progress) / 100000
-        Log.d("second", songs[nowPos].second.toString())
         songs[nowPos].isPlaying = false
         PlayerStatus(false)
 
@@ -116,11 +115,11 @@ class SongActivity : AppCompatActivity() {
     }
     private fun moveSong(direct: Int) { // direct는 +1 또는 -1임
         if (nowPos + direct < 0) {
-            Toast.makeText(this,"first song",Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "First Song").show()
         }
 
         else if (nowPos + direct >= songs.size){
-            Toast.makeText(this,"last song",Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "last song").show()
         }
 
         else {
@@ -167,11 +166,14 @@ class SongActivity : AppCompatActivity() {
 
         if (!isLike){
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
+            Snackbar.make(binding.root, "Liked Song").show()
         } else{
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_off)
+            Snackbar.make(binding.root, "Cancel Liked Song").show()
         }
 
     }
+
     private fun setPlayer(song:Song){
         binding.songTitleTv.text = song.title
         binding.songSingerTv.text = song.singer
@@ -180,9 +182,23 @@ class SongActivity : AppCompatActivity() {
         binding.songAlbumIv.setImageResource(song.coverImg!!)
         binding.songProgressV.progress = (song.second * 1000 / song.playTime)
 
-        val music = resources.getIdentifier(song.music, "raw", this.packageName)
+        val musicResId = when(song.music) {
+            "music_bboom" -> R.raw.music_bboom
+            "music_boy" -> R.raw.music_boy
+            "music_butter" -> R.raw.music_butter
+            "music_flu" -> R.raw.music_flu
+            "music_lilac" -> R.raw.music_lilac
+            "music_text" -> R.raw.music_text
+            "sample" -> R.raw.sample
+            else -> 0
+        }
 
-        mediaPlayer = MediaPlayer.create(this, music)
+        if (musicResId != 0) {
+            mediaPlayer = MediaPlayer.create(this, musicResId)
+        } else {
+            Toast.makeText(this, "음원 리소스를 찾을 수 없습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
         if(song.isLike) {
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
         }

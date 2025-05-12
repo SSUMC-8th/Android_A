@@ -24,6 +24,7 @@ class HomeFragment:Fragment(), CommunicationInterface {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var slideRunnable: Runnable
     private var albumDatas = ArrayList<Album>()
+    lateinit var songDB: SongDatabase
 
      override fun sendData(album: Album) { // MainActivity의 UI를 업데이트하기 위해 사용하는 메서드
         if (activity is FloMainActivity) {
@@ -50,15 +51,17 @@ class HomeFragment:Fragment(), CommunicationInterface {
 //            Album("Drama", "에스타", R.drawable.img_album_drama)
 //        )
 
-        albumDatas.apply {
-            add(Album(id = 1, title = "LILAC", singer = "아이유 (IU)", coverImage = R.drawable.img_album_exp2))
-            add(Album(id = 2, title = "Butter", singer = "BTS", coverImage = R.drawable.img_album_exp))
-            add(Album(id = 3, title = "NextLevel", singer = "에스파", coverImage = R.drawable.img_album_exp3))
-            add(Album(id = 4, title = "Weekend", singer = "태연", coverImage = R.drawable.img_album_exp4))
-            add(Album(id = 5, title = "BBoom BBoom", singer = "모모랜드", coverImage = R.drawable.img_album_exp5))
-            add(Album(id = 6, title = "Drama", singer = "에스타", coverImage = R.drawable.img_album_drama))
-        }
-
+//        albumDatas.apply {
+//            add(Album(id = 1, title = "LILAC", singer = "아이유 (IU)", coverImage = R.drawable.img_album_exp2))
+//            add(Album(id = 2, title = "Butter", singer = "BTS", coverImage = R.drawable.img_album_exp))
+//            add(Album(id = 3, title = "NextLevel", singer = "에스파", coverImage = R.drawable.img_album_exp3))
+//            add(Album(id = 4, title = "Weekend", singer = "태연", coverImage = R.drawable.img_album_exp4))
+//            add(Album(id = 5, title = "BBoom BBoom", singer = "모모랜드", coverImage = R.drawable.img_album_exp5))
+//            add(Album(id = 6, title = "Drama", singer = "에스타", coverImage = R.drawable.img_album_drama))
+//        }
+        DummyAlbum()
+        songDB = SongDatabase.getInstance(requireContext())!!
+        albumDatas.addAll(songDB.albumDao().getAlbums())
 
         //ViewPager, VPAdapter연결
         val pannelAdapter = PannelVPAdapter(this)
@@ -145,5 +148,58 @@ class HomeFragment:Fragment(), CommunicationInterface {
             }
         }
         handler.postDelayed(slideRunnable, 4000)
+    }
+
+    private fun DummyAlbum(){
+        val songDB = SongDatabase.getInstance(requireActivity())!!
+        val songs = songDB.albumDao().getAlbums()
+
+        if (songs.isNotEmpty()) return
+
+        songDB.albumDao().insert(
+            Album(
+                1,
+                "IU 5th Album 'LILAC'",
+                "아이유 (IU)",
+                R.drawable.img_album_exp2
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                2,
+                "Butter",
+                "방탄소년단 (BTS)",
+                R.drawable.img_album_exp
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                3,
+                "Next Level",
+                "에스파 (AESPA)",
+                R.drawable.img_album_exp3
+            )
+        )
+
+        songDB.albumDao().insert(
+            Album(
+                4,
+                "Music Boy",
+                "뮤직 보이 (Music Boy)",
+                R.drawable.img_album_exp4,
+            )
+        )
+
+
+        songDB.albumDao().insert(
+            Album(
+                5,
+                "Great",
+                "모모랜드 (MOMOLAND)",
+                R.drawable.img_album_exp5
+            )
+        )
     }
 }

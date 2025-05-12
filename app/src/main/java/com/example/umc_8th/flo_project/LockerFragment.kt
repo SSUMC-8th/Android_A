@@ -36,6 +36,14 @@ class LockerFragment : Fragment(){
         TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
             tab.text = information[position]
         }.attach()
+
+        val bottomSheetFragment = BottomSheetFragment()
+
+        binding.lockerSelectAllTv.setOnClickListener {
+            bottomSheetFragment.show(requireFragmentManager(), "BottomSheetDialog")
+        }
+
+
 //        val tabLayout = binding.lockerContentTb
 //        TabLayoutMediator(tabLayout, binding.lockerContentVp){tab, position ->
 //            tab.text = when(position){
