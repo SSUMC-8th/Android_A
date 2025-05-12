@@ -1,10 +1,12 @@
 package com.example.floclone
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.viewpager2.widget.ViewPager2
 import com.example.floclone.adaptor.LockerViewAdaptor
 import com.google.android.material.tabs.TabLayout
@@ -59,6 +61,11 @@ class LockerFragment : Fragment() {
             }
         }.attach()
 
+        val btnLogin = view.findViewById<Button>(R.id.btn_login_lockerFragment);
+        btnLogin.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

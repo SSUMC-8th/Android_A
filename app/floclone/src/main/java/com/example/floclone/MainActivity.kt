@@ -123,6 +123,7 @@ class MainActivity : AppCompatActivity() {
         //홈 뮤직 정의
         handleMusic()
 
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.ct_home, HomeFragment())
@@ -367,6 +368,16 @@ class MainActivity : AppCompatActivity() {
             SongDB(title = "Plazma", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Plazma.mp3", coverImg = R.drawable.plazma, isLike = false, albumIdx = 4),
             SongDB(title = "アイドル", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "アイドル.mp3", coverImg = R.drawable.thebook3, isLike = false, albumIdx = 2)
         )
+
+        lifecycleScope.launch {
+            songlist.forEach { song->
+                dao.updateSong(song)
+                Log.d("tagcheck", "{${song.title}}: ${song.coverImg}")
+            }
+            albumList.forEach { album->
+                dao2.updateAlbum(album)
+            }
+        }
 
     }
 
