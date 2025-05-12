@@ -67,14 +67,6 @@ class SavedViewModel : ViewModel() {
 
     val savedList: LiveData<MutableList<SavedData>> = _savedList
 
-//    fun removeItem(position: Int) {
-//        _savedList.value?.let {
-//            if (position in it.indices) {
-//                it.removeAt(position)
-//                _savedList.value = it.toMutableList() // 트리거를 위해 새 리스트로 할당
-//            }
-//        }
-//    }
     fun removeItem(position: Int) {
         val updatedList = _savedList.value?.toMutableList()
         updatedList?.removeAt(position)

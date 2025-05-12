@@ -28,7 +28,7 @@ class BannerAlbumAdapter(
             bannerAlbumSongName.text = item.title
             bannerAlbumSongArtist.text = item.artist
 
-            // 클릭 리스너 - null이 아닐 때만 실행
+            // 클릭 리스너 - 배너 클릭시 이동
             root.setOnClickListener {
                 onItemClick?.invoke(item)
             }

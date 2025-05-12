@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.umc_8th.R
-import com.example.umc_8th.SavedData
 import com.example.umc_8th.adapter.SavedAdapter
 import com.example.umc_8th.databinding.FragmentSavedBinding
 import com.example.umc_8th.viewmodel.SavedViewModel

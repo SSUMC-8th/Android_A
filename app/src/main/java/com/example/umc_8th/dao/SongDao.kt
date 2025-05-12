@@ -1,0 +1,23 @@
+package com.example.umc_8th.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.umc_8th.entity.SongEntity
+
+@Dao
+interface SongDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(songs: List<SongEntity>)
+
+    @Query("SELECT * FROM SongTable")
+    suspend fun getAll(): List<SongEntity>
+
+    @Query("SELECT * FROM SongTable WHERE songId = :id")
+    suspend fun getSongById(id: Int): SongEntity?
+
+     @Query("UPDATE SongTable SET isLiked = :isLiked WHERE songId = :songId")
+        fun updateIsLiked(songId: Int, isLiked: Boolean)
+}
+

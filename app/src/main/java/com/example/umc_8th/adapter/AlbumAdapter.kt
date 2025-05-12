@@ -13,17 +13,7 @@ class AlbumAdapter(private val albumList: List<AlbumItem>,
 
     inner class AlbumViewHolder(val binding: AlbumRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root)
-//    {
-//        fun bind(album: AlbumItem) {
-//            binding.albumImg.setImageResource(album.albumImage)
-//            binding.albumName.text = album.albumName
-//            binding.artistName.text = album.artistName
-//
-//            binding.root.setOnClickListener {
-//                onItemClick(album) // 클릭 시 함수 실행
-//            }
-//        }
-//    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val binding =

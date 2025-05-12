@@ -33,28 +33,28 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 더미 데이터 추가
-        val albumList = listOf(
-            AlbumItem(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
-            AlbumItem(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
-            AlbumItem(R.drawable.img_album_exp3, "Album Three", "Artist C"),
-            AlbumItem(R.drawable.img_album_exp4, "Album Four", "Artist D"),
-            AlbumItem(R.drawable.img_album_exp5, "Album Five", "Artist E")
-        )
+        // 더미 데이터 추가 엥 이거 모지 왜 없애도되냐
+//        val albumList = listOf(
+//            AlbumItem(R.drawable.img_album_exp, "Butter", "방탄소년단(BTS)"),
+//            AlbumItem(R.drawable.img_album_exp2, "LILAC", "아이유"),
+//            AlbumItem(R.drawable.img_album_exp3, "Album Three", "Artist C"),
+//            AlbumItem(R.drawable.img_album_exp4, "Album Four", "Artist D"),
+//            AlbumItem(R.drawable.img_album_exp5, "Album Five", "Artist E")
+//        )
 
         // 어댑터 설정
-        albumAdapter = AlbumAdapter(albumList, { title, artist ->
-            // 플레이 버튼 클릭 시 미니플레이어에 데이터 전달
-            (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
-        }, { album ->
-            // 앨범 클릭 시 상세 화면으로 이동
-            val bundle = Bundle().apply {
-                putString("title", album.albumName)
-                putString("artist", album.artistName)
-                putInt("imageRes", album.albumImage)
-            }
-            findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
-        })
+//        albumAdapter = AlbumAdapter(albumList, { title, artist ->
+//            // 플레이 버튼 클릭 시 미니플레이어에 데이터 전달
+//            (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
+//        }, { album ->
+//            // 앨범 클릭 시 상세 화면으로 이동
+//            val bundle = Bundle().apply {
+//                putString("title", album.albumName)
+//                putString("artist", album.artistName)
+//                putInt("imageRes", album.albumImage)
+//            }
+//            findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
+//        })
         //binding.albumRecyclerView.adapter = albumAdapter
 
         val bannerList = listOf(
