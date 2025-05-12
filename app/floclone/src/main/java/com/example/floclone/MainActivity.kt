@@ -349,10 +349,10 @@ class MainActivity : AppCompatActivity() {
 
 
         val albumList = listOf<Album>(
-            Album(title = "Lost corner", singer = "Kenshi Yonezu", coverImg = R.drawable.yone_lostcorner),
+            Album(title = "Lost corner", singer = "Kenshi Yonezu", coverImg = R.drawable.lostcorner),
             Album(title = "The book 3", singer = "Yoasobi", coverImg = R.drawable.thebook3),
             Album(title = "愛を伝えたいだとか", singer = "Aimyon", coverImg = R.drawable.aiwotsutaetaidatoka),
-            Album(title = "Digital single", singer = "Kenshi Yonezu", coverImg = R.drawable.yone_lostcorner)
+            Album(title = "Digital single", singer = "Kenshi Yonezu", coverImg = R.drawable.lostcorner)
         )
 
 
@@ -361,9 +361,9 @@ class MainActivity : AppCompatActivity() {
             SongDB(title = "愛を伝えたいだとか", singer = "Aimyon", second = 240, playTime = 0, isPlaying = false, music = "愛を伝えたいだとか.mp3", coverImg = R.drawable.aiwotsutaetaidatoka, isLike = false, albumIdx = 3),
             SongDB(title = "勇者", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "勇者.mp3", coverImg = R.drawable.thebook3, isLike = false, albumIdx = 2),
             SongDB(title = "群青", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "群青.mp3", coverImg = R.drawable.thebook, isLike = false, albumIdx = 2),
-            SongDB(title = "Spinning Globe", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Spinning Globe.mp3", coverImg = R.drawable.yone_lostcorner, isLike = false, albumIdx = 1),
-            SongDB(title = "Pop Song", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Pop Song.mp3", coverImg = R.drawable.yone_lostcorner, isLike = false, albumIdx = 1),
-            SongDB(title = "毎日", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "毎日.mp3", coverImg = R.drawable.yone_lostcorner, isLike = false, albumIdx = 1),
+            SongDB(title = "Spinning Globe", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Spinning Globe.mp3", coverImg = R.drawable.lostcorner, isLike = false, albumIdx = 1),
+            SongDB(title = "Pop Song", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Pop Song.mp3", coverImg = R.drawable.lostcorner, isLike = false, albumIdx = 1),
+            SongDB(title = "毎日", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "毎日.mp3", coverImg = R.drawable.lostcorner, isLike = false, albumIdx = 1),
             SongDB(title = "BOW AND ARROW", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "BOW AND ARROW.mp3", coverImg = R.drawable.bowandarrow, isLike = false, albumIdx = 4),
             SongDB(title = "Plazma", singer = "Kenshi Yonezu", second = 240, playTime = 0, isPlaying = false, music = "Plazma.mp3", coverImg = R.drawable.plazma, isLike = false, albumIdx = 4),
             SongDB(title = "アイドル", singer = "Yoasobi", second = 240, playTime = 0, isPlaying = false, music = "アイドル.mp3", coverImg = R.drawable.thebook3, isLike = false, albumIdx = 2)
@@ -371,11 +371,12 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             songlist.forEach { song->
-                dao.updateSong(song)
+                //dao.updateCoverImgByTitle(song.title, song.coverImg ?: 0)
                 Log.d("tagcheck", "{${song.title}}: ${song.coverImg}")
             }
             albumList.forEach { album->
-                dao2.updateAlbum(album)
+                dao2.updateCoverImgByTitle(album.title, album.coverImg ?: 0)
+                Log.d("tagcheck", "${album.title} ${album.coverImg}")
             }
         }
 

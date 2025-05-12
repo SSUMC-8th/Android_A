@@ -25,4 +25,7 @@ interface AlbumDAO {
     @Query("UPDATE AlbumTable SET coverImg = :newRes WHERE coverImg = :oldRes")
     suspend fun updateCoverImg(oldRes: Int, newRes: Int)
 
+    @Query("UPDATE AlbumTable SET coverImg = :newRes WHERE title = :titlename")
+    suspend fun updateCoverImgByTitle(titlename: String, newRes: Int)
+
 }

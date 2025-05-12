@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
         val bannerList = listOf(
             Banner("달밤의 감성 산책", "#7DC1F6", "총 10곡 2025.03.30", Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),  Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner")),
             Banner("요네즈 켄시 최신 특집", "#A67CF6", "총 23곡 2025.04.01", Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "digital single"), Song("Plazma", "Kenshi Yonezu", R.drawable.plazma, "digital single")),
-            Banner("오늘의 추천 노래", "#009688", "총 17곡 2025.03.31", Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"), Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"))
+            Banner("오늘의 추천 노래", "#009688", "총 17곡 2025.03.31", Song("Pop Song", "Kenshi Yonezu", R.drawable.lostcorner, "Lost Corner"), Song("毎日", "Kenshi Yonezu", R.drawable.lostcorner, "Lost Corner"))
 
         )
         bannerAdapter = BannerAdaptor(bannerList)
