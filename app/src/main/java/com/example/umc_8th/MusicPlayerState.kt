@@ -20,28 +20,20 @@ object MusicPlayerState {
         notifySongChangeListeners()
     }
 
+    // 재생/일시 정지 상태를 전환
     fun togglePlay() {
         isPlaying = !isPlaying
         notifyPlayListeners()
         if (isPlaying) startProgressThread()
     }
 
+    // 주어진 값으로 재생 상태를 설정
     fun setPlayState(playing: Boolean) {
         isPlaying = playing
         notifyPlayListeners()
         if (isPlaying) startProgressThread()
     }
 
-    fun playNewSong(songId: Int) {  // Long에서 Int로 변경
-        if (songId != currentSongId) {
-            currentSongId = songId
-            progress = 0
-            notifySongChangeListeners()
-            notifyProgressListeners()
-        }
-
-        setPlayState(true)
-    }
 
     private fun startProgressThread() {
         if (progressThread == null || !progressThread!!.isAlive) {
@@ -80,14 +72,6 @@ object MusicPlayerState {
         progressListeners.remove(listener)
     }
 
-    fun addSongChangeListener(listener: (Int?) -> Unit) {  // Long에서 Int로 변경
-        songChangeListeners.add(listener)
-        listener(currentSongId)
-    }
-
-    fun removeSongChangeListener(listener: (Int?) -> Unit) {  // Long에서 Int로 변경
-        songChangeListeners.remove(listener)
-    }
 
     private fun notifyPlayListeners() {
         playListeners.forEach { it(isPlaying) }
@@ -100,4 +84,27 @@ object MusicPlayerState {
     private fun notifySongChangeListeners() {
         songChangeListeners.forEach { it(currentSongId) }
     }
+
+    // 기존 스레드를 중지하는 함수
+    fun stopProgressThread() {
+        progressThread?.interrupt()
+        progressThread = null
+    }
+
+    // 진행 상태를 0으로 초기화하고 새로 스레드를 시작하는 함수
+    fun restartProgressThread() {
+        stopProgressThread()
+        progress = 0
+        notifyProgressListeners()
+        startProgressThread()
+    }
+
+    fun playNewSong(songId: Int) {
+        currentSongId = songId
+        notifySongChangeListeners()
+        restartProgressThread()  // 진행률 초기화하고 새로 시작
+        setPlayState(true)
+    }
+
+
 }

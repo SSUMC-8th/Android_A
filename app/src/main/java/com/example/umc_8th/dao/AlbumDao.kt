@@ -13,5 +13,15 @@ interface AlbumDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAlbums(albums: List<AlbumEntity>)
+
+    //특정 ID 앨범들 가져오기 (1,2,3...)
+    @Query("SELECT * FROM AlbumTable WHERE albumId IN (:albumIds)")
+    suspend fun getAlbumsByIds(albumIds: List<Int>): List<AlbumEntity>
+
+    //특정 가수만 가져오기
+    @Query("SELECT * FROM AlbumTable WHERE singer = :singerName")
+    suspend fun getAlbumsBySinger(singerName: String): List<AlbumEntity>
+
+
 }
 

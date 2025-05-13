@@ -23,5 +23,8 @@ interface SongDao {
     @Query("SELECT * FROM SongTable WHERE albumId = :albumId LIMIT 1")
     fun getFirstSongByAlbumId(albumId: Int): SongEntity?
 
+    @Query("SELECT * FROM SongTable WHERE albumId = :albumId ORDER BY songId ASC")
+    suspend fun getSongsByAlbumId(albumId: Int): List<SongEntity>
+
 }
 

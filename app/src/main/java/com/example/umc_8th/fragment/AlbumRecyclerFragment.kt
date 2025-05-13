@@ -55,11 +55,15 @@ class AlbumRecyclerFragment : Fragment() {
                         val songDao = db.songDao()
 
                         CoroutineScope(Dispatchers.IO).launch {
-                            val song = songDao.getFirstSongByAlbumId(albumId)  // 바로 사용할 수 있음!
+                            val song = songDao.getFirstSongByAlbumId(albumId)
 
                             song?.let {
                                 MusicPlayerState.setCurrentSongId(it.songId)
 
+                                // 🔽 진행률을 0으로 초기화하고 스레드 재시작
+                                MusicPlayerState.restartProgressThread()
+
+                                // 메인 스레드에서 MiniPlayer UI 업데이트
                                 CoroutineScope(Dispatchers.Main).launch {
                                     (requireActivity() as MainActivity_2nd).updateMiniPlayer(
                                         title = it.title,
@@ -70,6 +74,26 @@ class AlbumRecyclerFragment : Fragment() {
                             }
                         }
                     }
+
+//                    onPlayClick = { albumId, title, artist ->
+//                        val songDao = db.songDao()
+//
+//                        CoroutineScope(Dispatchers.IO).launch {
+//                            val song = songDao.getFirstSongByAlbumId(albumId)  // 바로 사용할 수 있음!
+//
+//                            song?.let {
+//                                MusicPlayerState.setCurrentSongId(it.songId)
+//
+//                                CoroutineScope(Dispatchers.Main).launch {
+//                                    (requireActivity() as MainActivity_2nd).updateMiniPlayer(
+//                                        title = it.title,
+//                                        artist = it.singer,
+//                                        isPlaying = true
+//                                    )
+//                                }
+//                            }
+//                        }
+//                    }
                     ,
 
                     onItemClick = { album ->
@@ -82,26 +106,6 @@ class AlbumRecyclerFragment : Fragment() {
                     }
                 )
 
-//                albumAdapter = AlbumAdapter(
-//                    albumList,
-//                    onPlayClick = { title, artist ->
-//                        (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
-//
-//                        val firstSongId = albumEntities.firstOrNull()?.albumId
-//                        firstSongId?.let {
-//                            MusicPlayerState.setCurrentSongId(it)
-//                        }
-//                    },
-//
-//                    onItemClick = { album ->
-//                        val bundle = Bundle().apply {
-//                            putString("title", album.albumName)
-//                            putString("artist", album.artistName)
-//                            putInt("imageRes", album.albumImage)
-//                        }
-//                        findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
-//                    }
-//                )
 
                 // RecyclerView 설정
                 binding.albumRecyclerView.layoutManager =

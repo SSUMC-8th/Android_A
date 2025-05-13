@@ -1,5 +1,6 @@
 package com.example.umc_8th
 
+import MusicPlayerState
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -55,6 +56,7 @@ class MainActivity_2nd : AppCompatActivity() {
                     SongEntity(title = "weekend", singer = "태연", second = 215, playTime = 0, isPlaying = false, music = "music1.mp3", coverImg = R.drawable.img_album_exp6, isLiked = false, albumId = insertedAlbums[0].albumId),
                     SongEntity(title = "weekend2", singer = "태연", second = 215, playTime = 0, isPlaying = false, music = "music1.mp3", coverImg = R.drawable.img_album_exp6, isLiked = false, albumId = insertedAlbums[0].albumId),
                     SongEntity(title = "lilac", singer = "아이유", second = 230, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_exp2, isLiked = false, albumId = insertedAlbums[1].albumId),
+                    SongEntity(title = "lilac2", singer = "아이유", second = 230, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_exp2, isLiked = false, albumId = insertedAlbums[1].albumId),
                     SongEntity(title = "supernova", singer = "aespa", second = 200, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_supernova, isLiked = false, albumId = insertedAlbums[2].albumId),
                     SongEntity(title = "next level", singer = "aespa", second = 200, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_supernova, isLiked = false, albumId = insertedAlbums[3].albumId),
                     SongEntity(title = "butter", singer = "BTS", second = 200, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_supernova, isLiked = false, albumId = insertedAlbums[4].albumId)
@@ -133,12 +135,6 @@ class MainActivity_2nd : AppCompatActivity() {
             }
         }
 
-
-
-
-
-
-
     }
 
     fun updateMiniPlayer(title: String, artist: String, isPlaying: Boolean) {
@@ -146,6 +142,7 @@ class MainActivity_2nd : AppCompatActivity() {
         mBinding.miniSongArtist.text = artist
 
         MusicPlayerState.setPlayState(isPlaying)
+
 
         mBinding.miniPlayer.visibility = View.VISIBLE
     }
