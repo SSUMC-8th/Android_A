@@ -34,26 +34,6 @@ class SongActivity : AppCompatActivity() {
         initPlayList()
         initSong()
         initClickListener()
-//        setPlayer(song)
-//        var title : String?=null
-//        var singer : String?=null
-//        if(intent.hasExtra("title")&&intent.hasExtra("singer")){
-//            title = intent.getStringExtra("title")
-//            singer =intent.getStringExtra("singer")
-//            binding.songTitleTv.text=intent.getStringExtra("title")
-//            binding.songSingerTv.text=intent.getStringExtra("singer")
-//        }
-//        binding.songDownIbtn.setOnClickListener{
-////            val intent = Intent(this, FloMainActivity::class.java).apply {
-////                putExtra("message", title + " " + singer)
-////            }
-//            val resultIntent = Intent().apply {
-//                putExtra("message", "$title $singer")
-//            }
-//            setResult(RESULT_OK, resultIntent)
-//            finish()
-//        }
-
         binding.songPlayerPlayIbtn.setOnClickListener{
             PlayerStatus(true)
         }
