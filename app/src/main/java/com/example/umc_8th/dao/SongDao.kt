@@ -17,7 +17,11 @@ interface SongDao {
     @Query("SELECT * FROM SongTable WHERE songId = :id")
     suspend fun getSongById(id: Int): SongEntity?
 
-     @Query("UPDATE SongTable SET isLiked = :isLiked WHERE songId = :songId")
-        fun updateIsLiked(songId: Int, isLiked: Boolean)
+    @Query("UPDATE SongTable SET isLiked = :isLiked WHERE songId = :songId")
+    fun updateIsLiked(songId: Int, isLiked: Boolean)
+
+    @Query("SELECT * FROM SongTable WHERE albumId = :albumId LIMIT 1")
+    fun getFirstSongByAlbumId(albumId: Int): SongEntity?
+
 }
 

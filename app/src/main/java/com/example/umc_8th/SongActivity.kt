@@ -34,10 +34,14 @@ class SongActivity : AppCompatActivity() {
         currentSongId = intent.getIntExtra("songId", -1)
         val title = intent.getStringExtra("songTitle")
         val artist = intent.getStringExtra("songArtist")
+        val coverImgResId = intent.getIntExtra("songCoverImg", R.drawable.img_first_album_default)
+
 
         // 받은 데이터를 UI에 반영
         binding.songTitle.text = title ?: "제목 없음"
         binding.songArtist.text = artist ?: "아티스트 없음"
+        binding.songImg.setImageResource(coverImgResId)
+
 
         // 좋아요 상태를 LiveData로 관찰
         songViewModel.isLiked.observe(this) { isLiked ->

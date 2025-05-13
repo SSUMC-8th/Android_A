@@ -53,7 +53,13 @@ class AlbumRecyclerFragment : Fragment() {
                     albumList,
                     onPlayClick = { title, artist ->
                         (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
+
+                        val firstSongId = albumEntities.firstOrNull()?.albumId
+                        firstSongId?.let {
+                            MusicPlayerState.setCurrentSongId(it)
+                        }
                     },
+
                     onItemClick = { album ->
                         val bundle = Bundle().apply {
                             putString("title", album.albumName)
