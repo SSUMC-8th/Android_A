@@ -73,7 +73,7 @@ class AlbumRecyclerFragment : Fragment() {
                                 }
                             }
                         }
-                    }
+                    },
 
 //                    onPlayClick = { albumId, title, artist ->
 //                        val songDao = db.songDao()
@@ -94,7 +94,6 @@ class AlbumRecyclerFragment : Fragment() {
 //                            }
 //                        }
 //                    }
-                    ,
 
                     onItemClick = { album ->
                         val bundle = Bundle().apply {
