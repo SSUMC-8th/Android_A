@@ -14,9 +14,11 @@ data class AlbumEntity(
 )
 fun AlbumEntity.toAlbumItem(): AlbumItem {
     return AlbumItem(
-        albumImage = this.coverImg ?: R.drawable.img_first_album_default,  // 기본 이미지 처리
+        albumId = this.albumId,  // 추가
+        albumImage = this.coverImg ?: R.drawable.img_first_album_default,
         albumName = this.title,
         artistName = this.singer
     )
 }
+
 

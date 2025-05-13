@@ -51,14 +51,26 @@ class AlbumRecyclerFragment : Fragment() {
                 // 어댑터 설정 + 클릭 이벤트 추가
                 albumAdapter = AlbumAdapter(
                     albumList,
-                    onPlayClick = { title, artist ->
-                        (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
+                    onPlayClick = { albumId, title, artist ->
+                        val songDao = db.songDao()
 
-                        val firstSongId = albumEntities.firstOrNull()?.albumId
-                        firstSongId?.let {
-                            MusicPlayerState.setCurrentSongId(it)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val song = songDao.getFirstSongByAlbumId(albumId)  // 바로 사용할 수 있음!
+
+                            song?.let {
+                                MusicPlayerState.setCurrentSongId(it.songId)
+
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    (requireActivity() as MainActivity_2nd).updateMiniPlayer(
+                                        title = it.title,
+                                        artist = it.singer,
+                                        isPlaying = true
+                                    )
+                                }
+                            }
                         }
-                    },
+                    }
+                    ,
 
                     onItemClick = { album ->
                         val bundle = Bundle().apply {
@@ -69,6 +81,27 @@ class AlbumRecyclerFragment : Fragment() {
                         findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
                     }
                 )
+
+//                albumAdapter = AlbumAdapter(
+//                    albumList,
+//                    onPlayClick = { title, artist ->
+//                        (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
+//
+//                        val firstSongId = albumEntities.firstOrNull()?.albumId
+//                        firstSongId?.let {
+//                            MusicPlayerState.setCurrentSongId(it)
+//                        }
+//                    },
+//
+//                    onItemClick = { album ->
+//                        val bundle = Bundle().apply {
+//                            putString("title", album.albumName)
+//                            putString("artist", album.artistName)
+//                            putInt("imageRes", album.albumImage)
+//                        }
+//                        findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
+//                    }
+//                )
 
                 // RecyclerView 설정
                 binding.albumRecyclerView.layoutManager =
