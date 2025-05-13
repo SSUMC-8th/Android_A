@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentBannerBinding
+import com.example.umc_8th.databinding.FragmentBannerBinding
+//import umc.study.umc_8th.databinding.FragmentBannerBinding
 
 class BannerFragment(val imgResource : Int) :Fragment(){
     lateinit var binding: FragmentBannerBinding

@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.FragmentSavedSongBinding
 import com.google.gson.Gson
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.FragmentSavedSongBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.FragmentSavedSongBinding
 
 class SavedSongFragment:Fragment() {
     lateinit var binding:FragmentSavedSongBinding
@@ -24,7 +26,7 @@ class SavedSongFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding=FragmentSavedSongBinding.inflate(inflater, container, false)
+        binding= FragmentSavedSongBinding.inflate(inflater, container, false)
         songDB = SongDatabase.getInstance(requireContext())!!
         albumDatas.apply {
             add(Album(id = 1, title = "LILAC", singer = "아이유 (IU)", coverImage = R.drawable.img_album_exp2))

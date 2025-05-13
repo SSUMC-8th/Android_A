@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentPannelBinding
+import com.example.umc_8th.databinding.FragmentPannelBinding
+//import umc.study.umc_8th.databinding.FragmentPannelBinding
 
 class PannelFragment(val imgRes:Int): Fragment() {
-    lateinit var binding:FragmentPannelBinding
+    lateinit var binding: FragmentPannelBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

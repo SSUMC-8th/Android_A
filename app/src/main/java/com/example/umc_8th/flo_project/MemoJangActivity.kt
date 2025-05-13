@@ -5,11 +5,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivityMemoJangBinding
+import com.example.umc_8th.databinding.ActivityMemoJangBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivityMemoJangBinding
 
 class MemoJangActivity : AppCompatActivity() {
-    lateinit var binding:ActivityMemoJangBinding
+    lateinit var binding: ActivityMemoJangBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

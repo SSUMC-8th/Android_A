@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.SnackbarBinding
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.SnackbarBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.SnackbarBinding
 import com.google.android.material.snackbar.Snackbar
 
 class Snackbar(view: View, private val message: String){

@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentAlbumTrackBinding
+import com.example.umc_8th.databinding.FragmentAlbumTrackBinding
+//import umc.study.umc_8th.databinding.FragmentAlbumTrackBinding
 
 class AlbumTrackFragment :Fragment(){
     lateinit var binding: FragmentAlbumTrackBinding

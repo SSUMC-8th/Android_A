@@ -5,7 +5,8 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import umc.study.umc_8th.databinding.ItemLockerAlbumBinding
+import com.example.umc_8th.databinding.ItemLockerAlbumBinding
+//import umc.study.umc_8th.databinding.ItemLockerAlbumBinding
 
 class LockerAlbumRVAdapter () : RecyclerView.Adapter<LockerAlbumRVAdapter.ViewHolder>() {
     private val switchStatus = SparseBooleanArray()
@@ -28,18 +29,18 @@ class LockerAlbumRVAdapter () : RecyclerView.Adapter<LockerAlbumRVAdapter.ViewHo
             removeSong(position) // 현재 화면에서 아이템을 제거
         }
 
-        val switch =  holder.binding.switchRV
-        switch.isChecked = switchStatus[position]
-        switch.setOnClickListener {
-            if (switch.isChecked) {
-                switchStatus.put(position, true)
-            }
-            else {
-                switchStatus.put(position, false)
-            }
-
-            notifyItemChanged(position)
-        }
+//        val switch =  holder.binding.switchRV
+//        switch.isChecked = switchStatus[position]
+//        switch.setOnClickListener {
+//            if (switch.isChecked) {
+//                switchStatus.put(position, true)
+//            }
+//            else {
+//                switchStatus.put(position, false)
+//            }
+//
+//            notifyItemChanged(position)
+//        }
     }
 
     override fun getItemCount(): Int = songs.size

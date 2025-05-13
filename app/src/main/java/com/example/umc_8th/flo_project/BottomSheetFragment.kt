@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.umc_8th.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import umc.study.umc_8th.databinding.FragmentBottomSheetBinding
+//import umc.study.umc_8th.databinding.FragmentBottomSheetBinding
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
 

@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.FragmentHomeBinding
 import com.google.gson.Gson
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.FragmentHomeBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.FragmentHomeBinding
 import java.util.TimerTask
 import kotlin.concurrent.timer
 

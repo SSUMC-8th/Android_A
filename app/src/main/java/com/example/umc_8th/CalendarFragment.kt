@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentCalendarBinding
+import com.example.umc_8th.databinding.FragmentCalendarBinding
+//import umc.study.umc_8th.databinding.FragmentCalendarBinding
 
 class CalendarFragment:Fragment() {
     private lateinit var binding: FragmentCalendarBinding

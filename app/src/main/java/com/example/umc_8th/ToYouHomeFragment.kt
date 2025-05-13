@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentToYouHomeBinding
+import com.example.umc_8th.databinding.FragmentToYouHomeBinding
+//import umc.study.umc_8th.databinding.FragmentToYouHomeBinding
 
 class ToYouHomeFragment:Fragment() {
     private lateinit var binding: FragmentToYouHomeBinding

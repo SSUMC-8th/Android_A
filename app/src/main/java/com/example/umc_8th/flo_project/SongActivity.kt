@@ -13,13 +13,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.ActivitySongBinding
+import com.google.firebase.database.DatabaseReference
 import com.google.gson.Gson
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivitySongBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivitySongBinding
 
 class SongActivity : AppCompatActivity() {
     lateinit var binding: ActivitySongBinding
     lateinit var timer : Timer
+    lateinit var database:DatabaseReference
     private var mediaPlayer: MediaPlayer? = null
     val songs = arrayListOf<Song>()
     lateinit var songDB: SongDatabase
@@ -68,9 +72,95 @@ class SongActivity : AppCompatActivity() {
     }
 
     private fun initPlayList(){
-        songDB = SongDatabase.getInstance(this)!!
-        songs.addAll(songDB.songDao().getSongs())
+//        songDB = SongDatabase.getInstance(this)!!
+//        songs.addAll(songDB.songDao().getSongs())
+        // 로컬 샘플 song 데이터
+        songs.addAll(getSampleSongs())
+
+        // Firebase에서 좋아요 상태 가져오기
+        database.child("likes").get().addOnSuccessListener { snapshot ->
+            for (song in songs) {
+                val liked = snapshot.child(song.id.toString()).getValue(Boolean::class.java) ?: false
+                song.isLike = liked
+            }
+            setPlayer(songs[nowPos])
+        }.addOnFailureListener {
+            Toast.makeText(this, "좋아요 상태를 불러오지 못했습니다", Toast.LENGTH_SHORT).show()
+        }
     }
+
+    private fun getSampleSongs(): List<Song> {
+        return listOf(
+            Song(
+                "Lilac",
+                "아이유 (IU)",
+                0,
+                200,
+                false,
+                "music_lilac",
+                R.drawable.img_album_exp2,
+                false,
+                1
+            ),
+            Song(
+                "Flu",
+                "아이유 (IU)",
+                0,
+                200,
+                false,
+                "music_flu",
+                R.drawable.img_album_exp2,
+                false,
+                2
+            ),
+            Song(
+                "Butter",
+                "방탄소년단 (BTS)",
+                0,
+                190,
+                false,
+                "music_butter",
+                R.drawable.img_album_exp,
+                false,
+                3
+            ),
+            Song(
+                "Text",
+                "에스파 (AESPA)",
+                0,
+                210,
+                false,
+                "music_text",
+                R.drawable.img_album_exp3,
+                false,
+                4
+            ),
+            Song(
+                "Boy with Luv",
+                "music_boy",
+                0,
+                230,
+                false,
+                "music_boy",
+                R.drawable.img_album_exp4,
+                false,
+                5
+            ),
+            Song(
+                "BBoom BBoom",
+                "모모랜드 (MOMOLAND)",
+                0,
+                240,
+                false,
+                "music_bboom",
+                R.drawable.img_album_exp5,
+                false,
+                6
+            )
+        )
+    }
+
+
 
     private fun initClickListener(){
         binding.songDownIbtn.setOnClickListener {
@@ -141,13 +231,25 @@ class SongActivity : AppCompatActivity() {
     }
 
     private fun setLike(isLike: Boolean){
-        songs[nowPos].isLike = !isLike
-        songDB.songDao().updateIsLikeById(!isLike,songs[nowPos].id)
+//        songs[nowPos].isLike = !isLike
+//        songDB.songDao().updateIsLikeById(!isLike,songs[nowPos].id)
+        val currentSong = songs[nowPos]
+        currentSong.isLike = !isLike
 
-        if (!isLike){
+        database.child("likes").child(currentSong.id.toString())
+            .setValue(currentSong.isLike)
+
+//        if (!isLike){
+//            binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
+//            Snackbar.make(binding.root, "Liked Song").show()
+//        } else{
+//            binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_off)
+//            Snackbar.make(binding.root, "Cancel Liked Song").show()
+//        }
+        if (currentSong.isLike) {
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
             Snackbar.make(binding.root, "Liked Song").show()
-        } else{
+        } else {
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_off)
             Snackbar.make(binding.root, "Cancel Liked Song").show()
         }

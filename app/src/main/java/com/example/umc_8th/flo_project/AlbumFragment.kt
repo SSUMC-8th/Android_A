@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.FragmentAlbumBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.FragmentAlbumBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.FragmentAlbumBinding
 
 class AlbumFragment : Fragment() {
     lateinit var binding: FragmentAlbumBinding

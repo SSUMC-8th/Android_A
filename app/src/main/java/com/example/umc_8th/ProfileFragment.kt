@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentProfileBinding
+import com.example.umc_8th.databinding.FragmentProfileBinding
+//import umc.study.umc_8th.databinding.FragmentProfileBinding
 
 class ProfileFragment:Fragment() {
     private lateinit var binding: FragmentProfileBinding

@@ -12,9 +12,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.ActivityFloMainBinding
 import com.google.gson.Gson
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivityFloMainBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivityFloMainBinding
 
 class FloMainActivity : AppCompatActivity() {
     lateinit var binding: ActivityFloMainBinding
