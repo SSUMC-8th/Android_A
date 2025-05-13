@@ -4,14 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.umc_8th.dao.AlbumDao
+import com.example.umc_8th.dao.SongDao
 import com.example.umc_8th.entity.AlbumEntity
 import com.example.umc_8th.entity.SongEntity
-import com.example.umc_8th.dao.SongDao
 
-@Database(entities = [SongEntity::class, AlbumEntity::class], version = 2)
+@Database(entities = [SongEntity::class, AlbumEntity::class], version = 3)
 abstract class SongDatabase : RoomDatabase() {
     abstract fun songDao(): SongDao
     abstract fun albumDao(): AlbumDao
@@ -26,7 +24,7 @@ abstract class SongDatabase : RoomDatabase() {
                     SongDatabase::class.java,
                     "song_database"
                 )
-                    //.fallbackToDestructiveMigration()  // 기존 데이터베이스 삭제 후 재생성
+                    //.fallbackToDestructiveMigration() // 필요 시 주석 해제
                     .build()
                 INSTANCE = instance
                 instance

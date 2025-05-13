@@ -40,34 +40,40 @@ class MainActivity_2nd : AppCompatActivity(){
         CoroutineScope(Dispatchers.IO).launch {
             val existing = albumDao.getAlbums()
             if (existing.isEmpty()) {
+                // 앨범 리스트 생성
                 val albumList = listOf(
-                    AlbumEntity("Weekend", "태연", R.drawable.img_album_exp6),
-                    AlbumEntity("Lilac", "아이유", R.drawable.img_album_exp2),
-                    AlbumEntity("Supernova","aespa",R.drawable.img_album_supernova),
-                    AlbumEntity("NEXT LEVEL","aespa",R.drawable.img_album_exp3),
-                    AlbumEntity("BUTTER","BTS",R.drawable.img_album_exp)
+                    AlbumEntity(albumId = 1, title = "Weekend", singer = "태연", coverImg = R.drawable.img_album_exp6),
+                    AlbumEntity(albumId = 2, title = "Lilac", singer = "아이유", coverImg = R.drawable.img_album_exp2),
+                    AlbumEntity(albumId = 3, title = "Supernova", singer = "aespa", coverImg = R.drawable.img_album_supernova),
+                    AlbumEntity(albumId = 4, title = "NEXT LEVEL", singer = "aespa", coverImg = R.drawable.img_album_exp3),
+                    AlbumEntity(albumId = 5, title = "BUTTER", singer = "BTS", coverImg = R.drawable.img_album_exp)
                 )
+                // 앨범 삽입
                 albumDao.insertAlbums(albumList)
 
-                // 앨범 id 가져오기
+                // 삽입된 앨범 가져오기
                 val insertedAlbums = albumDao.getAlbums()
 
+                // 곡 리스트 생성 (songId는 자동으로 생성되므로 title만 String으로 지정)
                 val songs = listOf(
-                    SongEntity("weekend", "태연", 215, 0, false, "music1.mp3", R.drawable.img_album_exp6, false, insertedAlbums[0].id),
-                    SongEntity("weekend2", "태연", 215, 0, false, "music1.mp3", R.drawable.img_album_exp6, false, insertedAlbums[0].id),
-                    SongEntity("lilac", "아이유", 230, 0, false, "music2.mp3", R.drawable.img_album_exp2, false, insertedAlbums[1].id),
-                    SongEntity("supernova", "aespa", 200, 0, false, "music2.mp3", R.drawable.img_album_supernova, false, insertedAlbums[2].id),
-                    SongEntity("next level", "aespa", 200, 0, false, "music2.mp3", R.drawable.img_album_supernova, false, insertedAlbums[3].id),
-                    SongEntity("butter", "BTS", 200, 0, false, "music2.mp3", R.drawable.img_album_supernova, false, insertedAlbums[4].id)
+                    SongEntity(title = "weekend", singer = "태연", second = 215, playTime = 0, isPlaying = false, music = "music1.mp3", coverImg = R.drawable.img_album_exp6, isLiked = false, albumId = insertedAlbums[0].albumId),
+                    SongEntity(title = "weekend2", singer = "태연", second = 215, playTime = 0, isPlaying = false, music = "music1.mp3", coverImg = R.drawable.img_album_exp6, isLiked = false, albumId = insertedAlbums[0].albumId),
+                    SongEntity(title = "lilac", singer = "아이유", second = 230, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_exp2, isLiked = false, albumId = insertedAlbums[1].albumId),
+                    SongEntity(title = "supernova", singer = "aespa", second = 200, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_supernova, isLiked = false, albumId = insertedAlbums[2].albumId),
+                    SongEntity(title = "next level", singer = "aespa", second = 200, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_supernova, isLiked = false, albumId = insertedAlbums[3].albumId),
+                    SongEntity(title = "butter", singer = "BTS", second = 200, playTime = 0, isPlaying = false, music = "music2.mp3", coverImg = R.drawable.img_album_supernova, isLiked = false, albumId = insertedAlbums[4].albumId)
                 )
+                // 곡 삽입
                 songDao.insertAll(songs)
 
-                // SharedPref에 첫 곡 id 저장
+                // SharedPreferences에 첫 곡 ID 저장
                 getSharedPreferences("song_pref", MODE_PRIVATE)
                     .edit().putInt("songId", 1).apply()
             }
         }
-    }
+
+}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
