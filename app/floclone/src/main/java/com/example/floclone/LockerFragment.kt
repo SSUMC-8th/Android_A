@@ -125,6 +125,8 @@ class LockerFragment : Fragment() {
             .putBoolean("loginCheck", false)
             .putString("id", "")
             .apply()
+
+
     }
 
     override fun onResume() {
@@ -142,6 +144,7 @@ class LockerFragment : Fragment() {
         else{
             btnLogin.visibility = TextView.VISIBLE
             btnLogout.visibility = TextView.GONE
+
         }
 
     }

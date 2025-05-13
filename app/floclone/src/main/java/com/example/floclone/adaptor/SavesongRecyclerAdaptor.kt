@@ -20,15 +20,17 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.graphics.Color
+import com.google.firebase.database.FirebaseDatabase
 
 import com.example.floclone.database.Song as SongDB
 
 class SavesongRecyclerAdaptor(
-    private val songList:ArrayList<SongDB>
+    private val songList:ArrayList<SongDB>, private val uid:String
     ): RecyclerView.Adapter<SavesongRecyclerAdaptor.ViewHolder>() {
 
     //lockerfragment 전용
     private var selectMode = false
+
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,10 +52,6 @@ class SavesongRecyclerAdaptor(
         val song = songList[position]
         holder.imageView.setImageResource(song.coverImg ?: R.drawable.gibonsong)
 
-        //Glide.with(holder.itemView.context)
-        //    .load(song.image)
-        //    .into(holder.imageView)
-
         //lockerfragment에서 줄 시 색깔 변경
         holder.itemView.setBackgroundColor(
             if (selectMode){
@@ -63,7 +61,6 @@ class SavesongRecyclerAdaptor(
                 Color.WHITE
             }
         )
-
 
         holder.titleView.text = song.title
         holder.artistView.text = song.singer
@@ -88,6 +85,23 @@ class SavesongRecyclerAdaptor(
                 songList.get(pos).isLike = false
             }
 
+
+            //그냥 FireStore에서 해당 아이템을 지우고 UI 반영하자.
+            if(!uid.equals("")){
+                val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+                val nSong = songList.get(pos)
+                val sid = "song_${nSong.id}"
+                dbLike.child(sid).removeValue()
+            }
+
+            if (pos != RecyclerView.NO_POSITION && pos < songList.size) {
+                songList.removeAt(pos)
+                notifyItemRemoved(pos) //삭제 후 애니메이션 반영
+                notifyItemRangeChanged(pos, songList.size - pos)
+            }
+
+
+            /*
             //sharedPreference에도 적용
             val sharedPref = holder.itemView.context.getSharedPreferences("Song", Context.MODE_PRIVATE)
             val gson = Gson()
@@ -103,8 +117,9 @@ class SavesongRecyclerAdaptor(
 
             val jsonSongList = gson.toJson(tmpSongList)
             sharedPref.edit().putString("songList", jsonSongList).apply()
+            */
 
-
+            /*
             //일단 DB에는 비동기적으로 반영이 될 것이다.
             kotlinx.coroutines.GlobalScope.launch {
                 SongDatabase.getDatabase(holder.itemView.context).songDao()
@@ -120,6 +135,8 @@ class SavesongRecyclerAdaptor(
                     }
                 }
             }
+            */
+
         }
 
         holder.btnPlay.setOnClickListener {
@@ -150,6 +167,15 @@ class SavesongRecyclerAdaptor(
     }
 
     fun deleteAllItems(context: Context){
+
+        //그냥 firebase 전체 날리기
+        val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+        dbLike.removeValue()
+
+        songList.clear()
+        notifyDataSetChanged()
+
+        /*
         //1. 일단 DB에 반영
         val dao = SongDatabase.getDatabase(context).songDao()
         kotlinx.coroutines.GlobalScope.launch {
@@ -178,5 +204,6 @@ class SavesongRecyclerAdaptor(
                 notifyDataSetChanged()
             }
         }
+        */
     }
 }
