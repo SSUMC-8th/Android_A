@@ -143,14 +143,9 @@ class MainActivity_2nd : AppCompatActivity() {
         }
 
         mBinding.miniPlayer.setOnClickListener {
-
-
             val db = SongDatabase.getDatabase(this)
-
-
             CoroutineScope(Dispatchers.IO).launch {
                 val songId = MusicPlayerState.currentSongId
-
                 if (songId != null) {
                     Log.d("MainActivity", "currentId is not null")
                     val song = db.songDao().getSongById(songId)
