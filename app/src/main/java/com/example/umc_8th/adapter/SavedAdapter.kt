@@ -3,10 +3,12 @@ package com.example.umc_8th.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.umc_8th.MainActivity_2nd
 import com.example.umc_8th.R
 import com.example.umc_8th.SavedData
 import com.example.umc_8th.databinding.ItemSavedBinding
 import com.example.umc_8th.entity.SongEntity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class SavedAdapter(
     private var songList: MutableList<SongEntity>,
@@ -19,13 +21,34 @@ class SavedAdapter(
 
     inner class SavedViewHolder(val binding: ItemSavedBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+            //바텀다일로그
+        private var isBottomDialogVisible = false
+            //보관함 리사이클러뷰
         fun bind(song: SongEntity) {
             binding.savedName.text = song.title
             binding.savedArtist.text = song.singer
             binding.savedImg.setImageResource(song.coverImg ?: R.drawable.img_first_album_default)
             binding.root.setOnClickListener {
                 listener.onItemClick(song.songId)
+
+                if (isBottomDialogVisible) {
+                    // 바텀 다이얼로그를 숨기고, 바텀 네비게이션 보이기
+                    (it.context as? MainActivity_2nd)?.toggleBottomNavigation(true)
+                    isBottomDialogVisible = false
+                } else {
+                    // 바텀 네비게이션 숨기고, 새로운 바텀 다이얼로그 바를 표시
+                    (it.context as? MainActivity_2nd)?.toggleBottomNavigation(false)
+                    showBottomDialog()  // 새로운 바텀 다이얼로그 표시
+                    isBottomDialogVisible = true
+                }
             }
+        }
+        private fun showBottomDialog() {
+            // 바텀 다이얼로그 바를 생성하고 표시하는 로직
+            val dialog = BottomSheetDialog(binding.root.context)
+            dialog.setContentView(R.layout.fragment_bottom_dialog)  // 예시 레이아웃
+            dialog.show()
         }
     }
 
@@ -45,51 +68,3 @@ class SavedAdapter(
         notifyDataSetChanged()
     }
 }
-
-
-//class SavedAdapter(
-//    private val savedList: MutableList<SavedData>,
-//    private val onItemClickListener: OnItemClickListener
-//) : RecyclerView.Adapter<SavedAdapter.SavedViewHolder>() {
-//
-//    interface OnItemClickListener {
-//        fun onItemClick(position: Int)
-//    }
-//
-//    inner class SavedViewHolder(private val binding: ItemSavedBinding) :
-//        RecyclerView.ViewHolder(binding.root) {
-//
-//        fun bind(savedData: SavedData) {
-//            binding.savedImg.setImageResource(savedData.savedImg)
-//            binding.savedName.text = savedData.savedName
-//            binding.savedArtist.text = savedData.savedArtist
-//
-//            binding.moreBtn.setOnClickListener {
-//                val pos = bindingAdapterPosition
-//                if (pos != RecyclerView.NO_POSITION) {
-//                    onItemClickListener.onItemClick(pos)
-//                }
-//            }
-//        }
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedViewHolder {
-//        val binding = ItemSavedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return SavedViewHolder(binding)
-//    }
-//
-//    override fun onBindViewHolder(holder: SavedViewHolder, position: Int) {
-//        holder.bind(savedList[position])
-//    }
-//
-//    override fun getItemCount(): Int = savedList.size
-//
-//
-//    fun updateList(newList: List<SavedData>) {
-//        savedList.clear()
-//        savedList.addAll(newList)
-//        notifyDataSetChanged()
-//
-//    }
-//
-//}

@@ -22,6 +22,7 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
+            android:id="@+id/selectAllBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체선택"
@@ -35,6 +36,7 @@
             android:layout_gravity="center_vertical"/>
 
         <TextView
+            android:id="@+id/listenAllBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체듣기"

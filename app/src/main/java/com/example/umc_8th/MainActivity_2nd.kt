@@ -23,6 +23,14 @@ class MainActivity_2nd : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMain2ndBinding
 
+    fun toggleBottomNavigation(isVisible: Boolean) {
+        if (isVisible) {
+            mBinding.myBtmNav.visibility = View.VISIBLE
+        } else {
+            mBinding.myBtmNav.visibility = View.GONE
+        }
+    }
+
     private val playStateListener: (Boolean) -> Unit = { isPlaying ->
         // UI 업데이트는 반드시 메인 스레드에서
         runOnUiThread {
