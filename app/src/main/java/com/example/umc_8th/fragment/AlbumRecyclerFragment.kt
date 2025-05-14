@@ -1,7 +1,9 @@
 //오늘발매음악
 package com.example.umc_8th.fragment
 
+import MusicPlayerState.currentSongId
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +61,7 @@ class AlbumRecyclerFragment : Fragment() {
 
                             song?.let {
                                 MusicPlayerState.setCurrentSongId(it.songId)
+                                Log.d("MainActivity", "현재 currentSongId: $currentSongId, albumId: ${it.albumId}")
 
                                 // 🔽 진행률을 0으로 초기화하고 스레드 재시작
                                 MusicPlayerState.restartProgressThread()

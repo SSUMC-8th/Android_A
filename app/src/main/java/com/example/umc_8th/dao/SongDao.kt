@@ -20,9 +20,13 @@ interface SongDao {
     @Query("UPDATE SongTable SET isLiked = :isLiked WHERE songId = :songId")
     suspend fun updateIsLiked(songId: Int, isLiked: Boolean)
 
+    @Query("UPDATE SongTable SET isPlaying = :isPlaying WHERE songId = :songId")
+    suspend fun updateIsPlaying(songId: Int, isPlaying: Boolean)
+
     @Query("SELECT * FROM SongTable WHERE albumId = :albumId LIMIT 1")
     fun getFirstSongByAlbumId(albumId: Int): SongEntity?
 
+    //앨범아이디로 모든 노래 가져오는거고
     @Query("SELECT * FROM SongTable WHERE albumId = :albumId ORDER BY songId ASC")
     suspend fun getSongsByAlbumId(albumId: Int): List<SongEntity>
 
