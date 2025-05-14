@@ -16,12 +16,12 @@ import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivityMainBinding
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
@@ -33,21 +33,25 @@ class MainActivity : AppCompatActivity() {
     private val progressReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val progress = intent?.getIntExtra("currentPosition", 0) ?: 0
-            Log.d("ProgressReceiver", "Received progress: $progress")  // 로그 추가
+            Log.d("ProgressReceiver", "Received progress: $progress")
             binding.mainplayerSb.progress = progress
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onResume() {
-        super.onResume()
-        registerReceiver(progressReceiver, IntentFilter("com.example.umc_8th.UPDATE_PROGRESS"), RECEIVER_NOT_EXPORTED)
-        Log.d("MainActivity", "registerReceiver called")
-    }
+    private val albumPlayReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val title = intent?.getStringExtra("title") ?: return
+            val artist = intent.getStringExtra("artist") ?: return
+            val progress = intent.getIntExtra("progress", 0)
+            val duration = intent.getIntExtra("duration", 100)
 
-    override fun onPause() {
-        super.onPause()
-        unregisterReceiver(progressReceiver)
+            binding.mainplayerTitle.text = title
+            binding.mainplayerArtist.text = artist
+            binding.mainplayerSb.max = duration
+            binding.mainplayerSb.progress = progress
+
+
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // BroadcastReceiver 등록 (onCreate에서 항상 등록)
+        registerReceiver(albumPlayReceiver, IntentFilter("com.example.umc_8th.ALBUM_PLAY"), Context.RECEIVER_EXPORTED)
+        Log.d("MainActivity", "registerReceiver called in onCreate")
 
         // NavController 설정
         val navHostFragment =
@@ -67,14 +75,13 @@ class MainActivity : AppCompatActivity() {
         val colorStateList = ColorStateList(
             arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf()),
             intArrayOf(
-                ContextCompat.getColor(this, R.color.colorSelected),  // 선택된 아이템 색상 (빨간색)
-                ContextCompat.getColor(this, R.color.colorUnselected) // 선택되지 않은 아이템 색상 (회색)
+                ContextCompat.getColor(this, R.color.colorSelected),
+                ContextCompat.getColor(this, R.color.colorUnselected)
             )
         )
         binding.bottomNavi.itemIconTintList = colorStateList
-        binding.bottomNavi.itemIconTintList = colorStateList
 
-        // 최신 방식으로 ActivityResultLauncher 등록
+        // ActivityResultLauncher 등록
         songActivityLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -82,21 +89,21 @@ class MainActivity : AppCompatActivity() {
                 val data = result.data
                 val newTitle = data?.getStringExtra("title") ?: "Unknown"
                 val newArtist = data?.getStringExtra("artist") ?: "Unknown"
-                val message = newTitle+"-"+newArtist
+                val message = "$newTitle - $newArtist"
 
-                val progress = result.data?.getIntExtra("progress", 0) ?: 0
-                val duration = result.data?.getIntExtra("duration", 100) ?: 100
+                val progress = data?.getIntExtra("progress", 0) ?: 0
+                val duration = data?.getIntExtra("duration", 100) ?: 100
 
-                // 뷰 바인딩을 통해 UI 업데이트
                 binding.mainplayerTitle.text = newTitle
                 binding.mainplayerArtist.text = newArtist
                 binding.mainplayerSb.max = duration
                 binding.mainplayerSb.progress = progress
+
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
         }
 
-        // 미니 플레이어 클릭 시 SongActivity로 이동
+        // 미니 플레이어 클릭 시 SongActivity 실행
         binding.mainplayerCl.setOnClickListener {
             val intent = Intent(this, SongActivity::class.java).apply {
                 putExtra("title", binding.mainplayerTitle.text.toString())
@@ -105,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             songActivityLauncher.launch(intent)
         }
 
-        // BottomNavigationView 아이템 선택 리스너 설정
+        // BottomNavigationView 아이템 선택 시 애니메이션 적용
         binding.bottomNavi.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -129,16 +136,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Fragment 전환 시 애니메이션을 적용하는 함수
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(progressReceiver)
+        Log.d("MainActivity", "unregisterReceiver called in onDestroy")
+    }
+
     private fun navigateWithAnimation(destinationId: Int) {
         val navOptions = NavOptions.Builder()
-            .setEnterAnim(R.anim.slide_in_right)    // 새 프래그먼트가 들어올 때
-            .setExitAnim(R.anim.slide_out_left)     // 기존 프래그먼트가 나갈 때
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
             .build()
 
         val navController: NavController = findNavController(R.id.fragment_container)
         navController.navigate(destinationId, null, navOptions)
     }
-
-
 }

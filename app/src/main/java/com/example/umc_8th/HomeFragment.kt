@@ -1,8 +1,12 @@
+
 package com.example.umc_8th
 
+import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,9 +74,31 @@ class HomeFragment : Fragment() {
         recyclerView = view.findViewById(R.id.home_today_music_album_rv)
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-        albumAdapter = AlbumAdapter() { album ->
-            openAlbumFragment(album)
-        }
+        albumAdapter = AlbumAdapter(
+            albumList = albumList,
+            onAlbumClick = { album ->
+                // 앨범 전체를 클릭했을 때: 앨범 상세 화면으로 이동
+                openAlbumFragment(album)
+            },
+            onPlayClick = { album ->
+                val track = album.trackList.firstOrNull()
+                Log.d("HomeFragment", "Clicked track: $track")
+                if (track != null) {
+                    val mediaPlayer = MediaPlayer.create(requireContext(), album.trackList[0].musicResId)
+                    val duration = mediaPlayer.duration
+                    mediaPlayer.release()
+                    Log.d("HomeFragment", "Duration: $duration")
+                    val intent = Intent("com.example.umc_8th.ALBUM_PLAY").apply {
+                        putExtra("title", track.title)
+                        putExtra("artist", track.artist)
+                        putExtra("progress", 0)
+                        putExtra("duration", duration)
+                    }
+                    requireContext().sendBroadcast(intent)
+                }
+            }
+
+        )
         recyclerView.adapter = albumAdapter
     }
 

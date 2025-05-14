@@ -15,5 +15,5 @@
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
-        android:title="프로필" />
+        android:title="보관함" />
 </menu>

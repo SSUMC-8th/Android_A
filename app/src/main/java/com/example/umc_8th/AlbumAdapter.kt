@@ -1,3 +1,4 @@
+
 package com.example.umc_8th
 
 import android.view.LayoutInflater
@@ -9,21 +10,30 @@ import androidx.recyclerview.widget.RecyclerView
 import umc.study.umc_8th.R
 
 class AlbumAdapter(
-    private val onAlbumClick: (Album) -> Unit // 클릭 이벤트 처리
+    private val albumList: List<Album>,
+    private val onAlbumClick: (Album) -> Unit,
+    private val onPlayClick: (Album) -> Unit
 ) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 
     inner class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val albumImage: ImageView = view.findViewById(R.id.item_album_cover_img_iv)
         private val albumTitle: TextView = view.findViewById(R.id.item_album_title_tv)
         private val albumArtist: TextView = view.findViewById(R.id.item_album_singer_tv)
+        private val playButton: ImageView = view.findViewById(R.id.item_album_play_img_iv)
 
         fun bind(album: Album) {
             albumImage.setImageResource(album.coverImage)
             albumTitle.text = album.title
             albumArtist.text = album.artist
 
+            // 전체 아이템 클릭 시
             itemView.setOnClickListener {
-                onAlbumClick(album) // 클릭한 앨범 데이터 전달
+                onAlbumClick(album)
+            }
+
+            // 재생 버튼만 클릭 시
+            playButton.setOnClickListener {
+                onPlayClick(album)
             }
         }
     }
