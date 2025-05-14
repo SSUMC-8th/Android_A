@@ -18,13 +18,17 @@ interface SongDao {
     suspend fun getSongById(id: Int): SongEntity?
 
     @Query("UPDATE SongTable SET isLiked = :isLiked WHERE songId = :songId")
-    fun updateIsLiked(songId: Int, isLiked: Boolean)
+    suspend fun updateIsLiked(songId: Int, isLiked: Boolean)
 
     @Query("SELECT * FROM SongTable WHERE albumId = :albumId LIMIT 1")
     fun getFirstSongByAlbumId(albumId: Int): SongEntity?
 
     @Query("SELECT * FROM SongTable WHERE albumId = :albumId ORDER BY songId ASC")
     suspend fun getSongsByAlbumId(albumId: Int): List<SongEntity>
+
+    @Query("SELECT * FROM SongTable WHERE isLiked = 1")
+    fun getLikedSongs(): androidx.lifecycle.LiveData<List<SongEntity>>
+
 
 }
 

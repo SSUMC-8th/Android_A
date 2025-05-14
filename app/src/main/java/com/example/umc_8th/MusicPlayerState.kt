@@ -1,3 +1,5 @@
+import android.util.Log
+
 object MusicPlayerState {
     var isPlaying: Boolean = false
         private set
@@ -34,20 +36,39 @@ object MusicPlayerState {
         if (isPlaying) startProgressThread()
     }
 
-
     private fun startProgressThread() {
         if (progressThread == null || !progressThread!!.isAlive) {
             progressThread = Thread {
-                while (progress <= 100) {
-                    if (!isPlaying) break
-                    Thread.sleep(100)
-                    progress++
-                    notifyProgressListeners()
+                try {
+                    while (progress <= 100) {
+                        if (!isPlaying) break
+                        Thread.sleep(100)  // InterruptedException을 처리할 부분
+                        progress++
+                        notifyProgressListeners()
+                    }
+                } catch (e: InterruptedException) {
+                    // 쓰레드가 중단되었을 때의 처리
+                    Log.d("MusicPlayerState", "Progress thread interrupted")
                 }
             }
             progressThread!!.start()
         }
     }
+
+
+//    private fun startProgressThread() {
+//        if (progressThread == null || !progressThread!!.isAlive) {
+//            progressThread = Thread {
+//                while (progress <= 100) {
+//                    if (!isPlaying) break
+//                    Thread.sleep(100)
+//                    progress++
+//                    notifyProgressListeners()
+//                }
+//            }
+//            progressThread!!.start()
+//        }
+//    }
 
     fun setProgress(value: Int) {
         progress = value

@@ -2,75 +2,87 @@
 
 package com.example.umc_8th.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.umc_8th.R
 import com.example.umc_8th.SavedData
+import com.example.umc_8th.database.SongDatabase
+import com.example.umc_8th.entity.SongEntity
 
-class SavedViewModel : ViewModel() {
+class SavedViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _savedList = MutableLiveData<MutableList<SavedData>>().apply {
-        value = mutableListOf(
-            SavedData(
-                savedImg = R.drawable.img_album_lovewinsall,
-                savedName = "love wins all",
-                savedArtist = "아이유"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_supernova,
-                savedName = "supernova",
-                savedArtist = "aespa"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_drama,
-                savedName = "drama",
-                savedArtist = "aespa"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_exp3,
-                savedName = "next level",
-                savedArtist = "aespa"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_exp6,
-                savedName = "weekend",
-                savedArtist = "태연"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_lovewinsall,
-                savedName = "love wins all",
-                savedArtist = "아이유"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_supernova,
-                savedName = "supernova",
-                savedArtist = "aespa"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_drama,
-                savedName = "drama",
-                savedArtist = "aespa"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_exp3,
-                savedName = "next level",
-                savedArtist = "aespa"
-            ),
-            SavedData(
-                savedImg = R.drawable.img_album_exp6,
-                savedName = "weekend",
-                savedArtist = "태연"
-            )
-        )
-    }
+    private val songDao = SongDatabase.getDatabase(application).songDao()
 
-    val savedList: LiveData<MutableList<SavedData>> = _savedList
-
-    fun removeItem(position: Int) {
-        val updatedList = _savedList.value?.toMutableList()
-        updatedList?.removeAt(position)
-        _savedList.value = updatedList
-    }
-
+    val savedList: LiveData<List<SongEntity>> = songDao.getLikedSongs()
 }
+
+//
+//class SavedViewModel : ViewModel() {
+//
+//    private val _savedList = MutableLiveData<MutableList<SavedData>>().apply {
+//        value = mutableListOf(
+//            SavedData(
+//                savedImg = R.drawable.img_album_lovewinsall,
+//                savedName = "love wins all",
+//                savedArtist = "아이유"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_supernova,
+//                savedName = "supernova",
+//                savedArtist = "aespa"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_drama,
+//                savedName = "drama",
+//                savedArtist = "aespa"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_exp3,
+//                savedName = "next level",
+//                savedArtist = "aespa"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_exp6,
+//                savedName = "weekend",
+//                savedArtist = "태연"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_lovewinsall,
+//                savedName = "love wins all",
+//                savedArtist = "아이유"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_supernova,
+//                savedName = "supernova",
+//                savedArtist = "aespa"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_drama,
+//                savedName = "drama",
+//                savedArtist = "aespa"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_exp3,
+//                savedName = "next level",
+//                savedArtist = "aespa"
+//            ),
+//            SavedData(
+//                savedImg = R.drawable.img_album_exp6,
+//                savedName = "weekend",
+//                savedArtist = "태연"
+//            )
+//        )
+//    }
+//
+//    val savedList: LiveData<MutableList<SavedData>> = _savedList
+//
+//    fun removeItem(position: Int) {
+//        val updatedList = _savedList.value?.toMutableList()
+//        updatedList?.removeAt(position)
+//        _savedList.value = updatedList
+//    }
+//
+//}

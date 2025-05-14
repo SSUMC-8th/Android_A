@@ -11,15 +11,14 @@ import com.example.umc_8th.adapter.SavedAdapter
 import com.example.umc_8th.databinding.FragmentSavedBinding
 import com.example.umc_8th.viewmodel.SavedViewModel
 
-class SavedFragment:Fragment(){
+class SavedFragment: Fragment() {
     private var _binding: FragmentSavedBinding? = null
     private val binding get() = _binding!!
 
-    //뷰모델 추가
     private val savedViewModel: SavedViewModel by viewModels()
     private lateinit var savedAdapter: SavedAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSavedBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -27,18 +26,17 @@ class SavedFragment:Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         savedAdapter = SavedAdapter(mutableListOf(), object : SavedAdapter.OnItemClickListener {
-            override fun onItemClick(position: Int) {
-                savedViewModel.removeItem(position)  // 아이템 클릭 시 아이템 제거
+            override fun onItemClick(songId: Int) {
+                // 필요 시 클릭 이벤트 처리
             }
         })
 
-        binding.savedRecyclerView.layoutManager =LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, false)
+        binding.savedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.savedRecyclerView.adapter = savedAdapter
 
         savedViewModel.savedList.observe(viewLifecycleOwner) { list ->
-            savedAdapter.updateList(list)  // 데이터 변경 시 어댑터에 업데이트
+            savedAdapter.updateList(list)
         }
     }
 
@@ -47,3 +45,41 @@ class SavedFragment:Fragment(){
         super.onDestroyView()
     }
 }
+
+//
+//class SavedFragment:Fragment(){
+//    private var _binding: FragmentSavedBinding? = null
+//    private val binding get() = _binding!!
+//
+//    //뷰모델 추가
+//    private val savedViewModel: SavedViewModel by viewModels()
+//    private lateinit var savedAdapter: SavedAdapter
+//
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        _binding = FragmentSavedBinding.inflate(inflater, container, false)
+//        return binding.root
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//
+//        savedAdapter = SavedAdapter(mutableListOf(), object : SavedAdapter.OnItemClickListener {
+//            override fun onItemClick(position: Int) {
+//                savedViewModel.removeItem(position)  // 아이템 클릭 시 아이템 제거
+//            }
+//        })
+//
+//        binding.savedRecyclerView.layoutManager =LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, false)
+//        binding.savedRecyclerView.adapter = savedAdapter
+//
+//        savedViewModel.savedList.observe(viewLifecycleOwner) { list ->
+//            savedAdapter.updateList(list)  // 데이터 변경 시 어댑터에 업데이트
+//        }
+//    }
+//
+//    override fun onDestroyView() {
+//        _binding = null
+//        super.onDestroyView()
+//    }
+//}

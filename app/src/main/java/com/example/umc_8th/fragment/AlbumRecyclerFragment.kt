@@ -75,26 +75,6 @@ class AlbumRecyclerFragment : Fragment() {
                         }
                     },
 
-//                    onPlayClick = { albumId, title, artist ->
-//                        val songDao = db.songDao()
-//
-//                        CoroutineScope(Dispatchers.IO).launch {
-//                            val song = songDao.getFirstSongByAlbumId(albumId)  // 바로 사용할 수 있음!
-//
-//                            song?.let {
-//                                MusicPlayerState.setCurrentSongId(it.songId)
-//
-//                                CoroutineScope(Dispatchers.Main).launch {
-//                                    (requireActivity() as MainActivity_2nd).updateMiniPlayer(
-//                                        title = it.title,
-//                                        artist = it.singer,
-//                                        isPlaying = true
-//                                    )
-//                                }
-//                            }
-//                        }
-//                    }
-
                     onItemClick = { album ->
                         val bundle = Bundle().apply {
                             putString("title", album.albumName)

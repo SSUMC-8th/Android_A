@@ -1,5 +1,6 @@
 package com.example.umc_8th.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,8 @@ class AlbumAdapter(
 
         with(holder.binding) {
             albumImg.setImageResource(album.albumImage)
+            Log.d("AlbumAdapter", "Cover Image Resource ID: ${album.albumImage}")
+
             albumName.text = album.albumName
             artistName.text = album.artistName
 
