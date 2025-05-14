@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.ActivitySongBinding
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 //import umc.study.umc_8th.R
 //import umc.study.umc_8th.databinding.ActivitySongBinding
@@ -34,6 +35,8 @@ class SongActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding=ActivitySongBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        database = FirebaseDatabase.getInstance().reference
 
         initPlayList()
         initSong()
@@ -101,7 +104,7 @@ class SongActivity : AppCompatActivity() {
                 R.drawable.img_album_exp2,
                 false,
                 1
-            ),
+            ).apply { id = 1 },
             Song(
                 "Flu",
                 "아이유 (IU)",
@@ -112,7 +115,7 @@ class SongActivity : AppCompatActivity() {
                 R.drawable.img_album_exp2,
                 false,
                 2
-            ),
+            ).apply { id = 2 },
             Song(
                 "Butter",
                 "방탄소년단 (BTS)",
@@ -123,7 +126,7 @@ class SongActivity : AppCompatActivity() {
                 R.drawable.img_album_exp,
                 false,
                 3
-            ),
+            ).apply { id = 3 },
             Song(
                 "Text",
                 "에스파 (AESPA)",
@@ -134,7 +137,7 @@ class SongActivity : AppCompatActivity() {
                 R.drawable.img_album_exp3,
                 false,
                 4
-            ),
+            ).apply { id = 4 },
             Song(
                 "Boy with Luv",
                 "music_boy",
@@ -145,7 +148,7 @@ class SongActivity : AppCompatActivity() {
                 R.drawable.img_album_exp4,
                 false,
                 5
-            ),
+            ).apply { id = 4 },
             Song(
                 "BBoom BBoom",
                 "모모랜드 (MOMOLAND)",
@@ -156,7 +159,7 @@ class SongActivity : AppCompatActivity() {
                 R.drawable.img_album_exp5,
                 false,
                 6
-            )
+            ).apply { id = 6 }
         )
     }
 
@@ -218,7 +221,7 @@ class SongActivity : AppCompatActivity() {
 
         nowPos = getPlayingSongPosition(songId)
         startTimer()
-        setPlayer(songs[nowPos])
+//        setPlayer(songs[nowPos])
     }
 
     private fun getPlayingSongPosition(songId: Int): Int{
@@ -238,7 +241,6 @@ class SongActivity : AppCompatActivity() {
 
         database.child("likes").child(currentSong.id.toString())
             .setValue(currentSong.isLike)
-
 //        if (!isLike){
 //            binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
 //            Snackbar.make(binding.root, "Liked Song").show()
@@ -253,7 +255,7 @@ class SongActivity : AppCompatActivity() {
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_off)
             Snackbar.make(binding.root, "Cancel Liked Song").show()
         }
-
+        setPlayer(currentSong)
     }
 
     private fun setPlayer(song:Song){
