@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SignUpActivity">
+
+    <TextView
+        android:id="@+id/tv_signin_signActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="회원가입"
+        android:textColor="@color/black"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edt_id_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:background="@android:color/transparent"
+        android:hint="아이디(이메일)"
+        android:textColor="@color/black"
+        android:inputType="text"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/tv_golbang_signActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_signin_signActivity" />
+
+    <TextView
+        android:id="@+id/tv_golbang_signActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/edt_id_signActivity"
+        app:layout_constraintEnd_toEndOf="@id/tv_signin_signActivity"
+        app:layout_constraintStart_toStartOf="@id/tv_signin_signActivity"
+        app:layout_constraintTop_toTopOf="@id/edt_id_signActivity" />
+
+    <EditText
+        android:id="@+id/edt_email_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:hint="직접입력"
+        android:textColor="@color/black"
+        android:inputType="textWebEmailAddress"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/edt_id_signActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_golbang_signActivity"
+        app:layout_constraintTop_toTopOf="@id/edt_id_signActivity" />
+
+    <View
+        android:id="@+id/view_underid_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="15dp"
+        android:background="#a8a8a8"
+        app:layout_constraintEnd_toEndOf="@id/edt_id_signActivity"
+        app:layout_constraintStart_toStartOf="@id/edt_id_signActivity"
+        app:layout_constraintTop_toBottomOf="@id/edt_id_signActivity" />
+
+    <View
+        android:id="@+id/view_underemail_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="15dp"
+        android:background="#a8a8a8"
+        app:layout_constraintEnd_toEndOf="@id/edt_email_signActivity"
+        app:layout_constraintStart_toStartOf="@id/edt_email_signActivity"
+        app:layout_constraintTop_toBottomOf="@id/edt_email_signActivity" />
+
+    <ImageView
+        android:id="@+id/imv_down_signActivity"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/nugu_btn_down"
+        app:layout_constraintBottom_toBottomOf="@id/edt_email_signActivity"
+        app:layout_constraintEnd_toEndOf="@id/edt_email_signActivity"
+        app:layout_constraintTop_toTopOf="@id/edt_email_signActivity" />
+
+    <EditText
+        android:id="@+id/edt_password_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:hint="비밀번호"
+        android:textColor="@color/black"
+        android:inputType="textPassword"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_underid_signActivity" />
+
+    <View
+        android:id="@+id/view_underpassword_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="15dp"
+        android:background="#a8a8a8"
+        app:layout_constraintEnd_toEndOf="@id/edt_password_signActivity"
+        app:layout_constraintStart_toStartOf="@id/edt_password_signActivity"
+        app:layout_constraintTop_toBottomOf="@id/edt_password_signActivity" />
+
+    <ImageView
+        android:id="@+id/imv_hide_signActivity"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/btn_input_password"
+        app:layout_constraintBottom_toBottomOf="@id/edt_password_signActivity"
+        app:layout_constraintEnd_toEndOf="@id/edt_password_signActivity"
+        app:layout_constraintTop_toTopOf="@id/edt_password_signActivity" />
+
+
+    <EditText
+        android:id="@+id/edt_passwordcheck_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:hint="비밀번호 확인"
+        android:textColor="@color/black"
+        android:inputType="textPassword"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_underpassword_signActivity" />
+
+    <View
+        android:id="@+id/view_underpasswordcheck_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginTop="15dp"
+        android:background="#a8a8a8"
+        app:layout_constraintEnd_toEndOf="@id/edt_passwordcheck_signActivity"
+        app:layout_constraintStart_toStartOf="@id/edt_passwordcheck_signActivity"
+        app:layout_constraintTop_toBottomOf="@id/edt_passwordcheck_signActivity" />
+
+    <ImageView
+        android:id="@+id/imv_hidecheck_signActivity"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/btn_input_password"
+        app:layout_constraintBottom_toBottomOf="@id/edt_passwordcheck_signActivity"
+        app:layout_constraintEnd_toEndOf="@id/edt_passwordcheck_signActivity"
+        app:layout_constraintTop_toTopOf="@id/edt_passwordcheck_signActivity" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_signin_signActivity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#919194"
+        android:enabled="false"
+        android:text="가입완료"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_errorsign_signActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#FF0000"
+        android:layout_marginTop="10dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@id/view_underpasswordcheck_signActivity"
+        app:layout_constraintTop_toBottomOf="@id/view_underpasswordcheck_signActivity"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

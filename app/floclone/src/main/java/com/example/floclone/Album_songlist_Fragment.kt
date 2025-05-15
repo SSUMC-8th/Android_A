@@ -11,7 +11,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.floclone.adaptor.SongsRecyclerAdaptor
+import com.example.floclone.database.Album
 import com.google.android.material.imageview.ShapeableImageView
+import com.example.floclone.database.Song as SongDB
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +33,9 @@ class Album_songlist_Fragment : Fragment() {
     //인자
     private var song: Song? = null
     private lateinit var albumImage: ImageView
+
+    private lateinit var album: Album
+    private lateinit var songList: List<SongDB>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +57,10 @@ class Album_songlist_Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            song = it.getParcelable("song")
+            album = it.getParcelable("album")!!
+            songList = it.getParcelableArrayList("songs")!!
         }
         //albumImage = view.findViewById<ShapeableImageView>(R.id.imv_albumCover_albumFragment)
-
-        Log.d("tagcheck", song!!.artist)
 
         //recyclerview 연결
         setSongsRecyclerView()
@@ -73,17 +77,8 @@ class Album_songlist_Fragment : Fragment() {
             btnToggleoff?.visibility = View.GONE
             btnToggleon?.visibility = View.VISIBLE
 
-            val temp = listOf(
-                Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
-                Song("Spinning Globe", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-                Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-                Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-                Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
-                Song("Plazma", "Kenshi Yonezu", R.drawable.plazma, "Digital single")
-            )
-
             //섞어서 새로 연결
-            val shuffle = temp.shuffled()
+            val shuffle = songList.shuffled()
             val rcv_categorySong = view?.findViewById<RecyclerView>(R.id.rcv_menusongs_albumFragment)
             val adaptor_categorySong = SongsRecyclerAdaptor(shuffle)
             rcv_categorySong?.adapter = adaptor_categorySong
@@ -106,14 +101,7 @@ class Album_songlist_Fragment : Fragment() {
         //recylcerView를 통해 연결해보자
         val rcv_categorySong = view?.findViewById<RecyclerView>(R.id.rcv_menusongs_albumFragment)
         //사용할 Item들을 정의
-        val songList = listOf(
-            Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
-            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("Pop Song", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
-            Song("Plazma", "Kenshi Yonezu", R.drawable.plazma, "Digital single")
-        )
+
         val adaptor_categorySong = SongsRecyclerAdaptor(songList)
         rcv_categorySong?.adapter = adaptor_categorySong
         //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향

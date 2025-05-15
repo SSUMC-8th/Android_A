@@ -1,14 +1,26 @@
 package com.example.floclone.adaptor
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.floclone.MainActivity
 import com.example.floclone.R
 import com.example.floclone.Song
+import com.example.floclone.database.SongDatabase
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
+
+import com.example.floclone.database.Song as SongDB
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +36,15 @@ class Locker_SavesongFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var btnChooseall : ConstraintLayout
+    private lateinit var btnChooseallno : ConstraintLayout
+    private lateinit var btnDeleteAll : ConstraintLayout
+    private lateinit var adaptor_savesong : SavesongRecyclerAdaptor
+
+    private var likeSongList: ArrayList<SongDB> = ArrayList()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,35 +64,101 @@ class Locker_SavesongFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        btnChooseall = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_savesong)
+        btnChooseallno = view.findViewById<ConstraintLayout>(R.id.btn_chooseall_delete_savesong)
+        
+        //얘는 MainActivity꺼다
+        btnDeleteAll = requireActivity().findViewById<ConstraintLayout>(R.id.btn_delete_edit_bottomsheet)
 
-        setSavesongRecyclerView()
+        getLikedSongFromFirestore()
+
+        btnChooseall.setOnClickListener {
+            btnChooseall.visibility = TextView.INVISIBLE
+            btnChooseallno.visibility = TextView.VISIBLE
+            (requireActivity() as? MainActivity)?.showBottomActionBar()
+            adaptor_savesong.doSelectMode()
+        }
+
+        btnChooseallno.setOnClickListener {
+            btnChooseall.visibility = TextView.VISIBLE
+            btnChooseallno.visibility = TextView.INVISIBLE
+            (requireActivity() as? MainActivity)?.hideBottomActionBar()
+            adaptor_savesong.disableSelectMode()
+        }
+
+        btnDeleteAll.setOnClickListener {
+            adaptor_savesong.deleteAllItems(requireContext())
+            btnChooseallno.performClick() //버튼 누르기 코드적 실행
+        }
 
     }
 
 
     private fun setSavesongRecyclerView(){
 
+        val sharedPrefLogin = requireActivity().getSharedPreferences("login", MODE_PRIVATE)
+        val uid = sharedPrefLogin.getString("id", null) ?: ""
+
         val rcv_savesong = view?.findViewById<RecyclerView>(R.id.rcv_savesongs_savesong)
-        val songList = arrayListOf(
-            Song("アイドル", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
-            Song("Lady", "Kenshi Yonezu", R.drawable.album_lady, "Lost Corner"),
-            Song("Spinning Globe", "Kenshi Yonezu", R.drawable.spinningglob, "Lost Corner"),
-            Song("勇者", "Yoasobi", R.drawable.thebook3, "THE BOOK 3"),
-            Song("毎日", "Kenshi Yonezu", R.drawable.yone_lostcorner, "Lost Corner"),
-            Song("青春と青春と青春", "Aimyon", R.drawable.kimiwarockwokikanai, "君はロックを聴かない"),
-            Song("BOW AND ARROW", "Kenshi Yonezu", R.drawable.bowandarrow, "Digital single"),
-            Song("マリーゴールド", "Aimyon", R.drawable.marigold, "マリーゴールド"),
-            Song("夜に駆ける", "Yoasobi", R.drawable.thebook, "THE BOOK"),
-            Song("群青", "Yoasobi", R.drawable.thebook, "THE BOOK"),
-        )
+
+        //val dao = SongDatabase.getDatabase(requireContext()).songDao()
+
+        lifecycleScope.launch {
+            //var tmpsongList = dao.getLikedSongs()
+            //var songList = ArrayList(tmpsongList)
+            adaptor_savesong = SavesongRecyclerAdaptor(likeSongList, uid)
+            rcv_savesong?.adapter = adaptor_savesong
+            //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
+            rcv_savesong?.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
 
 
-        val adaptor_savesong = SavesongRecyclerAdaptor(songList)
-        rcv_savesong?.adapter = adaptor_savesong
-        //recyclerview에서 아이템 배치 방식을 나타내는 부분(수평) - 선형으로 수평 ->(false) 방향
-        rcv_savesong?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+    }
 
+    //firestore에서 가져오기
+    private fun getLikedSongFromFirestore(){
+        //Firebase에서 유저 별로 isLike노래들 가져오기
+        val sharedPrefLogin = requireActivity().getSharedPreferences("login", MODE_PRIVATE)
+        val loginCheck = sharedPrefLogin.getBoolean("loginCheck", false)
+        val uid = sharedPrefLogin.getString("id", null)
+
+        if(loginCheck && uid != null){
+            val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+            dbLike.get().addOnSuccessListener { snapshot ->
+                //uid가 가진 key들을 얻는다.
+                for (child in snapshot.children) {
+                    Log.d("tagcheck", "일단 1차: ${child.value}")
+                    val map = child.value as? Map<String, Any>
+                    map?.let {
+                        Log.d("tagcheck", "map? 됬나?")
+                        val song = SongDB(
+                            id = (it["id"] as Long).toInt(),
+                            title = it["title"] as String,
+                            singer = it["singer"] as String,
+                            second = (it["second"] as Long).toInt(),
+                            playTime = (it["playTime"] as Long).toInt(),
+                            isPlaying = it["playing"] as Boolean,
+                            music = it["music"] as String,
+                            coverImg = (it["coverImg"] as Long).toInt(),
+                            isLike = it["like"] as Boolean,
+                            albumIdx = (it["albumIdx"] as Long).toInt()
+                        )
+                        likeSongList.add(song)
+                    }
+                }
+                //recylcerview update
+                setSavesongRecyclerView()
+            }
+                .addOnFailureListener {
+                    //
+                }
+        }
+    }
+
+    //로그인/로그아웃 시 UI 변경
+    fun refreshUI(){
+        getLikedSongFromFirestore()
     }
 
     companion object {

@@ -10,15 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.floclone.R
 import com.example.floclone.Song
+import com.example.floclone.database.Album
+import com.example.floclone.database.Song as SongDB
 
 
 //데이터-뷰 연결 + View 생성(각 요소들), View 재사용, 클릭 처리 등
 //private val onImageClick: (Song) -> Unit) :
 // ㄴ onImageClick 변수를 생성 이 타입은 song 객체를 인자로 받아 return X
 class AlbumRecyclerAdaptor(
-    private val songList:List<Song>,
-    private val onImageClick: (Song) -> Unit,
-    private val onPlayClick: (Song) -> Unit
+    private val albumList:List<Album>,
+    private val onImageClick: (Album) -> Unit,
+    private val onPlayClick: (Album) -> Unit
 ):
         RecyclerView.Adapter<AlbumRecyclerAdaptor.ViewHolder>() {
 
@@ -39,27 +41,27 @@ class AlbumRecyclerAdaptor(
 
     //데이터를 View에 연경
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val song = songList[position]
-        holder.imageView.setImageResource(song.image)
+        val album = albumList[position]
+        holder.imageView.setImageResource(album.coverImg ?: R.drawable.gibonsong)
 
         //Glide.with(holder.itemView.context)
         //    .load(song.image) // 여기 song.image는 R.drawable.xxx여도 되고, URI, URL도 가능
         //    .into(holder.imageView)
 
 
-        holder.titleView.text = song.title
-        holder.artistView.text = song.artist
+        holder.titleView.text = album.title
+        holder.artistView.text = album.singer
 
         //onclicklistener 설정 (콜백함수 설정)
         holder.imageView.setOnClickListener{
-            onImageClick(song)
+            onImageClick(album)
         }
         holder.btnPlay.setOnClickListener {
-            onPlayClick(song)
+            onPlayClick(album)
         }
     }
 
-    override fun getItemCount(): Int = songList.size
+    override fun getItemCount(): Int = albumList.size
 
 
 

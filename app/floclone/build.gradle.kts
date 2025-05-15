@@ -2,7 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize") // ← 이거 필요!
-    id("androidx.navigation.safeargs.kotlin") // ← SafeArgs도 필요
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -35,6 +39,13 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
@@ -47,7 +58,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3) // 이미 추가됨
-    implementation("androidx.compose.material3:material3:1.0.0") // 추가된 부분
+    implementation("androidx.compose.material3:material3:1.0.0")
+    implementation(libs.firebase.database) // 추가된 부분
+    implementation(libs.firebase.auth) //얘도 추가
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -64,8 +77,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx) // 추가된 부분
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
-    //circle Indicator
     implementation("me.relex:circleindicator:2.1.6")
 
     // Paging 라이브러리 추가
@@ -73,6 +84,7 @@ dependencies {
 
     // Hilt Dependency Injection
     implementation("com.google.dagger:hilt-android:2.49")
+    ksp("com.google.dagger:hilt-compiler:2.49")
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
@@ -95,6 +107,7 @@ dependencies {
 
     // Glide Image Loading Library
     implementation("com.github.bumptech.glide:glide:4.14.2")
+    ksp("com.github.bumptech.glide:ksp:4.14.2")
 
     // CardView
     implementation("androidx.cardview:cardview:1.0.0")
@@ -109,6 +122,11 @@ dependencies {
 
     // ROOM Database
     implementation("androidx.room:room-runtime:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+
+    // Firebase
+    //implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+
 
 }
