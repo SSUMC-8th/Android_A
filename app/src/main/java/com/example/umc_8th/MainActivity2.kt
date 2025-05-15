@@ -6,8 +6,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivityMain2Binding
+import com.example.umc_8th.databinding.ActivityMain2Binding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivityMain2Binding
 
 
 class MainActivity2 : AppCompatActivity() {

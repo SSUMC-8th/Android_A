@@ -6,11 +6,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivityMemoBinding
+import com.example.umc_8th.databinding.ActivityMemoBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivityMemoBinding
 
 class MemoActivity : AppCompatActivity() {
-    lateinit var binding:ActivityMemoBinding
+    lateinit var binding: ActivityMemoBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -12,9 +12,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.umc_8th.R
+import com.example.umc_8th.databinding.ActivityFloMainBinding
 import com.google.gson.Gson
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivityFloMainBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivityFloMainBinding
 
 class FloMainActivity : AppCompatActivity() {
     lateinit var binding: ActivityFloMainBinding
@@ -42,7 +44,6 @@ class FloMainActivity : AppCompatActivity() {
                 val data = result.data
                 if (data != null) {
                     val message = data.getStringExtra("message")
-                    Log.d("message", message!!)
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -50,23 +51,28 @@ class FloMainActivity : AppCompatActivity() {
 //        하단 미니 플레이어에서 SongAcitivitiy로 데이터 전달하고 띄우기
 //        val song = Song(binding.mainMiniplayerTitleTv.text.toString(), binding.mainMiniplayerSingerTv.text.toString(), 0,60,false, "sample")
         binding.mainPlayerCl.setOnClickListener{
-//            val intent=Intent(this, SongActivity::class.java)
-//            intent.putExtra("title", song.title)
-//            intent.putExtra("singer", song.singer)
-//            intent.putExtra("second", song.second)
-//            intent.putExtra("playTime", song.playTime)
-//            intent.putExtra("isPlaying", song.isPlaying)
-//            intent.putExtra("music", song.music)
-//            startActivity(intent)  <- 문제가 됐던 코드
             val editor = getSharedPreferences("song", MODE_PRIVATE).edit()
-            editor.putInt("songId", songs[nowPos].id)
+            editor.putInt("songId", song.id)
             editor.apply()
 
             val intent = Intent(this,SongActivity::class.java)
             activityResultLauncher.launch(intent)
         }
-//            getResultText.launch(intent)
-        }
+    }
+//    override fun onStart() {
+//        super.onStart()
+//
+//        val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
+//        val songId = sharedPreferences.getInt("songId", 0)
+//        val songDB = SongDatabase.getInstance(this)!!
+//
+//        song = if (songId == 0){
+//            songDB.songDao().getSong(1)
+//        } else{
+//            songDB.songDao().getSong(songId)
+//        }
+//        setMiniPlayer(song)
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -135,10 +141,8 @@ class FloMainActivity : AppCompatActivity() {
     private fun setMiniPlayer(song : Song) {
         binding.mainMiniplayerTitleTv.text = song.title
         binding.mainMiniplayerSingerTv.text = song.singer
-        Log.d("songInfo", song.toString())
         val sharedPreferences = getSharedPreferences("song", MODE_PRIVATE)
         val second = sharedPreferences.getInt("second", 0)
-        Log.d("spfSecond", second.toString())
         binding.mainMiniplayerProgress.progress = (second * 100000 / song.playTime)
     }
 
@@ -178,7 +182,7 @@ class FloMainActivity : AppCompatActivity() {
                 "music_flu",
                 R.drawable.img_album_exp2,
                 false,
-                1
+                2
             )
         )
 
@@ -192,21 +196,21 @@ class FloMainActivity : AppCompatActivity() {
                 "music_butter",
                 R.drawable.img_album_exp,
                 false,
-                2
+                3
             )
         )
 
         songDB.songDao().insert(
             Song(
-                "Next Level",
+                "Text",
                 "에스파 (AESPA)",
                 0,
                 210,
                 false,
-                "music_next",
+                "music_text",
                 R.drawable.img_album_exp3,
                 false,
-                3
+                4
             )
         )
 
@@ -221,7 +225,7 @@ class FloMainActivity : AppCompatActivity() {
                 "music_boy",
                 R.drawable.img_album_exp4,
                 false,
-                4
+                5
             )
         )
 
@@ -236,25 +240,13 @@ class FloMainActivity : AppCompatActivity() {
                 "music_bboom",
                 R.drawable.img_album_exp5,
                 false,
-                5
+                6
             )
         )
-
         val songDBData = songDB.songDao().getSongs()
-        Log.d("DB data", songDBData.toString())
     }
 
-    private fun getJwt() : String? {
-        val spf = this.getSharedPreferences("auth2", MODE_PRIVATE)
-
-        return spf!!.getString("jwt", "")
-    }
-
-
-
-
-
-    }
+}
 
 //    private val getResultText =registerForActivityResult(
 //        ActivityResultContracts.StartActivityForResult()

@@ -133,14 +133,16 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.kapt")
+    id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "umc.study.umc_8th"
+    namespace = "com.example.umc_8th"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "umc.study.umc_8th"
+        applicationId = "com.example.umc_8th"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -219,6 +221,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx) // 추가된 부분
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.firebase:firebase-database-ktx:20.3.0")
 
     implementation ("com.google.code.gson:gson:2.8.7")
 

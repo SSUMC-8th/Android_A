@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.ActivityToYouMainBinding
+import com.example.umc_8th.databinding.ActivityToYouMainBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.ActivityToYouMainBinding
 
 class ToYouMain : AppCompatActivity() {
     private lateinit var binding: ActivityToYouMainBinding

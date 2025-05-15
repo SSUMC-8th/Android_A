@@ -86,13 +86,18 @@
         app:layout_constraintTop_toTopOf="@+id/song_singer_tv"/>
     <ImageView
         android:id="@+id/song_album_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/img_album_exp2"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/album_cover"
+        app:layout_constraintTop_toBottomOf="@id/song_singer_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song_singer_tv"/>
+        app:layout_constraintDimensionRatio="1:1" />
+
+
     <TextView
         android:id="@+id/song_lyrics_first_tv"
         android:layout_width="wrap_content"

@@ -3,7 +3,8 @@ package com.example.umc_8th.flo_project
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import umc.study.umc_8th.databinding.ItemAlbumBinding
+import com.example.umc_8th.databinding.ItemAlbumBinding
+//import umc.study.umc_8th.databinding.ItemAlbumBinding
 
 class AlbumAdapter(private val albumList: ArrayList<Album>) : RecyclerView.Adapter<AlbumAdapter.ViewHolder>(){
 

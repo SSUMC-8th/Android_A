@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentAlbumDetailBinding
+import com.example.umc_8th.databinding.FragmentAlbumDetailBinding
+//import umc.study.umc_8th.databinding.FragmentAlbumDetailBinding
 
 class AlbumDetailFragment :Fragment(){
     lateinit var binding: FragmentAlbumDetailBinding

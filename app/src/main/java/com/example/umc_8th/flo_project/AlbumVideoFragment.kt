@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.study.umc_8th.databinding.FragmentAlbumVideoBinding
+import com.example.umc_8th.databinding.FragmentAlbumVideoBinding
+//import umc.study.umc_8th.databinding.FragmentAlbumVideoBinding
 
 class AlbumVideoFragment : Fragment(){
-    lateinit var binding:FragmentAlbumVideoBinding
+    lateinit var binding: FragmentAlbumVideoBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

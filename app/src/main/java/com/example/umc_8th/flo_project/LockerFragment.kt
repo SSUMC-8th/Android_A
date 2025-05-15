@@ -10,9 +10,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.umc_8th.databinding.FragmentLockerBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.FragmentLockerBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.FragmentLockerBinding
 
 class LockerFragment : Fragment(){
     private lateinit var binding: FragmentLockerBinding
@@ -36,38 +37,13 @@ class LockerFragment : Fragment(){
         TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
             tab.text = information[position]
         }.attach()
-//        val tabLayout = binding.lockerContentTb
-//        TabLayoutMediator(tabLayout, binding.lockerContentVp){tab, position ->
-//            tab.text = when(position){
-//                0 -> "저장한 곡"
-//                1 -> "음악파일"
-//                else -> ""
-//            }
-//        }.attach()
 
-        //커스텀 슬라이드
-//        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
-////            tab.text = info[position]
-//            val tabText = TextView(requireContext()).apply {
-//                text = info[position]
-//                gravity = Gravity.CENTER
-//                setSingleLine(true)
-//                setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_LabelLarge)
-//                setTextColor(ContextCompat.getColor(requireContext(), R.color.tab_unselected)) // 초기 상태는 unselected 색
-//            }
-//            tab.customView = tabText
-//        }.attach()
-//        binding.lockerContentVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position: Int) {
-//                super.onPageSelected(position)
-//
-//                for (i in 0 until binding.lockerContentTb.tabCount) {
-//                    val textView = binding.lockerContentTb.getTabAt(i)?.customView as? TextView
-//                    val colorRes = if (i == position) R.color.tab_selected else R.color.tab_unselected
-//                    textView?.setTextColor(ContextCompat.getColor(requireContext(), colorRes))
-//                }
-//            }
-//        })
+        val bottomSheetFragment = BottomSheetFragment()
+
+        binding.lockerSelectAllTv.setOnClickListener {
+            bottomSheetFragment.show(requireFragmentManager(), "BottomSheetDialog")
+        }
+
         return binding.root
     }
 }

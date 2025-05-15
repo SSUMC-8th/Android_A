@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_8th.databinding.FragmentLockerBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import umc.study.umc_8th.R
-import umc.study.umc_8th.databinding.FragmentLockerBinding
+//import umc.study.umc_8th.R
+//import umc.study.umc_8th.databinding.FragmentLockerBinding
 
 class LookFragment: Fragment(){
     lateinit var binding: FragmentLockerBinding
