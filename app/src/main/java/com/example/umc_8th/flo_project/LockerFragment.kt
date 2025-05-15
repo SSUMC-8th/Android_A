@@ -1,5 +1,6 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -43,7 +44,10 @@ class LockerFragment : Fragment(){
         binding.lockerSelectAllTv.setOnClickListener {
             bottomSheetFragment.show(requireFragmentManager(), "BottomSheetDialog")
         }
-
+        binding.lockerLoginTv.setOnClickListener{
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
     }
 }
