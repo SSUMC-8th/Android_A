@@ -21,14 +21,12 @@ class SavedSongAdapter(
         val song = songList[position]
         holder.binding.apply {
             tvTitle.text = song.title
-            tvArtist.text = song.artist
-            ivAlbum.setImageResource(song.albumResId)
+            tvArtist.text = song.singer
+            ivAlbum.setImageResource(song.id)
 
-            itemSavedSwitch.isChecked = song.isSelected // 🔸 모델 상태 기반으로 설정
-
-            itemSavedSwitch.setOnCheckedChangeListener(null) // 🔸 리스너 초기화 (중복 방지)
-            itemSavedSwitch.setOnCheckedChangeListener { _, isChecked ->
-                song.isSelected = isChecked // 🔸 상태 변경 시 모델 업데이트
+            // 더보기 버튼 클릭 시 삭제 콜백 호출
+            btnMore.setOnClickListener {
+                onDeleteClick(song)
             }
         }
     }

@@ -6,41 +6,77 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.room.Room
 import umc.study.umc_8th.R
 import umc.study.umc_8th.databinding.ActivitySongBinding
+import androidx.core.content.edit
 
 class SongActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySongBinding
-    lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer: MediaPlayer
     private val handler = Handler(Looper.getMainLooper())
     private var isRepeatMode = false
+
+    private lateinit var songs: List<Song>
+    private var nowPos: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySongBinding.inflate(layoutInflater)
-        setContentView(binding.root) // 바인딩을 통한 레이아웃 설정
+        setContentView(binding.root)
 
-        // 미디어 초기화
-        mediaPlayer = MediaPlayer.create(this, R.raw.lilac)
 
-        // SeekBar 설정
-        binding.songPlaySb.max = mediaPlayer.duration
-        binding.totalTimeTv.text = formatTime(mediaPlayer.duration)
+        val db = Room.databaseBuilder(
+            applicationContext,
+            SongDatabase::class.java,
+            "song-database"
+        ).allowMainThreadQueries().build()
 
-        // 재생 버튼 클릭 시
+        val songDao = db.songDao()
+        val dummySongs = listOf(
+            Song(title = "LILAC", singer = "IU", playTime = 210000, music = "lilac.mp3"),
+            Song(title = "Coin", singer = "IU", playTime = 200000, music = "coin.mp3"),
+            Song(title = "HiSpringBye", singer = "IU", playTime = 230000, music = "hi_spring_bye.mp3"),
+            Song(title = "Flu", singer = "IU", playTime = 180000, music = "flu.mp3")
+        )
+        // 첫 실행 시 더미 데이터 삽입
+        if (isFirstRun()) {
+            dummySongs.forEach { songDao.insert(it) }
+        }
+
+        songs = songDao.getAllSongs()
+
+        //불러올때
+        val savedSongId = getSharedPreferences("song_prefs", MODE_PRIVATE).getInt("songId", -1)
+        Log.d("SongActivity", "Saved songId from prefs: $savedSongId")
+        nowPos = songs.indexOfFirst { it.id == savedSongId }.takeIf { it != -1 } ?: 0
+
+
+        playSong(nowPos)
+
+
+        binding.resetDbBtn.setOnClickListener {
+            resetDatabase(songDao)
+        }
+
+        // 재생/일시정지 버튼
         binding.songPlayerPlayIbtn.setOnClickListener {
-            if (!this::mediaPlayer.isInitialized || !mediaPlayer.isPlaying) {
-                startOneSongPlayback()
-            } else {
+            if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
                 binding.songPlayerPlayIbtn.setImageResource(R.drawable.btn_miniplayer_play)
+            } else {
+                mediaPlayer.start()
+                binding.songPlayerPlayIbtn.setImageResource(R.drawable.btn_miniplay_pause)
+                updateSeekBar()
             }
         }
 
-        // SeekBar 변경 감지
+        // SeekBar 제어
         binding.songPlaySb.setOnSeekBarChangeListener(object : android.widget.SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: android.widget.SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) mediaPlayer.seekTo(progress)
@@ -51,75 +87,82 @@ class SongActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: android.widget.SeekBar?) {}
         })
 
+        // 반복 버튼
         binding.songRepeatIbtn.setOnClickListener {
             isRepeatMode = !isRepeatMode
-
             if (isRepeatMode) {
-                binding.songRepeatIbtn.setColorFilter(ContextCompat.getColor(this, R.color.purple_500)) // 활성화 아이콘
+                binding.songRepeatIbtn.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             } else {
-                binding.songRepeatIbtn.colorFilter = null // 비활성화 아이콘
+                binding.songRepeatIbtn.colorFilter = null
             }
         }
 
-        // MainActivity에서 전달받은 데이터 가져오기
-        val title = intent.getStringExtra("title") ?: "Unknown"
-        val artist = intent.getStringExtra("artist") ?: "Unknown"
+        // 이전 곡
+        binding.songPlayerPrevIbtn.setOnClickListener {
+            if (nowPos > 0) {
+                nowPos--
+                playSong(nowPos)
+            }
+        }
 
-        // 뷰 바인딩을 통해 UI에 데이터 설정
-        binding.songTitleTv.text = title
-        binding.songArtistTv.text = artist
-
-        // 아래쪽 화살표 버튼 클릭 시 MainActivity로 데이터 전달 후 종료
+        // 다음 곡
+        binding.songPlayerNextIbtn.setOnClickListener {
+            if (nowPos < songs.size - 1) {
+                nowPos++
+                playSong(nowPos)
+            }
+        }
+        Log.d("SongCheck", songs.joinToString("\n") { "${it.id}: ${it.title} / ${it.music}" })
+        // 아래로 내리기 버튼
         binding.songDownIbtn.setOnClickListener {
             val resultIntent = Intent().apply {
-                putExtra("title", binding.songTitleTv.text.toString()) // 변경된 제목 전달
-                putExtra("artist", binding.songArtistTv.text.toString()) // 변경된 가수명 전달
+                putExtra("title", binding.songTitleTv.text.toString())
+                putExtra("artist", binding.songArtistTv.text.toString())
                 putExtra("toastMessage", "노래 정보가 업데이트되었습니다!")
                 putExtra("progress", mediaPlayer.currentPosition)
                 putExtra("duration", mediaPlayer.duration)
             }
             setResult(RESULT_OK, resultIntent)
-            finish() // SongActivity 종료
+            saveCurrentSongId()
+            finish()
         }
+
     }
 
-    private fun formatTime(ms: Int): String {
-        val minutes = ms / 1000 / 60
-        val seconds = (ms / 1000) % 60
-        return String.format("%02d:%02d", minutes, seconds)
-    }
-
-    private fun updateSeekBar() {
-        binding.songPlaySb.progress = mediaPlayer.currentPosition
-        binding.currentTimeTv.text = formatTime(mediaPlayer.currentPosition)
-        if (mediaPlayer.isPlaying) {
-            broadcastProgress()
-            Log.d("SongActivity", "broadcast sent : ${mediaPlayer.currentPosition}")
-            handler.postDelayed({ updateSeekBar() }, 1000)
-        }
-    }
-
-    private fun startOneSongPlayback() {
+    private fun playSong(position: Int) {
         if (this::mediaPlayer.isInitialized) {
+            mediaPlayer.stop()
             mediaPlayer.release()
             handler.removeCallbacksAndMessages(null)
         }
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.lilac)
+        val song = songs[position]
+        Log.d("SongActivity", "Playing song: $song")
+        val songResId = when (song.music) {
+            "lilac.mp3" -> R.raw.lilac
+            "coin.mp3" -> R.raw.coin
+            "hi_spring_bye.mp3" -> R.raw.hi_spring_bye
+            "flu.mp3" -> R.raw.flu
+            else -> R.raw.lilac // 기본값
+        }
+        Log.d("SongCheck", songs.joinToString("\n") { "${it.id}: ${it.title} / ${it.music}" })
+        mediaPlayer = MediaPlayer.create(this, songResId)
+        mediaPlayer.start()
 
+        binding.songTitleTv.text = song.title
+        binding.songArtistTv.text = song.singer
         binding.songPlaySb.max = mediaPlayer.duration
         binding.songPlaySb.progress = 0
         binding.totalTimeTv.text = formatTime(mediaPlayer.duration)
         binding.currentTimeTv.text = formatTime(0)
-
-        mediaPlayer.start()
         binding.songPlayerPlayIbtn.setImageResource(R.drawable.btn_miniplay_pause)
 
         updateSeekBar()
+        saveCurrentSongId()
 
         mediaPlayer.setOnCompletionListener {
             if (isRepeatMode) {
-                startOneSongPlayback() // 한곡 반복
+                playSong(nowPos)
             } else {
                 binding.songPlayerPlayIbtn.setImageResource(R.drawable.btn_miniplayer_play)
                 handler.removeCallbacksAndMessages(null)
@@ -127,17 +170,70 @@ class SongActivity : AppCompatActivity() {
         }
     }
 
-    private fun broadcastProgress() {
-        val intent = Intent("com.example.umc_8th.UPDATE_PROGRESS")
-        Log.d("SongActivity", "Broadcasting progress: $mediaPlayer.currentPosition")
-        intent.putExtra("currentPosition", mediaPlayer.currentPosition)
-        sendBroadcast(intent)
+    private fun updateSeekBar() {
+        binding.songPlaySb.progress = mediaPlayer.currentPosition
+        binding.currentTimeTv.text = formatTime(mediaPlayer.currentPosition)
+        if (mediaPlayer.isPlaying) {
+            handler.postDelayed({ updateSeekBar() }, 1000)
+        }
     }
 
-    override fun onDestroy() {
-        mediaPlayer.release()
-        super.onDestroy()
+    private fun saveCurrentSongId() {
+        val songId = songs[nowPos].id
+        getSharedPreferences("song_prefs", MODE_PRIVATE).edit() {
+            putInt("songId", songId)
+        }
+        Log.d("SharedPrefs", "SongActivity: 저장된 songId = $songId")
+    }
 
+    private fun isFirstRun(): Boolean {
+        val prefs = getSharedPreferences("song_init", MODE_PRIVATE)  // 분리된 prefs 이름 추천
+        val isFirst = prefs.getBoolean("isFirst", true)
+        Log.d("isFirst", "$isFirst")
+        if (isFirst) {
+            prefs.edit().putBoolean("isFirst", false).apply()
+        }
+        return isFirst
+    }
+
+
+    private fun formatTime(ms: Int): String {
+        val minutes = ms / 1000 / 60
+        val seconds = (ms / 1000) % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
+    private fun resetDatabase(songDao: SongDao) {
+        // 1. 기존 데이터 삭제
+        songDao.deleteAll()
+
+        // 2. 더미 데이터 다시 삽입
+        val dummySongs = listOf(
+            Song(title = "LILAC", singer = "IU", playTime = 210000, music = "lilac.mp3"),
+            Song(title = "Coin", singer = "IU", playTime = 200000, music = "coin.mp3"),
+            Song(title = "HiSpringBye", singer = "IU", playTime = 230000, music = "hi_spring_bye.mp3"),
+            Song(title = "Flu", singer = "IU", playTime = 180000, music = "flu.mp3")
+        )
+        dummySongs.forEach { songDao.insert(it) }
+
+        // 3. 리스트 재갱신
+        songs = songDao.getAllSongs()
+        songDao.resetAutoIncrement()
+
+        // 4. 초기 위치로 재생
+        nowPos = 0
+        playSong(nowPos)
+
+        Toast.makeText(this, "DB가 초기화되었습니다.", Toast.LENGTH_SHORT).show()
+    }
+
+
+
+    override fun onDestroy() {
+        if (this::mediaPlayer.isInitialized) {
+            mediaPlayer.release()
+        }
         handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 }

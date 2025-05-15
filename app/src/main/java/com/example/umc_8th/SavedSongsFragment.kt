@@ -34,11 +34,6 @@ class SavedSongsFragment : Fragment() {
             Song("Bad Boy (PREP Remix)", "Red Velvet", R.drawable.img_album_exp6),
             Song("Always Me", "2am", R.drawable.img_album_exp6),
             Song("잘 가라니", "2am", R.drawable.img_album_exp6),
-            Song("잘 가라니", "2am", R.drawable.img_album_exp6),
-            Song("잘 가라니", "2am", R.drawable.img_album_exp6),
-            Song("잘 가라니", "2am", R.drawable.img_album_exp6),
-            Song("잘 가라니", "2am", R.drawable.img_album_exp6),
-            Song("잘 가라니", "2am", R.drawable.img_album_exp6)
 
         )
 

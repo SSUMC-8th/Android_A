@@ -24,11 +24,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.room.Room
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var songActivityLauncher: ActivityResultLauncher<Intent>
+    private lateinit var songs: List<Song>
+    private var nowPos = 0
 
     private val progressReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -59,10 +62,14 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        loadAllSongs()
+        initSongFromPrefs() // 초기화
 
         // BroadcastReceiver 등록 (onCreate에서 항상 등록)
         registerReceiver(albumPlayReceiver, IntentFilter("com.example.umc_8th.ALBUM_PLAY"), Context.RECEIVER_EXPORTED)
         Log.d("MainActivity", "registerReceiver called in onCreate")
+
+        syncCurrentSongFromPrefs()
 
         // NavController 설정
         val navHostFragment =
@@ -134,6 +141,23 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        binding.mainPrevBtn.setOnClickListener {
+            Log.d("MainActivity", "Previous button clicked")
+            moveToPrevSong()
+            Log.d("MainActivity", "nowpos : $nowPos")
+        }
+
+        binding.mainNextBtn.setOnClickListener {
+            Log.d("MainActivity", "Next button clicked")
+            moveToNextSong()
+            Log.d("MainActivity", "nowpos : $nowPos")
+        }
+    }
+
+    override fun onResume(){
+        super.onResume()
+        initSongFromPrefs()
     }
 
     override fun onDestroy() {
@@ -150,5 +174,134 @@ class MainActivity : AppCompatActivity() {
 
         val navController: NavController = findNavController(R.id.fragment_container)
         navController.navigate(destinationId, null, navOptions)
+    }
+
+    private fun insertDummySong() {
+        val db = SongDatabase.getInstance(this) // Singleton Room Database
+        val songDao = db.songDao()
+
+        val dummySong = Song(
+            title = "Dummy Title",
+            singer = "Dummy Artist",
+            second = 0,
+            playTime = 240000, // 예: 4분을 밀리초 단위로 저장한 경우
+            isPlaying = false,
+            music = "dummy_music.mp3", // 파일명이나 경로
+            coverImg = null, // 혹은 R.drawable.some_image_id
+            isLike = false
+        )
+
+//        Thread {
+////            val insertedId = songDao.insert(dummySong) // 반환값은 Primary Key (Long)
+////            saveSongIdToPrefs(insertedId.toInt()) // SharedPreferences에 저장
+////            Log.d("MainActivity", "Dummy song inserted with id: $insertedId")
+//            initSongFromPrefs() // 초기화
+//        }.start()
+    }
+
+    private fun saveSongIdToPrefs(songId: Int) {
+        val prefs = getSharedPreferences("song_prefs", Context.MODE_PRIVATE)
+        prefs.edit().putInt("songId", songId+1).apply()
+        Log.d("SharedPrefs", "MainActivity: 저장된 songId = $songId")
+    }
+
+    private fun initSongFromPrefs() {
+        val prefs = getSharedPreferences("song_prefs", Context.MODE_PRIVATE)
+        val songId = prefs.getInt("songId", -1)
+        Log.d("SharedPrefs", "MainActivity: 불러온 savedSongId = $songId")
+        nowPos = songId - 1
+        if (songId == -1) return
+
+        val db = SongDatabase.getInstance(this)
+        val songDao = db.songDao()
+
+        Thread {
+            val song = songDao.getSongById(songId)
+            song?.let {
+                runOnUiThread {
+                    binding.mainplayerTitle.text = it.title
+                    binding.mainplayerArtist.text = it.singer
+                    binding.mainplayerSb.max = it.playTime
+                    binding.mainplayerSb.progress = it.second
+                }
+            }
+        }.start()
+    }
+
+    private fun loadAllSongs() {
+        val db = SongDatabase.getInstance(this)
+        val songDao = db.songDao()
+
+        Thread {
+            songs = songDao.getAllSongs()
+
+            val prefs = getSharedPreferences("song_prefs", Context.MODE_PRIVATE)
+            val songId = prefs.getInt("songId", -1)
+
+            // 해당 songId가 리스트에 있는지 확인
+            nowPos = songs.indexOfFirst { it.id == songId }
+            if (nowPos == -1) {
+                nowPos = 0 // 기본값
+                if (songs.isNotEmpty()) {
+                    saveSongIdToPrefs(songs[0].id)
+                }
+            }
+
+            runOnUiThread {
+                if (songs.isNotEmpty() && nowPos in songs.indices) {
+                    updateMiniPlayer(songs[nowPos])
+                } else {
+                    Log.e("MainActivity", "loadAllSongs: 유효한 곡이 없음 또는 인덱스 오류")
+                }
+            }
+        }.start()
+    }
+
+    private fun moveToNextSong() {
+        if (songs.isEmpty()) return
+        nowPos = (nowPos + 1) % songs.size
+        Log.d("MainActivity", "nowpos : $nowPos")
+        Log.d("MainActivity", "songs : $songs")
+        updateMiniPlayer(songs[nowPos])
+    }
+
+    private fun moveToPrevSong() {
+        if (songs.isEmpty()) return
+        nowPos = if (nowPos - 1 < 0) songs.size - 1 else nowPos - 1
+
+        Log.d("MainActivity", "nowpos : $nowPos")
+        Log.d("MainActivity", "songs : $songs")
+        updateMiniPlayer(songs[nowPos])
+    }
+
+    private fun updateMiniPlayer(song: Song) {
+        binding.mainplayerTitle.text = song.title
+        binding.mainplayerArtist.text = song.singer
+        binding.mainplayerSb.max = song.playTime
+        binding.mainplayerSb.progress = song.second
+        saveSongIdToPrefs(nowPos)
+    }
+
+    private fun syncCurrentSongFromPrefs() {
+        val prefs = getSharedPreferences("song_prefs", MODE_PRIVATE)
+        val savedSongId = prefs.getInt("songId", -1)
+        if (savedSongId == -1) return
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            SongDatabase::class.java,
+            "song-database"
+        ).allowMainThreadQueries().build()
+
+        val songDao = db.songDao()
+
+        val song = songDao.getSongById(savedSongId)
+        if (song != null) {
+            binding.mainplayerTitle.text = song.title
+            binding.mainplayerArtist.text = song.singer
+            binding.mainplayerSb.max = song.playTime
+            binding.mainplayerSb.progress = 0 // 필요에 따라 현재 재생 위치 동기화 추가 가능
+            // 미니 플레이어 재생/일시정지 버튼 상태도 동기화 가능
+        }
     }
 }

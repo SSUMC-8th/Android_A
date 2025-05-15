@@ -292,4 +292,13 @@
         app:layout_constraintStart_toEndOf="@+id/song_player_ll"
         app:layout_constraintTop_toTopOf="@+id/song_player_ll" />
 
+    <Button
+        android:id="@+id/resetDbBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="DB 초기화"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_setting_ibtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
