@@ -14,10 +14,12 @@
         tools:targetApi="31">
         <activity
             android:name=".flo_project.SignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".flo_project.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".flo_project.LockerVPAdapter"
             android:exported="false" />

@@ -204,6 +204,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.0.0")
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.recyclerview) // 추가된 부분
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
