@@ -19,14 +19,6 @@ class BannerFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
-//        binding.root.setOnClickListener {
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container, BannerAlbumFragment())
-//                .addToBackStack(null)
-//                .commit()
-//        }
-
         binding = FragmentBannerBinding.inflate(inflater, container, false)
 
         val imageRes = arguments?.getInt("imageRes") ?: R.drawable.img_first_album_default

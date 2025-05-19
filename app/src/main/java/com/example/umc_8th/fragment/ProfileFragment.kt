@@ -1,10 +1,12 @@
 package com.example.umc_8th.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.umc_8th.LoginActivity
 import com.example.umc_8th.adapter.StorageAdapter
 import com.example.umc_8th.databinding.FragmentProfileBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,8 +23,15 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.loginBtn.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         // ViewPager2 어댑터 설정
         val adapter = StorageAdapter(this)
