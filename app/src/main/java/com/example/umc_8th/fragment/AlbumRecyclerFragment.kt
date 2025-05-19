@@ -1,18 +1,24 @@
+//오늘발매음악
 package com.example.umc_8th.fragment
 
+import MusicPlayerState.currentSongId
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.umc_8th.adapter.AlbumAdapter
-import com.example.umc_8th.AlbumItem
 import com.example.umc_8th.R
 import com.example.umc_8th.databinding.FragmentAlbumRecyclerBinding
 import androidx.navigation.fragment.findNavController
 import com.example.umc_8th.MainActivity_2nd
+import com.example.umc_8th.database.SongDatabase
+import com.example.umc_8th.entity.toAlbumItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AlbumRecyclerFragment : Fragment() {
 
@@ -32,35 +38,63 @@ class AlbumRecyclerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 📌 더미 데이터 추가 (여기에 position 값에 따라 다르게 넣을 수도 있음)
-        val albumList = listOf(
-            AlbumItem(R.drawable.img_album_exp6, "Weekend", "태연"),
-            AlbumItem(R.drawable.img_album_exp2, "LILAC", "아이유(IU)"),
-            AlbumItem(R.drawable.img_album_exp3, "Album Three", "Artist C"),
-            AlbumItem(R.drawable.img_album_exp4, "Album Four", "Artist D"),
-            AlbumItem(R.drawable.img_album_exp5, "Album Five", "Artist E")
-        )
+        val db = SongDatabase.getDatabase(requireContext())
+        val albumDao = db.albumDao()
 
-        // 어댑터 설정 + 클릭 이벤트 추가 ✅
-        albumAdapter = AlbumAdapter(
-            albumList,
-            onPlayClick = { title, artist ->
-                (requireActivity() as MainActivity_2nd).updateMiniPlayer(title, artist, isPlaying = true)
-            },
-            onItemClick = { album ->
-                val bundle = Bundle().apply {
-                    putString("title", album.albumName)
-                    putString("artist", album.artistName)
-                    putInt("imageRes", album.albumImage)
-                }
-                findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
+        CoroutineScope(Dispatchers.IO).launch {
+            // DB에서 앨범 데이터 가져오기
+            val albumEntities = albumDao.getAlbums()
+
+            // AlbumEntity를 AlbumItem으로 변환
+            val albumList = albumEntities.map { it.toAlbumItem() }
+
+            // UI 갱신은 메인 스레드에서
+            CoroutineScope(Dispatchers.Main).launch {
+                // 어댑터 설정 + 클릭 이벤트 추가
+                albumAdapter = AlbumAdapter(
+                    albumList,
+                    onPlayClick = { albumId, title, artist ->
+                        val songDao = db.songDao()
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val song = songDao.getFirstSongByAlbumId(albumId)
+
+                            song?.let {
+                                MusicPlayerState.setCurrentSongId(it.songId)
+                                Log.d("MainActivity", "현재 currentSongId: $currentSongId, albumId: ${it.albumId}")
+
+                                // 🔽 진행률을 0으로 초기화하고 스레드 재시작
+                                MusicPlayerState.restartProgressThread()
+
+                                // 메인 스레드에서 MiniPlayer UI 업데이트
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    (requireActivity() as MainActivity_2nd).updateMiniPlayer(
+                                        title = it.title,
+                                        artist = it.singer,
+                                        isPlaying = true
+                                    )
+                                }
+                            }
+                        }
+                    },
+
+                    onItemClick = { album ->
+                        val bundle = Bundle().apply {
+                            putString("title", album.albumName)
+                            putString("artist", album.artistName)
+                            putInt("imageRes", album.albumImage)
+                        }
+                        findNavController().navigate(R.id.action_homeFragment_to_albumFragment, bundle)
+                    }
+                )
+
+
+                // RecyclerView 설정
+                binding.albumRecyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                binding.albumRecyclerView.adapter = albumAdapter
             }
-        )
-
-        // RecyclerView 설정 ✅
-        //binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.albumRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.albumRecyclerView.adapter = albumAdapter
+        }
     }
 
     override fun onDestroyView() {

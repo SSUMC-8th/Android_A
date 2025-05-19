@@ -33,28 +33,34 @@
         tools:layout_editor_absoluteX="16dp"
         android:progressDrawable="@drawable/seekbar_progress"/>
 
-
-
     <LinearLayout
         android:id="@+id/miniPlayer"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/light_gray"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:gravity="center_vertical"
+        >
+
+        <!-- 텍스트 영역 (왼쪽) -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/miniSongTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="곡제목"
-                android:textSize="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="15dp"
+                android:textSize="15sp"
                 android:textColor="@color/black"
+                android:maxLines="1"
+                android:ellipsize="end"
                 />
 
             <TextView
@@ -62,59 +68,142 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가수"
-                android:textSize="12dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="15dp"
+                android:textSize="12sp"
                 android:textColor="@color/black"
+                android:maxLines="1"
+                android:ellipsize="end"
                 />
         </LinearLayout>
 
-        <View
-            android:layout_width="150dp"
-            android:layout_height="match_parent"/>
+        <!-- 버튼 영역 (오른쪽 정렬) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="end|center_vertical">
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/btn_miniplayer_previous"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:padding="0dp"
-            android:scaleType="centerCrop"
-            />
+            <ImageButton
+                android:id="@+id/preBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_previous"
+                android:background="@null"
+                android:padding="0dp"
+                android:scaleType="centerCrop" />
 
-        <ImageButton
-            android:id="@+id/miniPlayBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/btn_miniplayer_play"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:padding="0dp"
-            android:scaleType="centerCrop"
-            />
+            <ImageButton
+                android:id="@+id/miniPlayBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_play"
+                android:background="@null"
+                android:padding="0dp"
+                android:scaleType="centerCrop" />
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/btn_miniplayer_next"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:padding="0dp"
-            android:scaleType="centerCrop"
-            />
+            <ImageButton
+                android:id="@+id/nextBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_next"
+                android:background="@null"
+                android:padding="0dp"
+                android:scaleType="centerCrop" />
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/btn_miniplayer_go_list"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:padding="0dp"
-            android:scaleType="centerCrop"
-            />
-
+            <ImageButton
+                android:id="@+id/listBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/btn_miniplayer_go_list"
+                android:background="@null"
+                android:padding="0dp"
+                android:scaleType="centerCrop" />
+        </LinearLayout>
     </LinearLayout>
+
+
+
+    <!--    <LinearLayout-->
+<!--        android:id="@+id/miniPlayer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:background="@color/light_gray"-->
+<!--        android:orientation="horizontal">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/miniSongTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="곡제목"-->
+<!--                android:textSize="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/miniSongArtist"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="가수"-->
+<!--                android:textSize="12dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                />-->
+<!--        </LinearLayout>-->
+
+<!--        <View-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="match_parent"/>-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/preBtn"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:src="@drawable/btn_miniplayer_previous"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:background="@null"-->
+<!--            android:padding="0dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/miniPlayBtn"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:src="@drawable/btn_miniplayer_play"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:background="@null"-->
+<!--            android:padding="0dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/nextBtn"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:src="@drawable/btn_miniplayer_next"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:background="@null"-->
+<!--            android:padding="0dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            />-->
+
+<!--        <ImageButton-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:src="@drawable/btn_miniplayer_go_list"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:background="@null"-->
+<!--            android:padding="0dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            />-->
+
+<!--    </LinearLayout>-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/my_btm_nav"

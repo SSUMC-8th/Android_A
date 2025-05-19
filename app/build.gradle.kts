@@ -132,7 +132,9 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-    id("org.jetbrains.kotlin.kapt")
+//    id("org.jetbrains.kotlin.kapt")//추가
+//    id("org.jetbrains.kotlin.android")//추가
+//    id("kotlin-kapt")//추가
 }
 
 android {
@@ -263,4 +265,6 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    //룸데베 추가
+//    kapt("androidx.room:room-compiler:2.6.1")
 }
