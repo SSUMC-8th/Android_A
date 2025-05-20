@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/writeFragment"
-    tools:context="com.example.umc_8th.fragment.LookaroundFragment"
+    android:id="@+id/profileFragment"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.example.umc_8th.fragment.ProfileFragment"
     >
-    <TextView
-        android:id="@+id/write"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/storage"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lookaround"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="둘러보기"
+            android:textSize="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="horizontal"
+        android:overScrollMode="never"
+        />
+
+
+</LinearLayout>
