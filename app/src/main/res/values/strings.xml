@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UMC_8th</string>
+    <string-array name="email_domains">
+        <item>직접입력</item>
+        <item>naver.com</item>
+        <item>gmail.com</item>
+        <item>daum.net</item>
+    </string-array>
 </resources>

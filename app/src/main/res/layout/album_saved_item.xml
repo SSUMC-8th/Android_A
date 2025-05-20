@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <!-- 앨범 이미지 -->
+    <ImageView
+        android:id="@+id/album_cover"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="앨범 이미지"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!-- 텍스트 영역 -->
+    <LinearLayout
+        android:id="@+id/text_container"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/album_cover"
+        app:layout_constraintTop_toTopOf="@id/album_cover"
+        app:layout_constraintBottom_toBottomOf="@id/album_cover"
+        app:layout_constraintEnd_toStartOf="@id/play_button"
+        android:layout_marginStart="12dp">
+
+        <TextView
+            android:id="@+id/album_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="앨범 제목"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/album_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아티스트"
+            android:textSize="12sp"
+            android:textColor="#555555"/>
+
+        <TextView
+            android:id="@+id/album_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021.03.25 | 장르 | 댄스 팝"
+            android:textSize="11sp"
+            android:textColor="#888888"/>
+    </LinearLayout>
+
+    <!-- 재생 버튼 -->
+    <ImageView
+        android:id="@+id/play_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/btn_miniplay_mvplay"
+        android:contentDescription="재생"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/more_button"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- 더보기 버튼 -->
+    <ImageView
+        android:id="@+id/more_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/btn_player_more"
+        android:contentDescription="더보기"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
