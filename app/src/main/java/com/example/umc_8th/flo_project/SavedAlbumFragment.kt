@@ -42,6 +42,7 @@ class SavedAlbumFragment :Fragment() {
         super.onStart()
         loadLikedAlbumsFromFirebase()
     }
+    //firebase로 좋아요 곡들 불러오기
     private fun loadLikedAlbumsFromFirebase() {
         database.child("likes").get().addOnSuccessListener { snapshot ->
             val likedIds = snapshot.children
@@ -56,7 +57,7 @@ class SavedAlbumFragment :Fragment() {
             Toast.makeText(context, "좋아요된 앨범을 불러오지 못했습니다", Toast.LENGTH_SHORT).show()
         }
     }
-
+    //firebase로 좋아요 곡들 불러오기
     private fun initRecyclerView(filteredAlbums: ArrayList<Album>) {
         binding.lockerSavedSongRecyclerView.layoutManager = LinearLayoutManager(context)
         val albumRVAdapter = SavedAlbumRVAdapter()
@@ -71,7 +72,7 @@ class SavedAlbumFragment :Fragment() {
         binding.lockerSavedSongRecyclerView.adapter = albumRVAdapter
         albumRVAdapter.addAlbums(filteredAlbums)
     }
-
+    //DB로 좋아요 곡들 불러오기(JWt)
     private fun initRecyclerview(){
         binding.lockerSavedSongRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
