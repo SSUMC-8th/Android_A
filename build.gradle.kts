@@ -15,10 +15,12 @@ buildscript {
     }
     dependencies {
 
+        //firebase
+        classpath("com.google.gms:google-services:4.4.1")
+
+
         classpath ("com.android.tools.build:gradle:8.8.2")
         val nav_version = "2.7.7"
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
-        //
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.3")
     }
 }

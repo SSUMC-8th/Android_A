@@ -132,7 +132,10 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-    //alias(libs.plugins.google.gms.google.services)
+    //firebase
+    id("com.google.gms.google-services")
+
+
 }
 
 android {
@@ -188,6 +191,9 @@ android {
 }
 
 dependencies {
+    //firebase 추가설정
+    implementation("com.google.firebase:firebase-auth:23.2.0")
+
     //도트인디케이터
     implementation ("com.tbuonomo:dotsindicator:4.3")
     //리사이클러뷰 및 카드뷰
