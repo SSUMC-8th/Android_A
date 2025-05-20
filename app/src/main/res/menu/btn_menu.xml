@@ -8,12 +8,12 @@
     <item
         android:id ="@+id/writeFragment"
         android:title = "@null"
-        android:icon="@drawable/ic_pencil"
+        android:icon="@drawable/ic_bottom_look_no_select"
         />
     <item
         android:id ="@+id/calendarFragment"
         android:title = "@null"
-        android:icon="@drawable/ic_calendar"
+        android:icon="@drawable/ic_bottom_search_no_select"
         />
     <item
         android:id ="@+id/profileFragment"

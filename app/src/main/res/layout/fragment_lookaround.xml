@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/writeFragment"
-    tools:context="com.example.umc_8th.fragment.WriteFragment"
+    tools:context="com.example.umc_8th.fragment.LookaroundFragment"
     >
     <TextView
         android:id="@+id/write"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Write"
+        android:text="Lookaround"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
