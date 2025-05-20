@@ -2,8 +2,8 @@ package com.example.umc_8th.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
-
 @Entity(
     tableName = "SongTable",
     foreignKeys = [
@@ -13,7 +13,8 @@ import androidx.room.PrimaryKey
             childColumns = ["albumId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["albumId"])]  // 여기 추가
 )
 data class SongEntity(
     @PrimaryKey(autoGenerate = true) var songId: Int = 0,

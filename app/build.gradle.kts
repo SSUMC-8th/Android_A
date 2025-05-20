@@ -132,10 +132,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-    alias(libs.plugins.google.gms.google.services)
-//    id("org.jetbrains.kotlin.kapt")//추가
-//    id("org.jetbrains.kotlin.android")//추가
-//    id("kotlin-kapt")//추가
+    //alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -143,6 +140,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments.put("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
         applicationId = "umc.study.umc_8th"
         minSdk = 26
         targetSdk = 34
@@ -204,7 +206,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3) // 이미 추가됨
     implementation("androidx.compose.material3:material3:1.0.0")
-    implementation(libs.firebase.auth) // 추가된 부분
+    //implementation(libs.firebase.auth) // 추가된 부분
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
