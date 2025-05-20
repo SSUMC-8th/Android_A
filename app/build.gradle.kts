@@ -192,7 +192,7 @@ android {
 
 dependencies {
     //firebase 추가설정
-    implementation("com.google.firebase:firebase-auth:23.2.0")
+    implementation("com.google.firebase:firebase-auth:23.1.0")
 
     //도트인디케이터
     implementation ("com.tbuonomo:dotsindicator:4.3")
