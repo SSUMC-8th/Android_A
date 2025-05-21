@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".adaptor.Locker_SavealbumFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_chooseall_savealbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="5dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/imv_chooseall_savealbum"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_playlist_select_off"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_choseall_savealbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체 선택"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/imv_chooseall_savealbum"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_chooseall_delete_savealbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="5dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/imv_chooseall_delete_savealbum"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_playlist_select_on"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_choseall_delete_savealbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택 해제"
+            android:textColor="#3D5AFE"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/imv_chooseall_delete_savealbum"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_listenall_savealbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="5dp"
+        app:layout_constraintStart_toEndOf="@id/btn_chooseall_savealbum"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/imv_listenall_savealbum"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_browse_arrow_right"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_listenall_savealbum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체 듣기"
+            android:textSize="15sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/imv_listenall_savealbum"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <Button
+        android:id="@+id/btn_modify_savealbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/black"
+        android:text="편집"
+        android:textSize="15sp"
+        app:layout_constraintTop_toTopOf="@id/btn_chooseall_savealbum"
+        app:layout_constraintBottom_toBottomOf="@id/btn_chooseall_savealbum"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_savealbums_savealbum"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_chooseall_savealbum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

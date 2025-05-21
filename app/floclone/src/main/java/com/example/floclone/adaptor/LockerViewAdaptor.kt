@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class LockerViewAdaptor(fragment : Fragment): FragmentStateAdapter(fragment) {
-    //일단 tab 2개
+    //일단 tab 3개
     override fun getItemCount(): Int {
-        return 2;
+        return 3;
     }
 
 
@@ -14,6 +14,7 @@ class LockerViewAdaptor(fragment : Fragment): FragmentStateAdapter(fragment) {
         return when (position){
             0 -> Locker_SavesongFragment()
             1 -> Locker_SongFileFragment()
+            2 -> Locker_SavealbumFragment()
             else -> Locker_SavesongFragment()
         }
     }

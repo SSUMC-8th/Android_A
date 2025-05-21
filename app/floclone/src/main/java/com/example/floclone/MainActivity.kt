@@ -147,6 +147,12 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                     true
                 }
+                R.id.navigation_lookaroundFragment ->{
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.ct_home, LookaroundFragment())
+                        .commit()
+                    true
+                }
                 // 다른 메뉴 항목에 대해서도 필요하면 추가
                 else -> false
             }

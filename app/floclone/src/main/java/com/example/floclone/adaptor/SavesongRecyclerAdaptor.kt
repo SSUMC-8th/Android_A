@@ -88,7 +88,7 @@ class SavesongRecyclerAdaptor(
 
             //그냥 FireStore에서 해당 아이템을 지우고 UI 반영하자.
             if(!uid.equals("")){
-                val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+                val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid).child("song")
                 val nSong = songList.get(pos)
                 val sid = "song_${nSong.id}"
                 dbLike.child(sid).removeValue()
@@ -169,7 +169,7 @@ class SavesongRecyclerAdaptor(
     fun deleteAllItems(context: Context){
 
         //그냥 firebase 전체 날리기
-        val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+        val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid).child("song")
         dbLike.removeValue()
 
         songList.clear()

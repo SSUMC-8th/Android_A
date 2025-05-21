@@ -29,9 +29,9 @@
 
     <fragment
         android:id="@+id/navigation_lookaroundFragment"
-        android:name="com.example.floclone.HomeFragment"
+        android:name="com.example.floclone.LookaroundFragment"
         android:label="Lookaround"
-        tools:layout="@layout/fragment_home"
+        tools:layout="@layout/fragment_lookaround"
         />
 
     <fragment
