@@ -1,5 +1,6 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -18,7 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class LockerFragment : Fragment(){
     private lateinit var binding: FragmentLockerBinding
     private lateinit var lockerAdapter: LockerPageAdapter
-    private val information = arrayListOf("저장한 곡", "음악파일")
+    private val information = arrayListOf("저장한 곡", "음악파일", "저장앨범")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +34,14 @@ class LockerFragment : Fragment(){
 //        lockerAdapter = LockerPageAdapter(this)
 //        binding.lockerContentVp.adapter = lockerAdapter
 
-        val lockerPageAdapter = LockerPageAdapter(this)
-        binding.lockerContentVp.adapter=lockerPageAdapter
+//        val lockerPageAdapter = LockerPageAdapter(this)
+//        binding.lockerContentVp.adapter=lockerPageAdapter
+//        TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
+//            tab.text = information[position]
+//        }.attach()
+        val lockerVPAdapter = LockerVPAdapter(this)
+        binding.lockerContentVp.adapter = lockerVPAdapter
+
         TabLayoutMediator(binding.lockerContentTb, binding.lockerContentVp) { tab, position ->
             tab.text = information[position]
         }.attach()
@@ -43,7 +51,43 @@ class LockerFragment : Fragment(){
         binding.lockerSelectAllTv.setOnClickListener {
             bottomSheetFragment.show(requireFragmentManager(), "BottomSheetDialog")
         }
-
+        binding.lockerLoginTv.setOnClickListener{
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
         return binding.root
+    }
+    override fun onStart() {
+        super.onStart()
+        initViews()
+    }
+    private fun getJwt() : Int {
+        val spf = requireActivity().getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+        return spf!!.getInt("jwt", 0)
+    }
+
+    private fun initViews() {
+        val jwt : Int = getJwt()
+        if (jwt == 0) {
+            binding.lockerLoginTv.text="로그인"
+            binding.lockerLoginTv.setOnClickListener {
+                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            }
+        }
+
+        else {
+            binding.lockerLoginTv.text = "로그아웃"
+            binding.lockerLoginTv.setOnClickListener {
+                logout()
+                startActivity(Intent(requireActivity(), FloMainActivity::class.java))
+            }
+        }
+    }
+
+    private fun logout() {
+        val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+        val editor = spf!!.edit()
+        editor.remove("jwt")
+        editor.apply()
     }
 }

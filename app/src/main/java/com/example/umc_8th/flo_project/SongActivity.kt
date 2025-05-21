@@ -236,11 +236,6 @@ class SongActivity : AppCompatActivity() {
     private fun setLike(isLike: Boolean){
 //        songs[nowPos].isLike = !isLike
 //        songDB.songDao().updateIsLikeById(!isLike,songs[nowPos].id)
-        val currentSong = songs[nowPos]
-        currentSong.isLike = !isLike
-
-        database.child("likes").child(currentSong.id.toString())
-            .setValue(currentSong.isLike)
 //        if (!isLike){
 //            binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
 //            Snackbar.make(binding.root, "Liked Song").show()
@@ -248,6 +243,12 @@ class SongActivity : AppCompatActivity() {
 //            binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_off)
 //            Snackbar.make(binding.root, "Cancel Liked Song").show()
 //        }
+
+        //firebase부분
+        val currentSong = songs[nowPos]
+        currentSong.isLike = !isLike
+        database.child("likes").child(currentSong.id.toString())
+            .setValue(currentSong.isLike)
         if (currentSong.isLike) {
             binding.songLikeIbtn.setImageResource(R.drawable.ic_my_like_on)
             Snackbar.make(binding.root, "Liked Song").show()
@@ -343,3 +344,11 @@ class SongActivity : AppCompatActivity() {
         }
     }
 }
+
+
+
+
+
+
+
+

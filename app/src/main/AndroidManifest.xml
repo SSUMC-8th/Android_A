@@ -13,20 +13,28 @@
         android:theme="@style/Theme.UMC_8th"
         tools:targetApi="31">
         <activity
-            android:name="com.example.umc_8th.flo_project.LockerVPAdapter"
+            android:name=".flo_project.SignUpActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".flo_project.LoginActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".flo_project.LockerVPAdapter"
             android:exported="false" />
         <activity
-            android:name="com.example.umc_8th.flo_project.MemoJangActivity"
+            android:name=".flo_project.MemoJangActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.umc_8th.flo_project.MemoActivity"
+            android:name=".flo_project.MemoActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.umc_8th.flo_project.SongActivity"
+            android:name=".flo_project.SongActivity"
             android:exported="false"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.umc_8th.flo_project.FloMainActivity"
+            android:name=".flo_project.FloMainActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp.Splash2">
             <intent-filter>
@@ -36,11 +44,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.umc_8th.ToYouMain"
+            android:name=".ToYouMain"
             android:exported="true"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.umc_8th.SplashActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp.Splash">
 
@@ -52,11 +60,11 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name="com.example.umc_8th.MainActivity2"
+            android:name=".MainActivity2"
             android:exported="true"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.umc_8th.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.UMC_8th" />

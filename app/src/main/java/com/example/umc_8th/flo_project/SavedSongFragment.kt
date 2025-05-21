@@ -60,6 +60,7 @@ class SavedSongFragment:Fragment() {
     override fun onStart() {
         super.onStart()
         loadLikedAlbumsFromFirebase()
+//        initRecyclerview()
     }
     private fun loadLikedAlbumsFromFirebase() {
         database.child("likes").get().addOnSuccessListener { snapshot ->
@@ -123,5 +124,22 @@ class SavedSongFragment:Fragment() {
                 }
             })
             .commitAllowingStateLoss()
+    }
+
+    private fun initRecyclerview(){
+        binding.lockerMusicAlbumRv.layoutManager = LinearLayoutManager(requireActivity())
+        val lockerAlbumRVAdapter = LockerAlbumRVAdapter()
+
+        lockerAlbumRVAdapter.setItemClickListener(object : LockerAlbumRVAdapter.OnItemClickListener {
+            override fun onItemClick(album: Album) {
+
+            }
+
+            override fun onRemoveAlbum(songId: Int) {
+                songDB.songDao().updateIsLikeById(false, songId)
+            }
+        })
+        binding.lockerMusicAlbumRv.adapter = lockerAlbumRVAdapter
+        lockerAlbumRVAdapter.addSongs(songDB.songDao().getLikedSongs(true) as ArrayList<Song>)
     }
 }

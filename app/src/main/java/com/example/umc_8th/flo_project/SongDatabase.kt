@@ -22,11 +22,12 @@ abstract class SongDatabase: RoomDatabase() {
                         context.applicationContext,
                         SongDatabase::class.java,
                         "song-database" // 다른 데이터 베이스랑 이름이 겹치지 않도록 주의
-                    ).allowMainThreadQueries().build() // 편의상 메인 쓰레드에서 처리하게 한다.
+                    ).allowMainThreadQueries().build() // 편의상 메인 쓰레드에서 처리하게
                 }
             }
 
             return instance
         }
+
     }
 }
