@@ -132,9 +132,10 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
-//    id("org.jetbrains.kotlin.kapt")//추가
-//    id("org.jetbrains.kotlin.android")//추가
-//    id("kotlin-kapt")//추가
+    //firebase
+    id("com.google.gms.google-services")
+
+
 }
 
 android {
@@ -142,6 +143,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments.put("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
         applicationId = "umc.study.umc_8th"
         minSdk = 26
         targetSdk = 34
@@ -185,6 +191,9 @@ android {
 }
 
 dependencies {
+    //firebase 추가설정
+    implementation("com.google.firebase:firebase-auth:23.1.0")
+
     //도트인디케이터
     implementation ("com.tbuonomo:dotsindicator:4.3")
     //리사이클러뷰 및 카드뷰
@@ -202,7 +211,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3) // 이미 추가됨
-    implementation("androidx.compose.material3:material3:1.0.0") // 추가된 부분
+    implementation("androidx.compose.material3:material3:1.0.0")
+    //implementation(libs.firebase.auth) // 추가된 부분
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
