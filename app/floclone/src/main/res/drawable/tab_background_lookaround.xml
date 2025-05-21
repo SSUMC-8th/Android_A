@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 눌렸을 때 (pressed) -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#3027D3"/>
+            <corners android:radius="24dp"/>
+        </shape>
+    </item>
+    <!-- 선택된 탭 -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#3D35D7"/>
+            <corners android:radius="24dp"/>
+        </shape>
+    </item>
+    <!-- 기본 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#CCCBCB"/>
+            <corners android:radius="24dp"/>
+        </shape>
+    </item>
+</selector>

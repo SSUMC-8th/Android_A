@@ -64,6 +64,7 @@ class LockerFragment : Fragment() {
             tab.text = when(position) {
                 0 -> "저장한 곡"
                 1 -> "음악파일"
+                2 -> "저장앨범"
                 else -> ""
             }
         }.attach()

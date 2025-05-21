@@ -297,7 +297,7 @@ class SongActivity : AppCompatActivity() {
         val uid = sharedPrefLogin.getString("id", null)
 
         if(loginCheck && uid != null) {
-            val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+            val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid).child("song")
 
             if (songList.get(nowPos).isLike) {
                 //없앤다
@@ -356,7 +356,7 @@ class SongActivity : AppCompatActivity() {
         val uid = sharedPrefLogin.getString("id", null)
 
         if(loginCheck && uid != null){
-            val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid)
+            val dbLike = FirebaseDatabase.getInstance().getReference("Like").child(uid).child("song")
             dbLike.get().addOnSuccessListener { snapshot ->
                 //uid가 가진 key들을 얻는다.
                 for (child in snapshot.children) {
