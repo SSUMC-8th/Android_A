@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 //각 API 서비스를 제공하는 객체
+
 interface ApiService {
     //notation으로 정의된 거 작성(회원가입은 POST)
 

@@ -9,9 +9,9 @@ class AuthService(private val view: AuthView) {
     private val api = NetworkManager.retrofit.create(ApiService::class.java)
 
     //회원가입 기능
-    fun singUp(name: String, email: String, pw: String){
+    fun signUp(name: String, email: String, pw: String){
         //결국에는 NetworkManger -> Retrofit 인스턴스 + ApiService 연결 후 호출
-        //꼭 enqueue로 비동기로 넣자
+        //꼭 enqueue로 비동기로 넣자 (apiService에 정의된 signUP 실행)
         api.signUP(SignUpRequest(name, email, pw))
             .enqueue(object : Callback<SignUpResponse>{
                 override fun onResponse(
@@ -34,7 +34,8 @@ class AuthService(private val view: AuthView) {
                         val body = response.body()
                         //유효하면
                         if (body != null && body.isSuccess && body.result != null) {
-                            // 성공: SignUpResult 객체 전달 - 콜백함수로
+                            // 성공: SignUpResult 객체 전달 - 콜백함수로(
+                            // LoginActivity/SignUPactivity에서 이 콜백함수로 받은 내용을 통해 내용 정의
                             view.onSignUpSuccess(body.result)
                         } else {
                             // API 레벨 실패(400 등) 또는 isSuccesss == false

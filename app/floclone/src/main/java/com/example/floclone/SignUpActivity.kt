@@ -74,7 +74,7 @@ class SignUpActivity : AppCompatActivity(), AuthView {
         var email = etEmail.text.toString().trim()
         var pw = etPw.text.toString().trim()
         var userId = "$id@$email"
-        authService.singUp("uhutcha",userId,pw)
+        authService.signUp("uhutcha",userId,pw)
     }
 
     private fun validInputcheck(){

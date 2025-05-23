@@ -5,6 +5,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//실제 API가 있는 서버 주소를 이용해 refrofit 객체를 생성
+
 object NetworkManager {
 
     // 실제 API 서버의 Base URL IN
