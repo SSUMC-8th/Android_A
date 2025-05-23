@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
+import com.example.floclone.api.AuthService
+import com.example.floclone.api.AuthView
+import com.example.floclone.api.LoginResult
+import com.example.floclone.api.SignUpResult
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -18,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), AuthView {
 
     private lateinit var etId : EditText
     private lateinit var etEmail : EditText
@@ -27,6 +31,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnlogin : MaterialButton
     private lateinit var btnSingin : TextView
     private lateinit var tvError : TextView
+
+    //api 추가
+    private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +47,11 @@ class LoginActivity : AppCompatActivity() {
         btnlogin = findViewById<MaterialButton>(R.id.btn_login_loginActivity)
         tvError = findViewById<TextView>(R.id.tv_errorlogin_loginActivity)
 
+        authService = AuthService(this)
 
         btnlogin.setOnClickListener {
-            validLogin()
+            //validLogin()
+            validLoginWithApi()
         }
 
         btnSingin.setOnClickListener {
@@ -55,6 +64,22 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun validLoginWithApi(){
+        var id = etId.text.toString().trim()
+        var email = etEmail.text.toString().trim()
+        var pw = etPw.text.toString().trim()
+
+        var userId = "$id@$email"
+
+        if (id.isEmpty() || email.isEmpty() || pw.isEmpty()) {
+            tvError.text = "잘못된 입력입니다."
+            tvError.visibility = TextView.VISIBLE
+            return
+        }
+        //여기서는 api 호출만 하고 성공 실패는 밑의 override에
+        authService.login(userId, pw)
     }
 
     private fun validLogin(){
@@ -117,5 +142,39 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    override fun onSignUpSuccess(result: SignUpResult) {
+
+    }
+
+    override fun onSignUpFailure(errorMsg: String) {
+
+    }
+
+    override fun onLoginSuccess(result: LoginResult) {
+        runOnUiThread {
+            //1. 에러 메시지 없애기
+            tvError.visibility = TextView.INVISIBLE
+
+            //2. auth로부터 uid 받고, 이를 sharedPreference에 저장
+            val uid = result.memberId
+            val sharedPref = getSharedPreferences("login", MODE_PRIVATE)
+
+            sharedPref.edit()
+                .putBoolean("loginCheck", true)
+                .putString("id", uid.toString())
+                .apply()
+
+            //3. 로그인 성공
+            Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+    }
+
+    override fun onLoginFailure(errorMsg: String) {
+        runOnUiThread {
+            Toast.makeText(this, "errorMsg", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 }

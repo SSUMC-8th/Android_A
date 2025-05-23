@@ -14,10 +14,14 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.database.FirebaseDatabase
 import android.graphics.Color
 import android.widget.Toast
+import com.example.floclone.api.AuthService
+import com.example.floclone.api.AuthView
+import com.example.floclone.api.LoginResult
+import com.example.floclone.api.SignUpResult
 import com.google.firebase.auth.FirebaseAuth
 
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity(), AuthView {
 
     private lateinit var etId : EditText
     private lateinit var etEmail : EditText
@@ -25,6 +29,9 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etPwcheck : EditText
     private lateinit var btnSignin : MaterialButton
     private lateinit var tvError : TextView
+
+    //api 추가
+    private lateinit var authService: AuthService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +46,7 @@ class SignUpActivity : AppCompatActivity() {
         btnSignin = findViewById<MaterialButton>(R.id.btn_signin_signActivity)
         tvError = findViewById<TextView>(R.id.tv_errorsign_signActivity)
 
+        authService = AuthService(this)
 
         // 모든 editText에 대해 돌면서 체크
         listOf(etId, etEmail, etPw, etPwcheck).forEach { editText ->
@@ -48,7 +56,10 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         btnSignin.setOnClickListener {
-            signUserInfo()
+            //signUserInfo()
+
+            //외부 API를 이용해 핸들
+            signUserInfoWithApi()
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -56,6 +67,14 @@ class SignUpActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun signUserInfoWithApi(){
+        var id = etId.text.toString().trim()
+        var email = etEmail.text.toString().trim()
+        var pw = etPw.text.toString().trim()
+        var userId = "$id@$email"
+        authService.singUp("uhutcha",userId,pw)
     }
 
     private fun validInputcheck(){
@@ -133,4 +152,45 @@ class SignUpActivity : AppCompatActivity() {
             }
 
     }
+
+    override fun onSignUpSuccess(result: SignUpResult) {
+
+        runOnUiThread {
+
+            var id = etId.text.toString().trim()
+            var email = etEmail.text.toString().trim()
+            var userId = "$id@$email"
+
+            var uid = result.memberId.toString()
+
+            val dbUser = FirebaseDatabase.getInstance().getReference("User")
+            val userData = mapOf(
+                "uid" to uid,
+                "email" to userId
+            )
+            dbUser.child(uid).setValue(userData)
+
+            Toast.makeText(
+                this,
+                "회원가입 성공! ID=${result.memberId}",
+                //현재 ID = 14
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
+        }
+    }
+
+    override fun onSignUpFailure(errorMsg: String) {
+
+        Toast.makeText(this, "${errorMsg}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLoginSuccess(result: LoginResult) {
+
+    }
+
+    override fun onLoginFailure(errorMsg: String) {
+
+    }
+
 }
