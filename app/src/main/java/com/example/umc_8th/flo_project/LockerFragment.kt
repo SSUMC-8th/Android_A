@@ -1,5 +1,6 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -61,28 +62,57 @@ class LockerFragment : Fragment(){
         super.onStart()
         initViews()
     }
-    private fun getJwt() : Int {
-        val spf = requireActivity().getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
-        return spf!!.getInt("jwt", 0)
+//    private fun getJwt() : Int {
+//        val spf = requireActivity().getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
+//        return spf!!.getInt("jwt", 0)
+//    }
+    private fun getMemberId(): Int {
+        return requireContext()
+            .getSharedPreferences("auth", Context.MODE_PRIVATE)
+            .getInt("memberId", -1)  // 기본값을 -1 로
     }
 
-    private fun initViews() {
-        val jwt : Int = getJwt()
-        if (jwt == 0) {
-            binding.lockerLoginTv.text="로그인"
-            binding.lockerLoginTv.setOnClickListener {
-                startActivity(Intent(requireActivity(), LoginActivity::class.java))
-            }
-        }
+    private fun getJwt(): String? {
+        val spf = requireContext()
+            .getSharedPreferences("auth", Context.MODE_PRIVATE)
+        // → getInt 대신 getString 사용
+        return spf.getString("jwt", null)
+    }
 
-        else {
-            binding.lockerLoginTv.text = "로그아웃"
-            binding.lockerLoginTv.setOnClickListener {
-                logout()
-                startActivity(Intent(requireActivity(), FloMainActivity::class.java))
-            }
+//    private fun initViews() {
+//        val jwt : Int = getJwt()
+//        if (jwt == 0) {
+//            binding.lockerLoginTv.text="로그인"
+//            binding.lockerLoginTv.setOnClickListener {
+//                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+//            }
+//        }
+//
+//        else {
+//            binding.lockerLoginTv.text = "로그아웃"
+//            binding.lockerLoginTv.setOnClickListener {
+//                logout()
+//                startActivity(Intent(requireActivity(), FloMainActivity::class.java))
+//            }
+//        }
+//    }
+private fun initViews() {
+    val memberId = getMemberId()
+    if (memberId < 0) {
+        // 로그인 안 된 상태
+        binding.lockerLoginTv.text = "로그인"
+        binding.lockerLoginTv.setOnClickListener {
+            startActivity(Intent(requireActivity(), LoginActivity::class.java))
+        }
+    } else {
+        // 로그인 된 상태
+        binding.lockerLoginTv.text = "로그아웃"
+        binding.lockerLoginTv.setOnClickListener {
+            logout()
+            startActivity(Intent(requireActivity(), FloMainActivity::class.java))
         }
     }
+}
 
     private fun logout() {
         val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)

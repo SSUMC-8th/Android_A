@@ -82,17 +82,23 @@ private fun signUp() : Boolean {
         return false
     }
 
-    val authService = AuthService()
-    authService.setSignUpView(this)
-    authService.signUp(getUser())
+//    val authService = AuthService()
+//    authService.setSignUpView(this)
+//    authService.signUp(getUser())
+    // API 호출
+    AuthService().apply {
+        setSignUpView(this@SignUpActivity)
+        signUp(getUser())
+    }
     return true
     }
 
     override fun onSignUpSuccess() {
+        Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
         finish()
     }
 
     override fun onSignUpFailure() {
-
+        Toast.makeText(this, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
     }
 }

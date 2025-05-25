@@ -1,5 +1,6 @@
 package com.example.umc_8th.flo_project
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
         val email : String = binding.loginIdEt.text.toString() + "@" + binding.loginDirectInputEt.text.toString()
         val pwd : String = binding.loginPasswordEt.text.toString()
-
+        val user = User(email, pwd, "")
 //        val songDB = SongDatabase.getInstance(this)!!
 //        val user = songDB.userDao().getUser(email, pwd)
 //
@@ -53,10 +54,15 @@ class LoginActivity : AppCompatActivity(), LoginView {
 //        } else {
 //            Toast.makeText(this, "회원정보가 존재하지 않습니다", Toast.LENGTH_SHORT).show()
 //        }
-        Log.d("LOGIN", "이메일: $email, 비밀번호: $pwd")
-        val authService = AuthService()
-        authService.setLoginView(this)
-        authService.login(User(email, pwd, ""))
+
+        //////////////////////////////////
+//        val authService = AuthService()
+//        authService.setLoginView(this)
+//        authService.login(User(email, pwd, ""))
+        AuthService().apply {
+            setLoginView(this@LoginActivity)
+            login(user)
+        }
     }
 
 //    private fun saveJwt(jwt : Int) {
@@ -81,16 +87,30 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun onLoginSuccess(code: String, result: Result) {
-        Log.d("LOGIN", "onLoginSuccess 호출됨, code=$code, token=${result.accessToken}")
-        when(code){
-            "1000" -> {
-                saveJwt2(result.accessToken)
-                startMainActivity()
-            }
-        }
+//        Log.d("LOGIN", "onLoginSuccess 호출됨, code=$code, token=${result.accessToken}")
+//        when(code){
+//            "1000" -> {
+//                saveJwt2(result.accessToken)
+//                startMainActivity()
+//            }
+//        }
+        val spf = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        spf.edit()
+            .putString("jwt", result.accessToken)
+            .putInt("memberId", result.memberId)
+            .apply()
+
+        getSharedPreferences("auth", MODE_PRIVATE)
+            .edit()
+            .putString("jwt", result.accessToken)
+            .apply()
+
+        // 메인 화면으로 이동
+        startActivity(Intent(this, FloMainActivity::class.java))
+        finish()
     }
 
-    override fun onLoginFailure() {
+    override fun onLoginFailure(message: String) {
         Toast.makeText(this, "로그인에 실패했습니다. 인터넷 연결 또는 서버 상태를 확인해 주세요.", Toast.LENGTH_SHORT).show()
     }
 
