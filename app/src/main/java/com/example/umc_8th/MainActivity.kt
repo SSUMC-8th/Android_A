@@ -25,6 +25,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import java.util.Collections.emptyList
+
 // import androidx.room.Room // Room 임포트 삭제
 
 class MainActivity : AppCompatActivity() {

@@ -6,77 +6,53 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
 import umc.study.umc_8th.R
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity(), SignUpView {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var etEmail: EditText
-    private lateinit var etPassword: EditText
-    private lateinit var btnSignUp: Button
+    private lateinit var emailEditText: EditText
+    private lateinit var emailSpinner: Spinner
+    private lateinit var passwordEditText: EditText
+    private lateinit var confirmPasswordEditText: EditText
+    private lateinit var signupBtn: Button
+
+    private lateinit var service: SignUpService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        auth = FirebaseAuth.getInstance()
+        emailEditText = findViewById(R.id.emailEditText)
+        emailSpinner = findViewById(R.id.emailDomainSpinner)
+        passwordEditText = findViewById(R.id.passwordEditText)
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
+        signupBtn = findViewById(R.id.signupBtn)
 
-        etEmail = findViewById(R.id.emailEditText)
-        etPassword = findViewById(R.id.passwordEditText)
-        btnSignUp = findViewById(R.id.signupBtn)
+        service = SignUpService(this)
 
-        btnSignUp.setOnClickListener {
-            val emailDomainSpinner = findViewById<Spinner>(R.id.emailDomainSpinner)
-            val email = etEmail.text.toString().trim() + "@" + emailDomainSpinner.selectedItem.toString()
-            val password = etPassword.text.toString().trim()
+        signupBtn.setOnClickListener {
+            val email = "${emailEditText.text}@${emailSpinner.selectedItem}"
+            val password = passwordEditText.text.toString()
+            val confirmPassword = confirmPasswordEditText.text.toString()
+            val name = emailEditText.text.toString().substringBefore("@") // 이름은 이메일 앞부분으로 대체
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "이메일과 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
+            if (password != confirmPassword) {
+                Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            signUpWithFirebase(email, password)
-            //startActivity(Intent(this, LoginActivity::class.java))
+            service.signUp(name, email, password)
         }
-
     }
 
-    private fun signUpWithFirebase(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user != null) {
-                        saveUserToRealtimeDatabase(user)
-                        Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }
-                } else {
-                    Toast.makeText(this, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_LONG).show()
-                    Log.e("SignUpActivity", "회원가입 실패", task.exception)
-                }
-            }
+    override fun onSignUpSuccess(message: String) {
+        Log.d("SignUpActivity", "회원가입 성공: $message")
+        Toast.makeText(this, "회원가입 성공: $message", Toast.LENGTH_SHORT).show()
+        finish()
     }
 
-    private fun saveUserToRealtimeDatabase(user: FirebaseUser) {
-        val database = FirebaseDatabase.getInstance()
-        val usersRef = database.getReference("users")
-
-        val userData = User(
-            uid = user.uid,
-            email = user.email ?: ""
-        )
-
-        usersRef.child(user.uid).setValue(userData)
-            .addOnSuccessListener {
-                Log.d("FirebaseDB", "사용자 정보 저장 성공")
-            }
-            .addOnFailureListener {
-                Log.e("FirebaseDB", "사용자 정보 저장 실패: ${it.message}")
-            }
+    override fun onSignUpFailure(message: String) {
+        Log.d("SignUpActivity", "회원가입 실패: $message")
+        Toast.makeText(this, "회원가입 실패: $message", Toast.LENGTH_SHORT).show()
     }
 }

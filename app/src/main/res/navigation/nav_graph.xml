@@ -20,9 +20,9 @@
         android:layout="@layout/fragment_album"/>
     <fragment
         android:id="@+id/nav_pencil"
-        android:name="com.example.umc_8th.PencilFragment"
+        android:name="com.example.umc_8th.LookingFragment"
         android:label="Pencil"
-        tools:layout="@layout/fragment_pencil"/>
+        tools:layout="@layout/fragment_looking"/>
     <fragment
         android:id="@+id/nav_calendar"
         android:name="com.example.umc_8th.CalendarFragment"

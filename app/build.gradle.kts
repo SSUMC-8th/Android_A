@@ -134,7 +134,6 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.kapt")
     id("com.google.gms.google-services")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.1.0"
 }
 
 android {
@@ -197,9 +196,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3) // 이미 추가됨
-    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation(platform("com.google.firebase:firebase-bom:21.0.0"))
     implementation("androidx.compose.material3:material3:1.0.0")
-    implementation(libs.firebase.auth)
+    implementation("com.google.firebase:firebase-auth:21.0.0")
     implementation(libs.firebase.database) // 추가된 부분
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

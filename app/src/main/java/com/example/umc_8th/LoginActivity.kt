@@ -6,63 +6,60 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Response
 import umc.study.umc_8th.R
+import retrofit2.Callback
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var etEmailId: EditText
-    private lateinit var etEmailDomain: EditText
-    private lateinit var etPassword: EditText
-    private lateinit var btnLogin: Button
+    private lateinit var loginIdEt: EditText
+    private lateinit var loginDirectInputEt: EditText
+    private lateinit var loginPasswordEt: EditText
+    private lateinit var loginSignInBtn: AppCompatButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Firebase 인증 객체 초기화
-        auth = FirebaseAuth.getInstance()
+        loginIdEt = findViewById(R.id.login_id_et)
+        loginDirectInputEt = findViewById(R.id.login_direct_input_et)
+        loginPasswordEt = findViewById(R.id.login_password_et)
+        loginSignInBtn = findViewById(R.id.login_sign_in_btn)
 
-        // 뷰 바인딩
-        etEmailId = findViewById(R.id.login_id_et)
-        etEmailDomain = findViewById(R.id.login_direct_input_et)
-        etPassword = findViewById(R.id.login_password_et)
-        btnLogin = findViewById(R.id.login_sign_in_btn)
-
-        btnLogin.setOnClickListener {
-            val email = etEmailId.text.toString().trim() + "@" + etEmailDomain.text.toString().trim()
-            val password = etPassword.text.toString().trim()
-
-            // 이메일 형식 검사
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "올바른 이메일 형식을 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (password.isEmpty()) {
-                Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            loginWithFirebase(email, password)
+        loginSignInBtn.setOnClickListener {
+            val email = "${loginIdEt.text}@${loginDirectInputEt.text}"
+            val password = loginPasswordEt.text.toString()
+            login(email, password)
         }
     }
 
-    private fun loginWithFirebase(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    val uid = FirebaseAuth.getInstance().currentUser?.uid
-                    SharedPreferencesHelper.saveUserIdx(this, uid)
-                    startActivity(intent)
+    private fun login(email: String, password: String) {
+        val request = LoginRequest(email, password)
+
+        RetrofitClient.apiService.login(request).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null && body.isSuccess) {
+                        Log.d("LoginActivity", "로그인 성공: ${body.result}")
+                        Toast.makeText(this@LoginActivity, "로그인 성공!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.e("LoginActivity", "로그인 실패: ${body?.message}")
+                        Toast.makeText(this@LoginActivity, "로그인 실패: ${body?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(this, "로그인 실패: ${task.exception?.message}", Toast.LENGTH_LONG).show()
-                    Log.e("LoginActivity", "로그인 실패", task.exception)
+                    Log.e("LoginActivity", "서버 오류: ${response.errorBody()?.string()}")
+                    Toast.makeText(this@LoginActivity, "서버 오류", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Log.e("LoginActivity", "통신 실패: ${t.message}")
+                Toast.makeText(this@LoginActivity, "네트워크 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
