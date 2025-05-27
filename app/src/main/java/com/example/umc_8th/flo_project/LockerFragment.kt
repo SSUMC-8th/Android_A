@@ -118,6 +118,8 @@ private fun initViews() {
         val spf = activity?.getSharedPreferences("auth", AppCompatActivity.MODE_PRIVATE)
         val editor = spf!!.edit()
         editor.remove("jwt")
+        editor.remove("memberId")
         editor.apply()
+        initViews()
     }
 }
