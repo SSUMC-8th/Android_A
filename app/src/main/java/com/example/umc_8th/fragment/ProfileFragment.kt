@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
         binding.pager.adapter = adapter
 
         // TabLayout과 ViewPager2 연결
-        val tabTitles = arrayOf("저장한 곡", "음악 파일")
+        val tabTitles = arrayOf("저장한 곡", "음악 파일", "저장 앨범")
 
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = tabTitles[position]
