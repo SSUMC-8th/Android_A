@@ -213,6 +213,15 @@ class MainActivity_2nd : AppCompatActivity() {
         mBinding.nextBtn.setOnClickListener {
             navigateToAdjacentSong(isNext = true)
         }
+
+//        if (intent.getBooleanExtra("navigateToProfile", false)) {
+//            mBinding.myBtmNav.selectedItemId = R.id.profileFragment
+//        } else {
+//            // 기본 선택 (예: 홈)
+//            mBinding.myBtmNav.selectedItemId = R.id.homeFragment
+//        }
+
+
     }
 
     // UI 업데이트 함수 통합

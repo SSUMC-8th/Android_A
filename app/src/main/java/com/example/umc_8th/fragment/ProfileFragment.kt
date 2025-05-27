@@ -5,16 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.umc_8th.LoginActivity
 import com.example.umc_8th.adapter.StorageAdapter
 import com.example.umc_8th.databinding.FragmentProfileBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -23,14 +28,33 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    private fun updateLoginButton() {
+        if (auth.currentUser == null) {
+            binding.loginBtn.text = "로그인"
+        } else {
+            binding.loginBtn.text = "로그아웃"
+        }
+    }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateLoginButton()
+
         binding.loginBtn.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+            if (auth.currentUser == null) {
+                // 로그인 화면으로 이동
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+
+            } else {
+                // 로그아웃 처리
+                auth.signOut()
+                Toast.makeText(requireContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                updateLoginButton()
+            }
         }
 
         // ViewPager2 어댑터 설정
@@ -45,34 +69,13 @@ class ProfileFragment : Fragment() {
         }.attach()
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        updateLoginButton() // 프래그먼트가 다시 보일 때 버튼 텍스트 갱신
+//    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
-
-
-//package com.example.umc_8th.fragment
-//
-//import android.os.Bundle
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import androidx.appcompat.app.AppCompatActivity
-//import androidx.fragment.app.Fragment
-//import com.example.umc_8th.databinding.FragmentProfileBinding
-//
-//class ProfileFragment:Fragment() {
-//    private var mBinding: FragmentProfileBinding? = null
-//
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val binding = FragmentProfileBinding.inflate(inflater,container,false)
-//        mBinding = binding
-//        return mBinding?.root
-//    }
-//
-//    override fun onDestroyView() {
-//        mBinding = null
-//        super.onDestroyView()
-//    }
-//}
