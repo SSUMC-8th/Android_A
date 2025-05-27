@@ -2,6 +2,7 @@ package com.example.umc_8th
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.umc_8th.api.AuthService
@@ -21,7 +22,8 @@ class LoginActivity : AppCompatActivity(), AuthView {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        authService = AuthService(this)
+        authService = AuthService(this) // this는 AuthView 구현한 LoginActivity 자신
+
 
         binding.btnLogin.setOnClickListener {
             val email = binding.editTextUsername.text.toString().trim()
@@ -46,12 +48,29 @@ class LoginActivity : AppCompatActivity(), AuthView {
         }
     }
 
+    //결국 로그인 수행 코드는 여기
     override fun onLoginSuccess(response: LoginResponse) {
+        // 로그인 성공시 SharedPreferences에 저장
+        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
+        prefs.edit().putBoolean("isLoggedIn", true).apply()
+
+        // 저장 직후 상태 확인
+        val value = prefs.getBoolean("isLoggedIn", false)
+        Log.d("AUTH_LOG", "LoginActivity 저장 직후 읽은 값: $value")
+
         Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
-        // 토큰 저장, 다음 화면 이동 등 처리
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, MainActivity_2nd::class.java))
         finish()
     }
+
+
+//    override fun onLoginSuccess(response: LoginResponse) {
+//        Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT).show()
+//
+//        // 토큰 저장, 다음 화면 이동 등 처리
+//        startActivity(Intent(this, MainActivity::class.java))
+//        finish()
+//    }
 
     override fun onLoginFailure(message: String) {
         Toast.makeText(this, "로그인 실패: $message", Toast.LENGTH_LONG).show()

@@ -242,6 +242,8 @@ class MainActivity_2nd : AppCompatActivity() {
         mBinding.miniPlayer.visibility = View.VISIBLE
     }
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         MusicPlayerState.removePlayListener(playStateListener)
